@@ -1,0 +1,42 @@
+---
+import { getComponentForName } from '@/PageRenderer';
+
+type RendererProps = {
+  data: any[];
+  animate?: boolean;
+  useTailwind?: boolean;
+};
+
+const {
+  data = [],
+  animate = false,
+  useTailwind = true,
+} = Astro.props as RendererProps;
+
+const items = Array.isArray(data) ? data : data ? [data] : [];
+
+const sections = items.map((item: any) => {
+  const typename =
+    item?.__typename ?? item?.content?.__typename ?? item?.sectionType ?? '';
+  const Component = getComponentForName(typename);
+  const propsData = item?.content ?? item;
+  const sectionMeta = item?.content ? item : item;
+
+  const props = {
+    data: propsData,
+    sectionMeta,
+    animate,
+    useTailwind,
+  };
+
+  return { Component, props };
+});
+---
+
+{
+  sections.map(({ Component, props }) => (
+    <section>
+      <Component {...props} />
+    </section>
+  ))
+}

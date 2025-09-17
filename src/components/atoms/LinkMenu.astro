@@ -1,0 +1,28 @@
+---
+import Arrow from '@/icons/arrow.astro';
+
+type Props = {
+  link: string;
+  text?: string | any;
+  isMobile: boolean;
+  isActive?: boolean;
+  style?: string;
+};
+
+const { link, text, isActive, isMobile, style }: Props = Astro.props;
+
+const classDesk = `text-base lg:text-lg font-pp-mono uppercase hover:text-primary-light transition-[letter-spacing,color] duration-200 ease-out tracking-smooth hover:text-tertiary ${isActive ? 'text-tertiary font-bold' : 'text-white'}`;
+const classMob =
+  "text-xl font-pp-sans flex w-full justify-between py-4 px-4 items-center hover:text-white transition-[letter-spacing,color] duration-200 ease-out hover:tracking-tight relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-secondary before:transition-all before:duration-300 before:ease-in-out before:-z-10 hover:before:left-0 hover:text-primary-light!";
+---
+
+<li>
+  <a
+    href={link}
+    title={text}
+    class={`${isMobile ? classMob : classDesk} transition-all cursor-pointer`}
+  >
+    {text}
+    {isMobile && <Arrow />}
+  </a>
+</li>

@@ -1,0 +1,36 @@
+---
+interface ButtonLinkProps {
+  href: string; // URL al que apunta el enlace
+  text: string; // Texto dentro del botón
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  rel?: string; // Relación del enlace (útil para seguridad con _blank)
+  className?: string; // Clases CSS adicionales para estilos
+}
+
+// Validar las propiedades en tiempo de ejecución
+function isButtonLinkProps(obj: Record<string, any>): obj is ButtonLinkProps {
+  return typeof obj.href === 'string' && typeof obj.text === 'string';
+}
+
+if (!isButtonLinkProps(Astro.props)) {
+  throw new Error('Props no válidos para el componente ButtonLink');
+}
+
+const {
+  href,
+  text,
+  target = '_self',
+  rel = 'noopener noreferrer',
+  className = '',
+}: ButtonLinkProps = Astro.props;
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class={`cursor-pointer px-6 py-3  bg-secondary hover:bg-secondary/90 text-primary font-semibold text-lg rounded-md shadow focus:outline-none focus:ring-2 focus:ring-green-300 focus:ring-offset-2 ${className}`.trim()}
+>
+  {text}
+  <slot />
+</a>

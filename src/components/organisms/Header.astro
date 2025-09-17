@@ -1,0 +1,53 @@
+---
+import Container from '@/components/molecules/Container.astro';
+import Menu from '@components/molecules/Menu.astro';
+import { Image } from 'astro:assets';
+const isHomePage = Astro.url.pathname === '/';
+// ${isHomePage ? 'bg-light' : 'bg-light'}
+
+const { headerInfo } = Astro.props;
+const { title, logo, logoDark, instagram, email } = headerInfo;
+---
+
+<header
+  class="bg-primary text-light mx-auto max-w-full sticky top-0 z-50 transition-all duration-300"
+  id="header"
+>
+  <Container styles="py-[1.5rem] md:py-[1.2rem]">
+    {
+      !isHomePage ? (
+        <a
+          href="/"
+          class="flex transition-all text-[0px] w-[110px] sm:w-[120px]"
+        >
+          <Image
+            src={logo}
+            alt={title}
+            format="webp"
+            loading="lazy"
+            width={120}
+            height={120}
+            decoding="async"
+            class="aspect-auto"
+            transition:animate={`fade`}
+          />
+          <span class="sr-only">{title}</span>
+        </a>
+      ) : (
+        <Image
+          src={logo}
+          alt={title}
+          format="webp"
+          loading="lazy"
+          width={100}
+          height={100}
+          decoding="async"
+          transition:animate={`fade`}
+          class="aspect-auto flex transition-all text-[0px] w-[110px] sm:w-[120px]"
+        />
+      )
+    }
+
+    <Menu logo={logo} logoDark={logoDark} instagram={instagram} email={email} />
+  </Container>
+</header>

@@ -1,0 +1,114 @@
+---
+import Arrow from '@/icons/arrow.astro';
+import LinkMenu from '@/components/atoms/LinkMenu.astro';
+// Recibe las props "link" e "isActive" desde el componente padre
+const { link, isActive, isMobile } = Astro.props;
+
+// Si el link tiene dropdown, se revisa si alguno de sus sublinks está activo
+const hasActiveDropdown = link.dropdown
+  ? link.dropdown.some((subLink: any) => subLink.isActive)
+  : false;
+
+// Se considera activo si el link padre o alguno de sus sublinks está activo
+const parentActive = isActive || hasActiveDropdown;
+
+const classDesk = `text-primary hover:text-secondary text-sm lg:text-base font-pp-mono uppercase ${parentActive ? 'text-secondary font-bold' : 'text-primary'}`;
+const classMob =
+  "hover:text-gray-300 text-xl font-pp-sans link-mobile flex w-full justify-between py-4 px-4 items-center hover:text-white transition-colors duration-300 relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-secondary before:transition-all before:duration-300 before:ease-in-out before:-z-10 hover:before:left-0";
+
+const currentPath = Astro.url.pathname;
+const pathUrlActual = currentPath.replace(/\/$/, '');
+---
+
+{
+  !isMobile ? (
+    link.dropdown ? (
+      // Si existe la propiedad dropdown, renderiza un dropdown
+      <div x-data="{ open: false }" class="relative">
+        <button
+          @click="open = !open"
+          class={`${isMobile ? classMob : classDesk} cursor-pointer`}
+        >
+          {link.name}
+        </button>
+        <ul
+          x-show="open"
+          @click.outside="open = false"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 scale-90"
+          x-transition:enter-end="opacity-100 scale-100"
+          x-transition:leave="transition ease-in duration-300"
+          x-transition:leave-start="opacity-100 scale-100"
+          x-transition:leave-end="opacity-0 scale-90"
+          class="list-menu-desktop absolute mt-2 bg-white border rounded shadow-lg w-[180px] py-[.3rem]"
+          x-cloak
+        >
+          {link.dropdown.map((subLink: any) => {
+            return (
+              <li class="li-item hover:bg-gray-100 py-4">
+                <LinkMenu
+                  link={subLink.href}
+                  isActive={isActive}
+                  text={subLink.name}
+                  isMobile={isMobile}
+                  style="lg:text-sm p-2 flex"
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ) : (
+      // Si no tiene dropdown, renderiza el LinkMenu normal
+      <LinkMenu
+        link={link.href}
+        isActive={isActive}
+        text={link.name}
+        isMobile={isMobile}
+      />
+    )
+  ) : link.dropdown ? (
+    <ul class="w-full">
+      <li>
+        <span class="pointer-events-none hover:text-gray-300 text-xl font-pp-sans link-mobile flex w-full justify-between py-4 px-4 items-center transition-colors duration-300 cursor-default relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-secondary before:transition-all before:duration-300 before:ease-in-out before:-z-10 hover:before:left-0">
+          {link.name}
+          <Arrow style="rotate-90" />
+        </span>
+
+        {link.dropdown && link.dropdown.length > 0 && (
+          <ul class="bg-white">
+            {link.dropdown.map((subLink: any) => {
+              const isActive = pathUrlActual === subLink.href;
+
+              return (
+                <li
+                  class={`py-2 pl-4 border-b z-10 group relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-secondary before:transition-all before:duration-300 before:ease-in-out before:-z-10 hover:before:left-0 ${isActive ? 'before:left-0' : ''}`}
+                >
+                  <a
+                    href={subLink.href}
+                    class={`${isActive && 'text-white font-[500]'} flex text-primary group-hover:text-white`}
+                  >
+                    {subLink.name}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </li>
+    </ul>
+  ) : (
+    <LinkMenu
+      link={link.href}
+      isActive={isActive}
+      text={link.name}
+      isMobile={isMobile}
+    />
+  )
+}
+
+<style>
+  .li-item:nth-child(odd) {
+    display: none;
+  }
+</style>

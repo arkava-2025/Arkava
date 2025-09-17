@@ -1,1 +1,36 @@
+@import url('./fonts.css');
 @import "tailwindcss";
+
+@theme {
+  --color-light: #ffffff;
+  --color-primary: #2E483E;
+  --color-primary-light: #546758;
+  --color-primary-pastel: #82A198;
+  --color-secondary: #F9F6E7;
+  --color-tertiary: #E35205;
+  --color-quaternary: #C18778;
+  --color-black: #1E1A1B;
+  --color-gray: #CCCCCC;
+  --color-gray-darker: #808080;
+
+  --font-pp-mono: "PP Supply Mono", monospace;
+  --font-pp-sans: "PP Supply Sans", sans-serif;
+  --font-helvetica: "Helvetica Web", Helvetica, sans-serif;
+}
+
+
+.weight-smooth {
+  font-family: var(--font-pp-sans);
+  /* Base weight */
+  font-variation-settings: 'wght' 500;
+  transition: font-variation-settings 300ms ease, color 300ms ease;
+}
+
+
+.weight-smooth:hover {
+  font-variation-settings: 'wght' 700;
+}
+
+.weight-smooth--active {
+  font-variation-settings: 'wght' 700;
+}
