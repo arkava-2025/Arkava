@@ -27,6 +27,7 @@ const sections = items.map((item: any) => {
     sectionMeta,
     animate,
     useTailwind,
+    __typename: typename,
   };
 
   return { Component, props };
@@ -35,8 +36,8 @@ const sections = items.map((item: any) => {
 
 {
   sections.map(({ Component, props }) => (
-    <section>
+    <>
       <Component {...props} />
-    </section>
+    </>
   ))
 }

@@ -1,0 +1,15 @@
+---
+import Faq from '@/components/organisms/Faq';
+import Test from '@/components/organisms/Test.jsx';
+import NoComponentFile from '@/components/NoComponentFile.astro';
+
+const { __typename, ...rest } = Astro.props;
+const typeKey = (
+  typeof __typename === 'string' ? __typename : `${__typename ?? ''}`
+).toLowerCase();
+---
+
+{typeKey === 'test' && <Test {...rest} client:load />}
+{typeKey === 'faq' && <Faq {...rest} client:load />}
+
+{typeKey !== 'test' && typeKey !== 'faq' && <NoComponentFile {...rest} />}

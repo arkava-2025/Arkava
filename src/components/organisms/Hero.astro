@@ -1,18 +1,17 @@
 ---
 const { data } = Astro.props;
-const hero = Array.isArray(data) ? data[0] : data;
 ---
 
 <section
-  class="w-full h-[80vh] md:h-[85vh] flex items-center justify-center bg-gradient-to-br from-red-600 to-pink-600 text-white"
+  class="w-full h-[80vh] md:h-[85vh] flex items-center justify-center bg-gradient-to-br from-secondary/90 to-secondary/10"
 >
-  <div class="mx-auto max-w-4xl px-6 text-center">
+  <div class="mx-auto max-w-4xl px-6 text-center text-gray-800">
     <h1 class="text-3xl md:text-5xl font-pp-sans">
-      {hero?.title}
+      {data?.title}
     </h1>
     {
-      hero?.description && (
-        <p class="mt-4 text-base md:text-lg opacity-90">{hero.description}</p>
+      data?.description && (
+        <p class="mt-4 text-base md:text-lg opacity-90">{data.description}</p>
       )
     }
   </div>
