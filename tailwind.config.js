@@ -1,5 +1,8 @@
 import { defineConfig } from 'tailwindcss'
 
 export default defineConfig({
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tw-animate-css'),
+  ],
 })

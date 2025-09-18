@@ -23,7 +23,7 @@
         "src/styles/*"
       ],
       "@lib/*": [
-        "src/libs/*"
+        "src/lib/*"
       ]
     },
     "jsx": "react-jsx",

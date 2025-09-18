@@ -1,6 +1,6 @@
 ---
 import type { HomePageQuery } from '@/gql/graphql';
-import getHomePage from '@/libs/hygraph/queries/getHomePage';
+import getHomePage from '@/lib/hygraph/queries/getHomePage';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ComponentRenderer from '@/components/ComponentRenderer.astro';
 import {
@@ -8,7 +8,7 @@ import {
   sortSectionsByLocalOrder,
   ensureComponentsFromOrderPresent,
   dedupeSectionsByType,
-} from '@/libs/utils/sections';
+} from '@/lib/utils/sections/index';
 
 const { page }: HomePageQuery = await getHomePage(
   'home',

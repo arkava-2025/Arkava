@@ -1,18 +1,37 @@
 ---
+import { ImageCarousel } from '@/components/molecules/Carousel';
+
 const { data } = Astro.props;
 ---
 
-<section
-  class="w-full h-[80vh] md:h-[85vh] flex items-center justify-center bg-gradient-to-br from-secondary/90 to-secondary/10"
->
-  <div class="mx-auto max-w-4xl px-6 text-center text-gray-800">
-    <h1 class="text-3xl md:text-5xl font-pp-sans">
-      {data?.title}
-    </h1>
-    {
-      data?.description && (
-        <p class="mt-4 text-base md:text-lg opacity-90">{data.description}</p>
-      )
-    }
+<section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
+  {/* Capa del carrusel al 100% */}
+  <div class="absolute inset-0">
+    <ImageCarousel client:load />
+  </div>
+
+  {/* Overlay para mejorar contraste del texto (opcional) */}
+  <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+  {/* Contenido centrado */}
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <div class="mx-auto max-w-3xl px-6 text-center text-white">
+      <h1 class="text-3xl md:text-5xl font-pp-sans">
+        {data?.title}
+      </h1>
+      {
+        data?.description && (
+          <p class="mt-4 text-base md:text-lg opacity-95">{data.description}</p>
+        )
+      }
+      <div class="mt-6 flex items-center justify-center">
+        <a
+          href="#servicios"
+          class="bg-tertiary hover:bg-tertiary/80 text-white font-semibold py-2.5 px-5 rounded-md shadow"
+        >
+          Conoce nuestros servicios
+        </a>
+      </div>
+    </div>
   </div>
 </section>
