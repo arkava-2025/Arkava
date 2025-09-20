@@ -46,7 +46,7 @@ export function ImageCarousel() {
         <CarouselContent className="h-full">
           {images.map((src, idx) => (
             <CarouselItem key={src} className="h-full">
-              <div className="relative w-full h-full overflow-hidden">
+              <div className="relative w-full h-[85vh] overflow-hidden">
                 <img
                   src={`${src}&w=2560`}
                   srcSet={[

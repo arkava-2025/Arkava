@@ -6,10 +6,10 @@ import SectionWrapper from '@/components/templates/SectionWrapper.astro';
 
 export const sectionOrder = [
   'Hero',
-  'Test',
-  'Servicios',
   'Experiencia',
+  'Servicios',
   'Faq',
+  'Test',
 ];
 
 type Mapping = { [name: string]: any };
