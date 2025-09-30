@@ -1004,7 +1004,7 @@ export enum EntityTypeName {
   PageAboutUs = 'PageAboutUs',
   PorqueElegirnos = 'PorqueElegirnos',
   Project = 'Project',
-  ProjectsHome = 'ProjectsHome',
+  ProyectosHome = 'ProyectosHome',
   /** Scheduled Operation system model */
   ScheduledOperation = 'ScheduledOperation',
   /** Scheduled Release system model */
@@ -6046,7 +6046,7 @@ export type ProjectConnection = {
 };
 
 export type ProjectCreateInput = {
-  cmfmwz2eh0qym07o865uwf5r0?: InputMaybe<ProjectsHomeCreateManyInlineInput>;
+  cmfmwz2eh0qym07o865uwf5r0?: InputMaybe<ProyectosHomeCreateManyInlineInput>;
   cmfonzmxk06er07pj564icq79?: InputMaybe<SingleProjectPageCreateManyInlineInput>;
   coverImage?: InputMaybe<AssetCreateOneInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6085,11 +6085,6 @@ export type ProjectEdge = {
   /** The item at the end of the edge. */
   node: Project;
 };
-
-export enum ProjectHomeMode {
-  Featured = 'featured',
-  Manual = 'manual'
-}
 
 /** Identifies documents */
 export type ProjectManyWhereInput = {
@@ -6357,7 +6352,7 @@ export enum ProjectOrderByInput {
 }
 
 export type ProjectUpdateInput = {
-  cmfmwz2eh0qym07o865uwf5r0?: InputMaybe<ProjectsHomeUpdateManyInlineInput>;
+  cmfmwz2eh0qym07o865uwf5r0?: InputMaybe<ProyectosHomeUpdateManyInlineInput>;
   cmfonzmxk06er07pj564icq79?: InputMaybe<SingleProjectPageUpdateManyInlineInput>;
   coverImage?: InputMaybe<AssetUpdateOneInlineInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -6705,13 +6700,18 @@ export type ProjectWhereUniqueInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ProjectsHome = Entity & {
-  __typename?: 'ProjectsHome';
+export enum ProyectoHomeMode {
+  Featured = 'featured',
+  Manual = 'manual'
+}
+
+export type ProyectosHome = Entity & {
+  __typename?: 'ProyectosHome';
   description?: Maybe<Scalars['String']['output']>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
   limit?: Maybe<Scalars['Int']['output']>;
-  mode: ProjectHomeMode;
+  mode: ProyectoHomeMode;
   projects: Array<Project>;
   /** System stage field */
   stage: Stage;
@@ -6722,7 +6722,7 @@ export type ProjectsHome = Entity & {
 };
 
 
-export type ProjectsHomeProjectsArgs = {
+export type ProyectosHomeProjectsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -6734,67 +6734,67 @@ export type ProjectsHomeProjectsArgs = {
   where?: InputMaybe<ProjectWhereInput>;
 };
 
-export type ProjectsHomeConnectInput = {
+export type ProyectosHomeConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
   /** Document to connect */
-  where: ProjectsHomeWhereUniqueInput;
+  where: ProyectosHomeWhereUniqueInput;
 };
 
 /** A connection to a list of items. */
-export type ProjectsHomeConnection = {
-  __typename?: 'ProjectsHomeConnection';
+export type ProyectosHomeConnection = {
+  __typename?: 'ProyectosHomeConnection';
   aggregate: Aggregate;
   /** A list of edges. */
-  edges: Array<ProjectsHomeEdge>;
+  edges: Array<ProyectosHomeEdge>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
 };
 
-export type ProjectsHomeCreateInput = {
+export type ProyectosHomeCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  mode: ProjectHomeMode;
+  mode: ProyectoHomeMode;
   projects?: InputMaybe<ProjectCreateManyInlineInput>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type ProjectsHomeCreateManyInlineInput = {
-  /** Create and connect multiple existing ProjectsHome documents */
-  create?: InputMaybe<Array<ProjectsHomeCreateInput>>;
+export type ProyectosHomeCreateManyInlineInput = {
+  /** Create and connect multiple existing ProyectosHome documents */
+  create?: InputMaybe<Array<ProyectosHomeCreateInput>>;
 };
 
-export type ProjectsHomeCreateOneInlineInput = {
-  /** Create and connect one ProjectsHome document */
-  create?: InputMaybe<ProjectsHomeCreateInput>;
+export type ProyectosHomeCreateOneInlineInput = {
+  /** Create and connect one ProyectosHome document */
+  create?: InputMaybe<ProyectosHomeCreateInput>;
 };
 
-export type ProjectsHomeCreateWithPositionInput = {
+export type ProyectosHomeCreateWithPositionInput = {
   /** Document to create */
-  data: ProjectsHomeCreateInput;
+  data: ProyectosHomeCreateInput;
   /** Position in the list of existing component instances, will default to appending at the end of list */
   position?: InputMaybe<ConnectPositionInput>;
 };
 
 /** An edge in a connection. */
-export type ProjectsHomeEdge = {
-  __typename?: 'ProjectsHomeEdge';
+export type ProyectosHomeEdge = {
+  __typename?: 'ProyectosHomeEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: ProjectsHome;
+  node: ProyectosHome;
 };
 
 /** Identifies documents */
-export type ProjectsHomeManyWhereInput = {
+export type ProyectosHomeManyWhereInput = {
   /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProjectsHomeWhereInput>>;
+  AND?: InputMaybe<Array<ProyectosHomeWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProjectsHomeWhereInput>>;
+  NOT?: InputMaybe<Array<ProyectosHomeWhereInput>>;
   /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProjectsHomeWhereInput>>;
+  OR?: InputMaybe<Array<ProyectosHomeWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -6850,13 +6850,13 @@ export type ProjectsHomeManyWhereInput = {
   limit_not?: InputMaybe<Scalars['Int']['input']>;
   /** All values that are not contained in given list. */
   limit_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  mode?: InputMaybe<ProjectHomeMode>;
+  mode?: InputMaybe<ProyectoHomeMode>;
   /** All values that are contained in given list. */
-  mode_in?: InputMaybe<Array<InputMaybe<ProjectHomeMode>>>;
+  mode_in?: InputMaybe<Array<InputMaybe<ProyectoHomeMode>>>;
   /** Any other value that exists and is not equal to the given value. */
-  mode_not?: InputMaybe<ProjectHomeMode>;
+  mode_not?: InputMaybe<ProyectoHomeMode>;
   /** All values that are not contained in given list. */
-  mode_not_in?: InputMaybe<Array<InputMaybe<ProjectHomeMode>>>;
+  mode_not_in?: InputMaybe<Array<InputMaybe<ProyectoHomeMode>>>;
   projects_every?: InputMaybe<ProjectWhereInput>;
   projects_none?: InputMaybe<ProjectWhereInput>;
   projects_some?: InputMaybe<ProjectWhereInput>;
@@ -6915,7 +6915,7 @@ export type ProjectsHomeManyWhereInput = {
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
 };
 
-export enum ProjectsHomeOrderByInput {
+export enum ProyectosHomeOrderByInput {
   DescriptionAsc = 'description_ASC',
   DescriptionDesc = 'description_DESC',
   IdAsc = 'id_ASC',
@@ -6932,179 +6932,179 @@ export enum ProjectsHomeOrderByInput {
   UpdatedAtDesc = 'updatedAt_DESC'
 }
 
-export type ProjectsHomeParent = Section;
+export type ProyectosHomeParent = Section;
 
-export type ProjectsHomeParentConnectInput = {
+export type ProyectosHomeParentConnectInput = {
   Section?: InputMaybe<SectionConnectInput>;
 };
 
-export type ProjectsHomeParentCreateInput = {
+export type ProyectosHomeParentCreateInput = {
   Section?: InputMaybe<SectionCreateInput>;
 };
 
-export type ProjectsHomeParentCreateManyInlineInput = {
-  /** Connect multiple existing ProjectsHomeParent documents */
-  connect?: InputMaybe<Array<ProjectsHomeParentWhereUniqueInput>>;
-  /** Create and connect multiple existing ProjectsHomeParent documents */
-  create?: InputMaybe<Array<ProjectsHomeParentCreateInput>>;
+export type ProyectosHomeParentCreateManyInlineInput = {
+  /** Connect multiple existing ProyectosHomeParent documents */
+  connect?: InputMaybe<Array<ProyectosHomeParentWhereUniqueInput>>;
+  /** Create and connect multiple existing ProyectosHomeParent documents */
+  create?: InputMaybe<Array<ProyectosHomeParentCreateInput>>;
 };
 
-export type ProjectsHomeParentCreateOneInlineInput = {
-  /** Connect one existing ProjectsHomeParent document */
-  connect?: InputMaybe<ProjectsHomeParentWhereUniqueInput>;
-  /** Create and connect one ProjectsHomeParent document */
-  create?: InputMaybe<ProjectsHomeParentCreateInput>;
+export type ProyectosHomeParentCreateOneInlineInput = {
+  /** Connect one existing ProyectosHomeParent document */
+  connect?: InputMaybe<ProyectosHomeParentWhereUniqueInput>;
+  /** Create and connect one ProyectosHomeParent document */
+  create?: InputMaybe<ProyectosHomeParentCreateInput>;
 };
 
-export type ProjectsHomeParentUpdateInput = {
+export type ProyectosHomeParentUpdateInput = {
   Section?: InputMaybe<SectionUpdateInput>;
 };
 
-export type ProjectsHomeParentUpdateManyInlineInput = {
-  /** Connect multiple existing ProjectsHomeParent documents */
-  connect?: InputMaybe<Array<ProjectsHomeParentConnectInput>>;
-  /** Create and connect multiple ProjectsHomeParent documents */
-  create?: InputMaybe<Array<ProjectsHomeParentCreateInput>>;
-  /** Delete multiple ProjectsHomeParent documents */
-  delete?: InputMaybe<Array<ProjectsHomeParentWhereUniqueInput>>;
-  /** Disconnect multiple ProjectsHomeParent documents */
-  disconnect?: InputMaybe<Array<ProjectsHomeParentWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing ProjectsHomeParent documents */
-  set?: InputMaybe<Array<ProjectsHomeParentWhereUniqueInput>>;
-  /** Update multiple ProjectsHomeParent documents */
-  update?: InputMaybe<Array<ProjectsHomeParentUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple ProjectsHomeParent documents */
-  upsert?: InputMaybe<Array<ProjectsHomeParentUpsertWithNestedWhereUniqueInput>>;
+export type ProyectosHomeParentUpdateManyInlineInput = {
+  /** Connect multiple existing ProyectosHomeParent documents */
+  connect?: InputMaybe<Array<ProyectosHomeParentConnectInput>>;
+  /** Create and connect multiple ProyectosHomeParent documents */
+  create?: InputMaybe<Array<ProyectosHomeParentCreateInput>>;
+  /** Delete multiple ProyectosHomeParent documents */
+  delete?: InputMaybe<Array<ProyectosHomeParentWhereUniqueInput>>;
+  /** Disconnect multiple ProyectosHomeParent documents */
+  disconnect?: InputMaybe<Array<ProyectosHomeParentWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing ProyectosHomeParent documents */
+  set?: InputMaybe<Array<ProyectosHomeParentWhereUniqueInput>>;
+  /** Update multiple ProyectosHomeParent documents */
+  update?: InputMaybe<Array<ProyectosHomeParentUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple ProyectosHomeParent documents */
+  upsert?: InputMaybe<Array<ProyectosHomeParentUpsertWithNestedWhereUniqueInput>>;
 };
 
-export type ProjectsHomeParentUpdateManyWithNestedWhereInput = {
+export type ProyectosHomeParentUpdateManyWithNestedWhereInput = {
   Section?: InputMaybe<SectionUpdateManyWithNestedWhereInput>;
 };
 
-export type ProjectsHomeParentUpdateOneInlineInput = {
-  /** Connect existing ProjectsHomeParent document */
-  connect?: InputMaybe<ProjectsHomeParentWhereUniqueInput>;
-  /** Create and connect one ProjectsHomeParent document */
-  create?: InputMaybe<ProjectsHomeParentCreateInput>;
-  /** Delete currently connected ProjectsHomeParent document */
+export type ProyectosHomeParentUpdateOneInlineInput = {
+  /** Connect existing ProyectosHomeParent document */
+  connect?: InputMaybe<ProyectosHomeParentWhereUniqueInput>;
+  /** Create and connect one ProyectosHomeParent document */
+  create?: InputMaybe<ProyectosHomeParentCreateInput>;
+  /** Delete currently connected ProyectosHomeParent document */
   delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Disconnect currently connected ProjectsHomeParent document */
+  /** Disconnect currently connected ProyectosHomeParent document */
   disconnect?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single ProjectsHomeParent document */
-  update?: InputMaybe<ProjectsHomeParentUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single ProjectsHomeParent document */
-  upsert?: InputMaybe<ProjectsHomeParentUpsertWithNestedWhereUniqueInput>;
+  /** Update single ProyectosHomeParent document */
+  update?: InputMaybe<ProyectosHomeParentUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single ProyectosHomeParent document */
+  upsert?: InputMaybe<ProyectosHomeParentUpsertWithNestedWhereUniqueInput>;
 };
 
-export type ProjectsHomeParentUpdateWithNestedWhereUniqueInput = {
+export type ProyectosHomeParentUpdateWithNestedWhereUniqueInput = {
   Section?: InputMaybe<SectionUpdateWithNestedWhereUniqueInput>;
 };
 
-export type ProjectsHomeParentUpsertWithNestedWhereUniqueInput = {
+export type ProyectosHomeParentUpsertWithNestedWhereUniqueInput = {
   Section?: InputMaybe<SectionUpsertWithNestedWhereUniqueInput>;
 };
 
-export type ProjectsHomeParentWhereInput = {
+export type ProyectosHomeParentWhereInput = {
   Section?: InputMaybe<SectionWhereInput>;
 };
 
-export type ProjectsHomeParentWhereUniqueInput = {
+export type ProyectosHomeParentWhereUniqueInput = {
   Section?: InputMaybe<SectionWhereUniqueInput>;
 };
 
-export type ProjectsHomeUpdateInput = {
+export type ProyectosHomeUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  mode?: InputMaybe<ProjectHomeMode>;
+  mode?: InputMaybe<ProyectoHomeMode>;
   projects?: InputMaybe<ProjectUpdateManyInlineInput>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ProjectsHomeUpdateManyInlineInput = {
-  /** Create and connect multiple ProjectsHome component instances */
-  create?: InputMaybe<Array<ProjectsHomeCreateWithPositionInput>>;
-  /** Delete multiple ProjectsHome documents */
-  delete?: InputMaybe<Array<ProjectsHomeWhereUniqueInput>>;
-  /** Update multiple ProjectsHome component instances */
-  update?: InputMaybe<Array<ProjectsHomeUpdateWithNestedWhereUniqueAndPositionInput>>;
-  /** Upsert multiple ProjectsHome component instances */
-  upsert?: InputMaybe<Array<ProjectsHomeUpsertWithNestedWhereUniqueAndPositionInput>>;
+export type ProyectosHomeUpdateManyInlineInput = {
+  /** Create and connect multiple ProyectosHome component instances */
+  create?: InputMaybe<Array<ProyectosHomeCreateWithPositionInput>>;
+  /** Delete multiple ProyectosHome documents */
+  delete?: InputMaybe<Array<ProyectosHomeWhereUniqueInput>>;
+  /** Update multiple ProyectosHome component instances */
+  update?: InputMaybe<Array<ProyectosHomeUpdateWithNestedWhereUniqueAndPositionInput>>;
+  /** Upsert multiple ProyectosHome component instances */
+  upsert?: InputMaybe<Array<ProyectosHomeUpsertWithNestedWhereUniqueAndPositionInput>>;
 };
 
-export type ProjectsHomeUpdateManyInput = {
+export type ProyectosHomeUpdateManyInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  mode?: InputMaybe<ProjectHomeMode>;
+  mode?: InputMaybe<ProyectoHomeMode>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ProjectsHomeUpdateManyWithNestedWhereInput = {
+export type ProyectosHomeUpdateManyWithNestedWhereInput = {
   /** Update many input */
-  data: ProjectsHomeUpdateManyInput;
+  data: ProyectosHomeUpdateManyInput;
   /** Document search */
-  where: ProjectsHomeWhereInput;
+  where: ProyectosHomeWhereInput;
 };
 
-export type ProjectsHomeUpdateOneInlineInput = {
-  /** Create and connect one ProjectsHome document */
-  create?: InputMaybe<ProjectsHomeCreateInput>;
-  /** Delete currently connected ProjectsHome document */
+export type ProyectosHomeUpdateOneInlineInput = {
+  /** Create and connect one ProyectosHome document */
+  create?: InputMaybe<ProyectosHomeCreateInput>;
+  /** Delete currently connected ProyectosHome document */
   delete?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Update single ProjectsHome document */
-  update?: InputMaybe<ProjectsHomeUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single ProjectsHome document */
-  upsert?: InputMaybe<ProjectsHomeUpsertWithNestedWhereUniqueInput>;
+  /** Update single ProyectosHome document */
+  update?: InputMaybe<ProyectosHomeUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single ProyectosHome document */
+  upsert?: InputMaybe<ProyectosHomeUpsertWithNestedWhereUniqueInput>;
 };
 
-export type ProjectsHomeUpdateWithNestedWhereUniqueAndPositionInput = {
+export type ProyectosHomeUpdateWithNestedWhereUniqueAndPositionInput = {
   /** Document to update */
-  data?: InputMaybe<ProjectsHomeUpdateInput>;
+  data?: InputMaybe<ProyectosHomeUpdateInput>;
   /** Position in the list of existing component instances, will default to appending at the end of list */
   position?: InputMaybe<ConnectPositionInput>;
   /** Unique component instance search */
-  where: ProjectsHomeWhereUniqueInput;
+  where: ProyectosHomeWhereUniqueInput;
 };
 
-export type ProjectsHomeUpdateWithNestedWhereUniqueInput = {
+export type ProyectosHomeUpdateWithNestedWhereUniqueInput = {
   /** Document to update */
-  data: ProjectsHomeUpdateInput;
+  data: ProyectosHomeUpdateInput;
   /** Unique document search */
-  where: ProjectsHomeWhereUniqueInput;
+  where: ProyectosHomeWhereUniqueInput;
 };
 
-export type ProjectsHomeUpsertInput = {
+export type ProyectosHomeUpsertInput = {
   /** Create document if it didn't exist */
-  create: ProjectsHomeCreateInput;
+  create: ProyectosHomeCreateInput;
   /** Update document if it exists */
-  update: ProjectsHomeUpdateInput;
+  update: ProyectosHomeUpdateInput;
 };
 
-export type ProjectsHomeUpsertWithNestedWhereUniqueAndPositionInput = {
+export type ProyectosHomeUpsertWithNestedWhereUniqueAndPositionInput = {
   /** Document to upsert */
-  data?: InputMaybe<ProjectsHomeUpsertInput>;
+  data?: InputMaybe<ProyectosHomeUpsertInput>;
   /** Position in the list of existing component instances, will default to appending at the end of list */
   position?: InputMaybe<ConnectPositionInput>;
   /** Unique component instance search */
-  where: ProjectsHomeWhereUniqueInput;
+  where: ProyectosHomeWhereUniqueInput;
 };
 
-export type ProjectsHomeUpsertWithNestedWhereUniqueInput = {
+export type ProyectosHomeUpsertWithNestedWhereUniqueInput = {
   /** Upsert data */
-  data: ProjectsHomeUpsertInput;
+  data: ProyectosHomeUpsertInput;
   /** Unique document search */
-  where: ProjectsHomeWhereUniqueInput;
+  where: ProyectosHomeWhereUniqueInput;
 };
 
 /** Identifies documents */
-export type ProjectsHomeWhereInput = {
+export type ProyectosHomeWhereInput = {
   /** Logical AND on all given filters. */
-  AND?: InputMaybe<Array<ProjectsHomeWhereInput>>;
+  AND?: InputMaybe<Array<ProyectosHomeWhereInput>>;
   /** Logical NOT on all given filters combined by AND. */
-  NOT?: InputMaybe<Array<ProjectsHomeWhereInput>>;
+  NOT?: InputMaybe<Array<ProyectosHomeWhereInput>>;
   /** Logical OR on all given filters. */
-  OR?: InputMaybe<Array<ProjectsHomeWhereInput>>;
+  OR?: InputMaybe<Array<ProyectosHomeWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -7160,13 +7160,13 @@ export type ProjectsHomeWhereInput = {
   limit_not?: InputMaybe<Scalars['Int']['input']>;
   /** All values that are not contained in given list. */
   limit_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  mode?: InputMaybe<ProjectHomeMode>;
+  mode?: InputMaybe<ProyectoHomeMode>;
   /** All values that are contained in given list. */
-  mode_in?: InputMaybe<Array<InputMaybe<ProjectHomeMode>>>;
+  mode_in?: InputMaybe<Array<InputMaybe<ProyectoHomeMode>>>;
   /** Any other value that exists and is not equal to the given value. */
-  mode_not?: InputMaybe<ProjectHomeMode>;
+  mode_not?: InputMaybe<ProyectoHomeMode>;
   /** All values that are not contained in given list. */
-  mode_not_in?: InputMaybe<Array<InputMaybe<ProjectHomeMode>>>;
+  mode_not_in?: InputMaybe<Array<InputMaybe<ProyectoHomeMode>>>;
   projects_every?: InputMaybe<ProjectWhereInput>;
   projects_none?: InputMaybe<ProjectWhereInput>;
   projects_some?: InputMaybe<ProjectWhereInput>;
@@ -7225,8 +7225,8 @@ export type ProjectsHomeWhereInput = {
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
 };
 
-/** References ProjectsHome record uniquely */
-export type ProjectsHomeWhereUniqueInput = {
+/** References ProyectosHome record uniquely */
+export type ProyectosHomeWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -9284,13 +9284,13 @@ export type SectionWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type SectioncontentUnion = Experiencia | Hero | PorqueElegirnos | ProjectsHome | Servicios;
+export type SectioncontentUnion = Experiencia | Hero | PorqueElegirnos | ProyectosHome | Servicios;
 
 export type SectioncontentUnionConnectInput = {
   Experiencia?: InputMaybe<ExperienciaConnectInput>;
   Hero?: InputMaybe<HeroConnectInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosConnectInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeConnectInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeConnectInput>;
   Servicios?: InputMaybe<ServiciosConnectInput>;
 };
 
@@ -9298,7 +9298,7 @@ export type SectioncontentUnionCreateInput = {
   Experiencia?: InputMaybe<ExperienciaCreateInput>;
   Hero?: InputMaybe<HeroCreateInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosCreateInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeCreateInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeCreateInput>;
   Servicios?: InputMaybe<ServiciosCreateInput>;
 };
 
@@ -9316,7 +9316,7 @@ export type SectioncontentUnionCreateWithPositionInput = {
   Experiencia?: InputMaybe<ExperienciaCreateWithPositionInput>;
   Hero?: InputMaybe<HeroCreateWithPositionInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosCreateWithPositionInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeCreateWithPositionInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeCreateWithPositionInput>;
   Servicios?: InputMaybe<ServiciosCreateWithPositionInput>;
 };
 
@@ -9324,7 +9324,7 @@ export type SectioncontentUnionUpdateInput = {
   Experiencia?: InputMaybe<ExperienciaUpdateInput>;
   Hero?: InputMaybe<HeroUpdateInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosUpdateInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeUpdateInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeUpdateInput>;
   Servicios?: InputMaybe<ServiciosUpdateInput>;
 };
 
@@ -9343,7 +9343,7 @@ export type SectioncontentUnionUpdateManyWithNestedWhereInput = {
   Experiencia?: InputMaybe<ExperienciaUpdateManyWithNestedWhereInput>;
   Hero?: InputMaybe<HeroUpdateManyWithNestedWhereInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosUpdateManyWithNestedWhereInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeUpdateManyWithNestedWhereInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeUpdateManyWithNestedWhereInput>;
   Servicios?: InputMaybe<ServiciosUpdateManyWithNestedWhereInput>;
 };
 
@@ -9362,7 +9362,7 @@ export type SectioncontentUnionUpdateWithNestedWhereUniqueAndPositionInput = {
   Experiencia?: InputMaybe<ExperienciaUpdateWithNestedWhereUniqueAndPositionInput>;
   Hero?: InputMaybe<HeroUpdateWithNestedWhereUniqueAndPositionInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosUpdateWithNestedWhereUniqueAndPositionInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeUpdateWithNestedWhereUniqueAndPositionInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeUpdateWithNestedWhereUniqueAndPositionInput>;
   Servicios?: InputMaybe<ServiciosUpdateWithNestedWhereUniqueAndPositionInput>;
 };
 
@@ -9370,7 +9370,7 @@ export type SectioncontentUnionUpdateWithNestedWhereUniqueInput = {
   Experiencia?: InputMaybe<ExperienciaUpdateWithNestedWhereUniqueInput>;
   Hero?: InputMaybe<HeroUpdateWithNestedWhereUniqueInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosUpdateWithNestedWhereUniqueInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeUpdateWithNestedWhereUniqueInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeUpdateWithNestedWhereUniqueInput>;
   Servicios?: InputMaybe<ServiciosUpdateWithNestedWhereUniqueInput>;
 };
 
@@ -9378,7 +9378,7 @@ export type SectioncontentUnionUpsertWithNestedWhereUniqueAndPositionInput = {
   Experiencia?: InputMaybe<ExperienciaUpsertWithNestedWhereUniqueAndPositionInput>;
   Hero?: InputMaybe<HeroUpsertWithNestedWhereUniqueAndPositionInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosUpsertWithNestedWhereUniqueAndPositionInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeUpsertWithNestedWhereUniqueAndPositionInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeUpsertWithNestedWhereUniqueAndPositionInput>;
   Servicios?: InputMaybe<ServiciosUpsertWithNestedWhereUniqueAndPositionInput>;
 };
 
@@ -9386,7 +9386,7 @@ export type SectioncontentUnionUpsertWithNestedWhereUniqueInput = {
   Experiencia?: InputMaybe<ExperienciaUpsertWithNestedWhereUniqueInput>;
   Hero?: InputMaybe<HeroUpsertWithNestedWhereUniqueInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosUpsertWithNestedWhereUniqueInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeUpsertWithNestedWhereUniqueInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeUpsertWithNestedWhereUniqueInput>;
   Servicios?: InputMaybe<ServiciosUpsertWithNestedWhereUniqueInput>;
 };
 
@@ -9394,7 +9394,7 @@ export type SectioncontentUnionWhereInput = {
   Experiencia?: InputMaybe<ExperienciaWhereInput>;
   Hero?: InputMaybe<HeroWhereInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosWhereInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeWhereInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeWhereInput>;
   Servicios?: InputMaybe<ServiciosWhereInput>;
 };
 
@@ -9402,7 +9402,7 @@ export type SectioncontentUnionWhereUniqueInput = {
   Experiencia?: InputMaybe<ExperienciaWhereUniqueInput>;
   Hero?: InputMaybe<HeroWhereUniqueInput>;
   PorqueElegirnos?: InputMaybe<PorqueElegirnosWhereUniqueInput>;
-  ProjectsHome?: InputMaybe<ProjectsHomeWhereUniqueInput>;
+  ProyectosHome?: InputMaybe<ProyectosHomeWhereUniqueInput>;
   Servicios?: InputMaybe<ServiciosWhereUniqueInput>;
 };
 
@@ -11507,12 +11507,12 @@ export type HomePageQueryVariables = Exact<{
 
 export type HomePageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', id: string, title?: string | null, slug?: string | null, sections: Array<{ __typename?: 'Section', id: string, internalName?: string | null, sectionType?: SectionType | null, isVisible?: boolean | null, content: Array<
         | { __typename: 'Experiencia', numProjects?: string | null, porcentajeSatisfacion?: string | null, anosExperiencia?: string | null, garantiaRespuesta?: string | null }
-        | { __typename: 'Hero', title: string, description?: string | null }
+        | { __typename: 'Hero', title: string, description?: string | null, images: Array<{ __typename?: 'Asset', url: string }> }
         | { __typename: 'PorqueElegirnos' }
-        | { __typename: 'ProjectsHome' }
+        | { __typename: 'ProyectosHome' }
         | { __typename: 'Servicios', subtitle?: string | null, description?: string | null, servicetitle?: string | null, services: Array<{ __typename?: 'Servicio', title: string, description?: string | null, iconService?: string | null, imageService?: { __typename?: 'Asset', url: string } | null }> }
       > }> } | null };
 
 
 export const GetGeneralPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGeneralPage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"generalInfos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"whatsapp"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"urlInstagram"}},{"kind":"Field","name":{"kind":"Name","value":"logo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"logoDark"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<GetGeneralPageQuery, GetGeneralPageQueryVariables>;
-export const HomePageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HomePage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"stage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Stage"}}},"defaultValue":{"kind":"EnumValue","value":"PUBLISHED"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"stage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"stage"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"sections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"internalName"}},{"kind":"Field","name":{"kind":"Name","value":"sectionType"}},{"kind":"Field","name":{"kind":"Name","value":"isVisible"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Hero"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Experiencia"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numProjects"}},{"kind":"Field","name":{"kind":"Name","value":"porcentajeSatisfacion"}},{"kind":"Field","name":{"kind":"Name","value":"anosExperiencia"}},{"kind":"Field","name":{"kind":"Name","value":"garantiaRespuesta"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Servicios"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"servicetitle"},"name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"iconService"}},{"kind":"Field","name":{"kind":"Name","value":"imageService"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<HomePageQuery, HomePageQueryVariables>;
+export const HomePageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HomePage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"stage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Stage"}}},"defaultValue":{"kind":"EnumValue","value":"PUBLISHED"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"stage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"stage"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"sections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"internalName"}},{"kind":"Field","name":{"kind":"Name","value":"sectionType"}},{"kind":"Field","name":{"kind":"Name","value":"isVisible"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Hero"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Experiencia"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numProjects"}},{"kind":"Field","name":{"kind":"Name","value":"porcentajeSatisfacion"}},{"kind":"Field","name":{"kind":"Name","value":"anosExperiencia"}},{"kind":"Field","name":{"kind":"Name","value":"garantiaRespuesta"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Servicios"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"servicetitle"},"name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"iconService"}},{"kind":"Field","name":{"kind":"Name","value":"imageService"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<HomePageQuery, HomePageQueryVariables>;

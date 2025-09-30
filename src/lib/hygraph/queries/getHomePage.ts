@@ -19,6 +19,9 @@ const query = graphql(`
           ... on Hero {
             title
             description
+            images {
+              url
+            }
           }
           ... on Experiencia {
             numProjects

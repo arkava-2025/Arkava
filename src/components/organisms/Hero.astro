@@ -7,7 +7,7 @@ const { data } = Astro.props;
 <section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
   {/* Capa del carrusel al 100% */}
   <div class="absolute inset-0">
-    <ImageCarousel client:load />
+    <ImageCarousel images={data?.images} client:load />
   </div>
 
   {/* Overlay para mejorar contraste del texto (opcional) */}
