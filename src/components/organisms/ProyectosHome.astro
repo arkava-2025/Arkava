@@ -1,10 +1,39 @@
 ---
-import Container from '../molecules/Container.astro';
+type Project = {
+  slug: string;
+  title: string;
+  description: string;
+  coverImage: {
+    url: string;
+  };
+};
+
+const { data } = Astro.props;
+const { titleProyectHome, subtitle, description, projects } = data;
 ---
 
-<section class="h-[60vh] bg-[#f8f8f8]">
-  <Container styles="flex flex-col items-center justify-center h-full">
-    <h2 class="text-3xl md:text-5xl font-pp-sans">proyectos home</h2>
-    <p class="font-helvetica text-gray-800">prijectsss Home</p>
-  </Container>
+<section class="h-auto bg-[#f8f8f8] flex items-center justify-center flex-col">
+  <h2 class="text-3xl md:text-5xl font-pp-sans">{titleProyectHome}</h2>
+  <h3>{subtitle}</h3>
+  <p class="font-helvetica text-gray-800">{description}</p>
+
+  <div class="w-full grid grid-cols-4 mt-8 h-[70vh]">
+    {
+      projects.map((project: Project) => {
+        return (
+          <a href={`/proyectos/${project.slug}`} class="h-full">
+            {/* <h4>{project.title}</h4>
+            <p>{project.description}</p> */}
+            <img
+              src={project.coverImage.url}
+              alt={project.title}
+              class="h-full w-full object-cover grayscale hover:grayscale-0 transition-all duration-300 cursor-pointer"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        );
+      })
+    }
+  </div>
 </section>

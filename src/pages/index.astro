@@ -3,37 +3,28 @@ import type { HomePageQuery } from '@/gql/graphql';
 import getHomePage from '@/lib/hygraph/queries/getHomePage';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ComponentRenderer from '@/components/ComponentRenderer.astro';
-import {
-  isPreview,
-  sortSectionsByLocalOrder,
-  ensureComponentsFromOrderPresent,
-  dedupeSectionsByType,
-} from '@/lib/utils/sections/index';
+import { isPreview } from '@/lib/utils/sections/index';
 
 const { page }: HomePageQuery = await getHomePage(
   'home',
   isPreview() ? 'DRAFT' : 'PUBLISHED',
 );
 
-const baseSections = Array.isArray(page?.sections) ? page.sections : [];
-// Ensure components listed in sectionOrder exist at least once (synthetic minimal sections if missing)
-const enriched = ensureComponentsFromOrderPresent(baseSections);
-const deduped = dedupeSectionsByType(enriched);
-const allSections = sortSectionsByLocalOrder(deduped);
+const allSections = (Array.isArray(page?.sections) ? page.sections : []).filter(
+  (s) => s?.isVisible !== false,
+);
 ---
 
 <BaseLayout title={page?.title ?? 'Arkava'}>
   <main class="mb-6">
     {
-      allSections.map((section: any) => {
-        return (
-          <ComponentRenderer
-            data={section.content}
-            animate={true}
-            useTailwind={true}
-          />
-        );
-      })
+      allSections.map((section: any) => (
+        <ComponentRenderer
+          data={section.content}
+          animate={true}
+          useTailwind={true}
+        />
+      ))
     }
   </main>
 </BaseLayout>

@@ -42,6 +42,27 @@ const query = graphql(`
               }
             }
           }
+          ... on ProyectosHome {
+            titleProyectHome: title
+            subtitle
+            description
+            __typename
+            projects {
+              title
+              slug
+              seoTitle
+              seoDescription
+              description
+              resume
+              coverImage {
+                url
+              }
+              gallery {
+                url
+              }
+              isFeatured
+            }
+          }
         }
       }
     }
