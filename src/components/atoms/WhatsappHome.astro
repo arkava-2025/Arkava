@@ -1,0 +1,71 @@
+---
+import WhatsappColor from '@/icons/whatsappColor.astro';
+const { wtNumber } = Astro.props;
+---
+
+<a
+  href={`https://wa.me/57${wtNumber}?text=Bienvenido%20a%20Arkava%20Quiero%20iniciar%20un%20proyecto`}
+  target="_blank"
+  aria-label="Escribenos a nuestro Whatsapp"
+  class="whatsapp-button fixed bottom-5 right-5 w-14 h-14 z-50 shadow-xl rounded-full transition-all hover:scale-110 duration-300 group"
+>
+  <!-- Efecto de ripple -->
+  <div class="absolute inset-0">
+    <span
+      class="absolute w-full h-full bg-[#25D366] rounded-full animate-ping opacity-75"
+    ></span>
+
+    <!-- Icono -->
+    <WhatsappColor
+      class="w-full h-full relative z-50 group-hover:scale-110 transition-transform duration-300"
+    />
+  </div>
+
+  <style>
+    /* @keyframes pulse-whatsapp {
+        0%,
+        100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    } */
+
+    @keyframes pulse-delayed {
+      0%,
+      85% {
+        transform: scale(1);
+      }
+      90% {
+        transform: scale(1.15);
+      }
+      95% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .whatsapp-button {
+      animation: pulse-delayed 8s infinite;
+    }
+
+    .whatsapp-button:hover {
+      animation: none;
+    }
+
+    @keyframes ping {
+      75%,
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .animate-ping {
+      animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  </style>
+</a>

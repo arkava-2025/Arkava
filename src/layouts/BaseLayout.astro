@@ -1,5 +1,8 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import Header from '@components/organisms/Header.astro';
+import WhatsappHome from '@/components/atoms/WhatsappHome.astro';
 import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
 import '@styles/global.css';
 import '@styles/fonts.css';
@@ -32,6 +35,9 @@ const headerInfo = {
   </head>
   <body class="min-h-dvh bg-white antialiased font-pp-sans">
     <Header headerInfo={headerInfo} />
+    <WhatsappHome wtNumber={headerInfo.whatsapp} />
+    <Analytics />
+    <SpeedInsights />
     <slot />
   </body>
 </html>

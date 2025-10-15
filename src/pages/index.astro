@@ -3,22 +3,27 @@ import type { HomePageQuery } from '@/gql/graphql';
 import getHomePage from '@/lib/hygraph/queries/getHomePage';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ComponentRenderer from '@/components/ComponentRenderer.astro';
-import { isPreview } from '@/lib/utils/sections/index';
+import {
+  isPreview,
+  sectionOrder,
+  buildOrderedSections,
+} from '@/lib/utils/sections/index';
 
 const { page }: HomePageQuery = await getHomePage(
   'home',
   isPreview() ? 'DRAFT' : 'PUBLISHED',
 );
 
-const allSections = (Array.isArray(page?.sections) ? page.sections : []).filter(
-  (s) => s?.isVisible !== false,
+const orderedSections = buildOrderedSections(
+  page?.sections as any[],
+  sectionOrder,
 );
 ---
 
 <BaseLayout title={page?.title ?? 'Arkava'}>
   <main class="mb-6">
     {
-      allSections.map((section: any) => (
+      orderedSections.map((section: any) => (
         <ComponentRenderer
           data={section.content}
           animate={true}

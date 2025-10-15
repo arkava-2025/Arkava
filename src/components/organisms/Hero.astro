@@ -19,16 +19,16 @@ const { data } = Astro.props;
   {/* Contenido centrado */}
   <div class="relative z-10 flex items-center justify-center h-full">
     <div
-      class="mx-auto max-w-6xl px-6 text-center text-white absolute bottom-[30px]"
+      class="mx-auto max-w-6xl px-6 text-center text-white absolute md:bottom-[30px]"
     >
       <h1
-        class="text-3xl md:text-6xl font-pp-sans text-white drop-shadow-[0_4px_6px_rgba(0,0,0,1)]"
+        class="text-4xl md:text-6xl font-pp-sans text-white drop-shadow-[0_4px_6px_rgba(0,0,0,1)]"
       >
         {data?.title}
       </h1>
       {
         data?.description && (
-          <p class="mt-4 text-base md:text-lg opacity-95 text-white drop-shadow-[0_4px_6px_rgba(0,0,0,1)] w-[70%] mx-auto">
+          <p class="mt-4 text-base md:text-lg opacity-95 text-white drop-shadow-[0_4px_6px_rgba(0,0,0,1)] md:w-[70%] w-full mx-auto">
             {data.description}
           </p>
         )

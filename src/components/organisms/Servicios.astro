@@ -1,15 +1,17 @@
 ---
 import Container from '../molecules/Container.astro';
+import Section from '@/components/atoms/Section.astro';
+import Title from '@/components/atoms/Title.astro';
 ---
 
-<section class="h-[60vh] bg-[#f8f8f8]">
-  <Container styles="flex flex-col items-center justify-center h-full">
-    <h2 class="text-3xl md:text-5xl font-pp-sans">Servicios</h2>
-    <p class="font-helvetica text-gray-800">
+<Section style="h-[60vh] bg-[#f8f8f8]">
+  <Container styles="flex flex-col items-center">
+    <Title title="Nuestros Servicios" style="w-full text-center" />
+    <p class="font-helvetica text-gray-800 w-full text-center">
       En Arkava, nos enorgullecemos de ofrecer servicios de calidad que cumplen
       con las expectativas de nuestros clientes. Nuestro compromiso con la
       excelencia nos lleva a brindar soluciones innovadoras y eficientes para
       satisfacer las necesidades de cada proyecto.
     </p>
   </Container>
-</section>
+</Section>
