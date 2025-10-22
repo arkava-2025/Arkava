@@ -3,6 +3,7 @@ import type { HomePageQuery } from '@/gql/graphql';
 import getHomePage from '@/lib/hygraph/queries/getHomePage';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ComponentRenderer from '@/components/ComponentRenderer.astro';
+import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
 import {
   isPreview,
   sectionOrder,
@@ -13,6 +14,8 @@ const { page }: HomePageQuery = await getHomePage(
   'home',
   isPreview() ? 'DRAFT' : 'PUBLISHED',
 );
+
+const general = await getGeneralPage();
 
 const orderedSections = buildOrderedSections(
   page?.sections as any[],
@@ -28,6 +31,7 @@ const orderedSections = buildOrderedSections(
           data={section.content}
           animate={true}
           useTailwind={true}
+          whatsapp={general?.whatsapp}
         />
       ))
     }

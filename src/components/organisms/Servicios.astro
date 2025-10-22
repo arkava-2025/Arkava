@@ -2,16 +2,88 @@
 import Container from '../molecules/Container.astro';
 import Section from '@/components/atoms/Section.astro';
 import Title from '@/components/atoms/Title.astro';
+
+const { data } = Astro.props;
+const { servicetitle, bgImage, services } = data;
+
+// Cargar todos los iconos .astro como componentes
+const iconModules = import.meta.glob('../../icons/*.astro', {
+  eager: true,
+}) as Record<string, { default: any }>;
+
+// Crear un mapa: "brush" => Componente (default export)
+const iconComponentMap: Record<string, any> = {};
+for (const path in iconModules) {
+  // extrae "brush" de "../../icons/brush.astro"
+  const nameMatch = path.match(/\/([^\/]+)\.astro$/);
+  if (nameMatch)
+    iconComponentMap[nameMatch[1].toLowerCase()] = iconModules[path].default;
+}
+
+// helper: normalizar iconName recibido (quita espacios, todo lowercase)
+const normalize = (s?: string) =>
+  s ? s.trim().toLowerCase().replace(/\s+/g, '-') : '';
+
+// SVG de fallback (pequeño)
+const fallbackSvg = `<svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#F3F4F6"/><path d="M6 12h12" stroke="#374151" stroke-width="1.5" stroke-linecap="round"/></svg>`;
 ---
 
-<Section style="h-[60vh] bg-[#f8f8f8]">
-  <Container styles="flex flex-col items-center">
-    <Title title="Nuestros Servicios" style="w-full text-center" />
-    <p class="font-helvetica text-gray-800 w-full text-center">
+<Section style="h-auto relative overflow-hidden">
+  <!-- Capa de imagen de fondo -->
+  <div class="absolute inset-0 w-full h-full z-0">
+    <img src={bgImage.url} alt="" class="w-full h-full object-cover" />
+  </div>
+  <!-- Capa de filtro con color primary -->
+  <div class="absolute inset-0 bg-primary/95 z-10 mix-blend-multiply"></div>
+
+  <Container style="flex flex-col items-center relative z-20 text-white">
+    <Title title="Nuestros Servicios" style="w-full text-center text-white" />
+    <p class="font-helvetica w-full text-center my-10 md:w-[70%] m-auto">
       En Arkava, nos enorgullecemos de ofrecer servicios de calidad que cumplen
       con las expectativas de nuestros clientes. Nuestro compromiso con la
       excelencia nos lleva a brindar soluciones innovadoras y eficientes para
       satisfacer las necesidades de cada proyecto.
     </p>
+
+    <div class="grid gap-4 md:gap-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+      {
+        services.map((svc: any) => {
+          const key = normalize(svc.iconService);
+          const Icon = iconComponentMap[key];
+
+          return (
+            <article class="group relative flex items-center justify-center flex-col gap-4 md:gap-6 p-6 rounded-2xl bg-black/40 backdrop-blur-xs hover:bg-black/60 transition-all ring-1 ring-white/10 shadow-lg">
+              {Icon ? (
+                <Icon
+                  className="flex-none group-hover:scale-110 transition-all"
+                  aria-hidden="true"
+                  currentColor="#fff"
+                  height="64"
+                  width="64"
+                />
+              ) : (
+                <div
+                  class="w-12 h-12 flex-none"
+                  set:html={fallbackSvg}
+                  aria-hidden="true"
+                />
+              )}
+              <div>
+                <h3 class="text-xl text-white font-semibold">{svc.title}</h3>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <a
+      href="/servicios"
+      class="bg-tertiary hover:bg-tertiary/80 text-white font-semibold py-2.5 px-5 rounded-md shadow w-fit flex m-auto mt-4 lg:mt-8 lg:mx-0"
+    >
+      Conoce nuestros servicios
+    </a>
   </Container>
 </Section>
+
+<!-- //innerHTML={svg} -->

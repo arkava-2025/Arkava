@@ -1,0 +1,24 @@
+---
+const { width, height, currentColor, className } = Astro.props;
+---
+
+<svg viewBox="0 0 48 48" width={width} height={height} class={className}>
+  <!-- Square with white fill and colored stroke for visibility on white backgrounds -->
+  <rect
+    width="36"
+    height="36"
+    x="6"
+    y="6"
+    rx="3"
+    fill="white"
+    stroke={currentColor}
+    stroke-width="2"></rect>
+  <!-- Tile lines drawn with colored stroke and no fill -->
+  <path
+    d="M28 6L6 28m36-8L20 42M40 8L8 40m4-18l7 7m10-10l7 7"
+    fill="none"
+    stroke="#2E483E"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+</svg>

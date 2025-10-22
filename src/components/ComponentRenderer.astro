@@ -5,12 +5,14 @@ type RendererProps = {
   data: any[];
   animate?: boolean;
   useTailwind?: boolean;
+  whatsapp?: string;
 };
 
 const {
   data = [],
   animate = false,
   useTailwind = true,
+  whatsapp,
 } = Astro.props as RendererProps;
 
 const items = Array.isArray(data) ? data : data ? [data] : [];
@@ -27,6 +29,7 @@ const sections = items.map((item: any) => {
     sectionMeta,
     animate,
     useTailwind,
+    whatsapp,
     __typename: typename,
   };
 

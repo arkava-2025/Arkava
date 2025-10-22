@@ -18,7 +18,7 @@ function Faq({ data }: Props) {
   const items = data?.items ?? [];
 
   return (
-    <section className="py-12 bg-red-900">
+    <section className="py-12 bg-white">
       <div className="mx-auto max-w-3xl px-6">
         <h2 className="text-2xl md:text-3xl font-pp-sans">{title}</h2>
         <div className="mt-6 divide-y divide-gray-200">

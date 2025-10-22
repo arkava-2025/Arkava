@@ -33,6 +33,9 @@ const query = graphql(`
             servicetitle: title
             subtitle
             description
+            bgImage {
+              url
+            }
             services {
               title
               description { raw }
