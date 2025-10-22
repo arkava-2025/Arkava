@@ -1,5 +1,5 @@
 ---
-import { ImageCarousel } from '@/components/molecules/Carousel';
+import Carousel from '@/components/molecules/Carousel';
 
 const { data } = Astro.props;
 ---
@@ -7,7 +7,17 @@ const { data } = Astro.props;
 <section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
   {/* Capa del carrusel al 100% */}
   <div class="absolute inset-0">
-    <ImageCarousel images={data?.images} client:load />
+    <Carousel client:only="react">
+      {
+        data?.images.map((image: any) => (
+          <img
+            src={image.url}
+            alt={image.title}
+            class="h-full w-full object-cover"
+          />
+        ))
+      }
+    </Carousel>
   </div>
 
   {/* Overlay para mejorar contraste del texto (opcional) */}
