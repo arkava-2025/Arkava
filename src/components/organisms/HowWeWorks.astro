@@ -105,36 +105,56 @@ const steps = [
                 <span class="hidden sm:block mb-4 h-2">&nbsp;</span>
               )}
 
-              {/* Mobile Layout: Marker + Content side by side */}
-              <div class="sm:hidden flex items-start gap-4 w-full">
-                {/* Mobile Marker */}
-                <div class="relative flex-shrink-0">
-                  <button
-                    class="w-12 h-12 rounded-full border-2 border-[#E35205] flex items-center justify-center bg-transparent hover:bg-[#E35205]/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#E35205]/50"
-                    aria-describedby={`tip-${step.id}`}
-                    type="button"
-                  >
-                    <div class="w-3 h-3 rounded-full bg-[#E35205]" />
-                  </button>
+              {/* Mobile Layout: Accordion style */}
+              <div class="sm:hidden w-full">
+                <div class="flex items-start gap-4 w-full">
+                  {/* Mobile Marker */}
+                  <div class="relative flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full border-2 border-[#E35205] flex items-center justify-center bg-transparent">
+                      <div class="w-3 h-3 rounded-full bg-[#E35205]" />
+                    </div>
+                  </div>
+
+                  {/* Mobile Content - Clickable Header */}
+                  <div class="flex-1 pt-2">
+                    <button
+                      class="accordion-trigger w-full text-left text-sm font-medium text-[#AE9A91] focus:outline-none hover:text-[#E35205] transition-colors flex items-center justify-between"
+                      data-step-id={step.id}
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls={`accordion-content-${step.id}`}
+                    >
+                      <span>
+                        {step.number} {step.title}
+                      </span>
+                      <svg
+                        class="accordion-icon w-4 h-4 transition-transform duration-200"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
-                {/* Mobile Content */}
-                <div class="flex-1 pt-2 relative">
-                  <button
-                    class="text-left text-sm font-medium text-[#AE9A91] focus:outline-none hover:text-[#E35205] transition-colors"
-                    aria-describedby={`tip-${step.id}`}
-                    type="button"
-                  >
-                    {step.number} {step.title}
-                  </button>
-
-                  {/* Mobile Tooltip - appears below the title */}
-                  <div
-                    role="tooltip"
-                    id={`tip-${step.id}`}
-                    class="pointer-events-none absolute top-full left-0 mt-3 rounded bg-[#fff] px-3 py-2 text-xs text-gray-900 opacity-0 shadow-lg ring-1 ring-black/10 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 w-[250px] z-20"
-                  >
-                    {step.tooltip}
+                {/* Mobile Accordion Content */}
+                <div
+                  id={`accordion-content-${step.id}`}
+                  class="accordion-content ml-16 mt-3 overflow-hidden transition-all duration-300 ease-in-out"
+                  style="max-height: 0;"
+                  aria-hidden="true"
+                >
+                  <div class="pb-4">
+                    <div class="rounded bg-[#fff] px-4 py-3 text-sm text-gray-900 shadow-lg ring-1 ring-black/10">
+                      {step.tooltip}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -195,3 +215,61 @@ const steps = [
     </div>
   </Container>
 </Section>
+
+<script>
+  // Accordion functionality for mobile
+  document.addEventListener('DOMContentLoaded', function () {
+    const accordionTriggers = document.querySelectorAll('.accordion-trigger');
+
+    accordionTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', function (event) {
+        const target = event.currentTarget as HTMLElement;
+        if (!target) return;
+
+        const stepId = target.getAttribute('data-step-id');
+        const content = document.getElementById(
+          `accordion-content-${stepId}`,
+        ) as HTMLElement;
+        const icon = target.querySelector('.accordion-icon') as HTMLElement;
+        const isExpanded = target.getAttribute('aria-expanded') === 'true';
+
+        if (!content || !icon) return;
+
+        // Close all other accordions first
+        accordionTriggers.forEach((otherTrigger) => {
+          if (otherTrigger !== target) {
+            const otherStepId = otherTrigger.getAttribute('data-step-id');
+            const otherContent = document.getElementById(
+              `accordion-content-${otherStepId}`,
+            ) as HTMLElement;
+            const otherIcon = otherTrigger.querySelector(
+              '.accordion-icon',
+            ) as HTMLElement;
+
+            if (otherContent && otherIcon) {
+              otherTrigger.setAttribute('aria-expanded', 'false');
+              otherContent.setAttribute('aria-hidden', 'true');
+              otherContent.style.maxHeight = '0';
+              otherIcon.style.transform = 'rotate(0deg)';
+            }
+          }
+        });
+
+        // Toggle current accordion
+        if (isExpanded) {
+          // Close current
+          target.setAttribute('aria-expanded', 'false');
+          content.setAttribute('aria-hidden', 'true');
+          content.style.maxHeight = '0';
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          // Open current
+          target.setAttribute('aria-expanded', 'true');
+          content.setAttribute('aria-hidden', 'false');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+  });
+</script>
