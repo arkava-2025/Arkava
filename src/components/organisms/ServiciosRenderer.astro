@@ -1,0 +1,47 @@
+---
+import {
+  serviciosComponents,
+  isValidServicioId,
+} from '@/lib/utils/servicios/mapping';
+
+interface Props {
+  servicios: any[]; // Tipo flexible para manejar los datos del CMS
+}
+
+const { servicios } = Astro.props;
+
+// Filtrar y ordenar servicios válidos
+const validServicios = servicios
+  .filter((servicio) => servicio.ids && isValidServicioId(servicio.ids))
+  .sort((a, b) => {
+    // Mantener el orden del array original del CMS
+    return servicios.indexOf(a) - servicios.indexOf(b);
+  });
+---
+
+<!-- Renderizar cada servicio dinámicamente -->{
+  validServicios.map((servicio) => {
+    const Component =
+      serviciosComponents[servicio.ids as keyof typeof serviciosComponents];
+
+    if (!Component) {
+      console.warn(
+        `Componente no encontrado para el servicio: ${servicio.ids}`,
+      );
+      return null;
+    }
+
+    // Pasar todos los datos del servicio como props
+    return <Component {...servicio} />;
+  })
+}
+
+<!-- Mensaje de debug en desarrollo -->
+{
+  import.meta.env.DEV && (
+    <div class="hidden">
+      <p>Servicios renderizados: {validServicios.length}</p>
+      <p>IDs: {validServicios.map((s) => s.ids).join(', ')}</p>
+    </div>
+  )
+}

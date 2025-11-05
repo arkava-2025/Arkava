@@ -60,25 +60,31 @@ const steps = [
 
     <!-- Timeline container -->
     <div class="relative w-full">
-      <!-- Horizontal connector line (visible en >sm). Positioned at 50% to cross marker centers -->
+      <!-- Mobile: Vertical line on the left -->
       <div
-        class="block sm:block absolute left-0 right-0 top-1/2 transform -translate-y-1/2"
+        class="sm:hidden absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#AE9A91]/20 via-[#AE9A91]/40 to-[#AE9A91]/20"
+      >
+      </div>
+
+      <!-- Desktop: Horizontal line - positioned to align with desktop markers -->
+      <div
+        class="hidden sm:flex absolute left-0 right-0 items-center pointer-events-none"
+        style="top: 50%; transform: translateY(-50%);"
       >
         <div
-          class="mx-6 w-0.5 h-full sm:w-auto sm:h-0.5"
-          style="background: linear-gradient(90deg, rgba(174,154,145,0.15) 0%, rgba(174,154,145,0.15) 100%);"
+          class="mx-6 h-0.5 bg-gradient-to-r from-[#AE9A91]/20 via-[#AE9A91]/40 to-[#AE9A91]/20 w-full"
         >
         </div>
       </div>
 
-      <!-- Steps: on small screens stacked vertically, on sm+ horizontal and spaced -->
+      <!-- Steps: Mobile vertical timeline, Desktop horizontal -->
       <ul
-        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8 sm:gap-0 relative z-10"
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8 sm:gap-0 relative z-10 pl-0 sm:pl-0 sm:min-h-[200px]"
       >
         {
           steps.map((step) => (
             <li
-              class="sm:w-1/5 flex flex-col items-center h-full group"
+              class="sm:w-1/5 flex flex-col sm:items-center h-full group relative"
               id={`step-${step.id}`}
             >
               {/* Desktop title above (only when position === 'above') */}
@@ -96,11 +102,45 @@ const steps = [
 
               {/* Placeholder for spacing when title is below on desktop */}
               {step.position === 'below' && (
-                <span class="hidden sm:block mb-4 h-6">&nbsp;</span>
+                <span class="hidden sm:block mb-4 h-2">&nbsp;</span>
               )}
 
-              {/* Marker */}
-              <div class="relative">
+              {/* Mobile Layout: Marker + Content side by side */}
+              <div class="sm:hidden flex items-start gap-4 w-full">
+                {/* Mobile Marker */}
+                <div class="relative flex-shrink-0">
+                  <button
+                    class="w-12 h-12 rounded-full border-2 border-[#E35205] flex items-center justify-center bg-transparent hover:bg-[#E35205]/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#E35205]/50"
+                    aria-describedby={`tip-${step.id}`}
+                    type="button"
+                  >
+                    <div class="w-3 h-3 rounded-full bg-[#E35205]" />
+                  </button>
+                </div>
+
+                {/* Mobile Content */}
+                <div class="flex-1 pt-2 relative">
+                  <button
+                    class="text-left text-sm font-medium text-[#AE9A91] focus:outline-none hover:text-[#E35205] transition-colors"
+                    aria-describedby={`tip-${step.id}`}
+                    type="button"
+                  >
+                    {step.number} {step.title}
+                  </button>
+
+                  {/* Mobile Tooltip - appears below the title */}
+                  <div
+                    role="tooltip"
+                    id={`tip-${step.id}`}
+                    class="pointer-events-none absolute top-full left-0 mt-3 rounded bg-[#fff] px-3 py-2 text-xs text-gray-900 opacity-0 shadow-lg ring-1 ring-black/10 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 w-[250px] z-20"
+                  >
+                    {step.tooltip}
+                  </div>
+                </div>
+              </div>
+
+              {/* Desktop Marker (hidden on mobile) */}
+              <div class="hidden sm:block relative">
                 <button
                   class="w-12 h-12 rounded-full border-2 border-[#E35205] flex items-center justify-center bg-transparent hover:bg-[#E35205]/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#E35205]/50"
                   aria-describedby={`tip-${step.id}`}
@@ -109,27 +149,29 @@ const steps = [
                   <div class="w-3 h-3 rounded-full bg-[#E35205]" />
                 </button>
 
-                {/* Unified Tooltip */}
+                {/* Desktop Tooltip */}
                 <div
                   role="tooltip"
-                  id={`tip-${step.id}`}
+                  id={`tip-${step.id}-desktop`}
                   class={`pointer-events-none absolute left-1/2 -translate-x-1/2 rounded bg-[#fff] px-3 py-2 text-xs text-gray-900 opacity-0 shadow-lg ring-1 ring-black/10 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 w-[250px] z-20 ${step.position === 'above' ? 'top-full mt-2' : '-top-2 -translate-y-full'}`}
                 >
                   {step.tooltip}
                 </div>
               </div>
 
-              {/* Bottom title: mobile-only if position === 'above'; visible on all if 'below' */}
+              {/* Desktop Bottom title: only for desktop when position === 'below' */}
               <div
-                class={`relative inline-block mt-4 ${step.position === 'above' ? 'sm:hidden' : ''} ${step.position === 'below' ? 'sm:min-h-[1.5rem] sm:flex sm:items-center' : ''}`}
+                class={`hidden sm:block relative mt-0 ${step.position === 'below' ? 'sm:min-h-[1.5rem] sm:flex sm:items-center' : ''}`}
               >
-                <button
-                  class="text-sm font-medium text-[#AE9A91] focus:outline-none hover:text-[#E35205] transition-colors"
-                  aria-describedby={`tip-${step.id}`}
-                  type="button"
-                >
-                  {step.number} {step.title}
-                </button>
+                {step.position === 'below' && (
+                  <button
+                    class="text-sm font-medium text-[#AE9A91] focus:outline-none hover:text-[#E35205] transition-colors"
+                    aria-describedby={`tip-${step.id}-desktop`}
+                    type="button"
+                  >
+                    {step.number} {step.title}
+                  </button>
+                )}
               </div>
 
               {/* Bottom spacer to balance height on desktop when title is above */}

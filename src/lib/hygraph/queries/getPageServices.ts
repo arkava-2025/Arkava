@@ -18,6 +18,7 @@ const query = graphql(`
             content {
                 ... on Servicio {
                     title
+                    ids
                     resume
                     description {
                         raw

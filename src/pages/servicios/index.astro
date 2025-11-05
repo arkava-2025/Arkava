@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/molecules/Container.astro';
+import ServiciosRenderer from '@/components/organisms/ServiciosRenderer.astro';
+import getServiciosPage from '@/lib/hygraph/queries/getPageServices';
+import { isPreview } from '@/lib/utils/sections/index';
+import type { ServiciosPageQuery } from '@/gql/graphql';
+
+// Obtener datos de la página de servicios
+const { pageInternal }: ServiciosPageQuery = await getServiciosPage(
+  'servicios',
+  isPreview() ? 'DRAFT' : 'PUBLISHED',
+);
+
+const [serviciosData] = pageInternal;
+const { titlePage, metaTitle, metaDescripcion, description, content } =
+  serviciosData;
+
+// Procesar descripción del CMS
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
+---
+
+<BaseLayout title={'Servicios - Arkava'}>
+  <section class="py-20">
+    <Container>
+      <div class="relative z-10 text-center max-w-4xl mx-auto">
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 leading-tight"
+        >
+          {titlePage}
+        </h1>
+
+        <div
+          class="text-lg text-gray-600 leading-relaxed font-helvetica w-full mx-auto"
+        >
+          {descriptionText}
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <div
+            class="w-24 h-1 bg-gradient-to-r from-tertiary to-secondary rounded-full"
+          >
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Renderizado dinámico de servicios -->
+  <ServiciosRenderer servicios={content} />
+</BaseLayout>
