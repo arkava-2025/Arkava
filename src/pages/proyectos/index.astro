@@ -23,29 +23,36 @@ const {
   content,
 } = projectsData;
 
+const descriptionText = description?.raw?.children
+  ?.map((block: any) => block.children.map((child: any) => child.text))
+  
+
 ---
 
 <BaseLayout title={metaTitle || 'Proyectos - Arkava'} description={metaDescripcion}>
   <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-primary/5 via-white to-secondary/5 py-20 md:py-32">
-    <div class="absolute inset-0 opacity-40">
-      <div class="w-full h-full" style="background-image: url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><g fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;><g fill=&quot;%23000000&quot; fill-opacity=&quot;0.02&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot;/></g></g></svg>');"></div>
+  <section class="relative bg-gradient-to-br from-primary/5 via-white to-secondary/5 py-20 md:py-16">
+    <div class="absolute inset-0">
+      <!-- <div class="w-full h-full" style="background-image: url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><g fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;><g fill=&quot;%23000000&quot; fill-opacity=&quot;0.02&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot;/></g></g></svg>');"></div> -->
+      <div class="w-[5px] h-[98%] m-auto bg-primary absolute left-5 top-0 bottom-0" />
+      <div class="w-[5px] h-[92%] m-auto bg-primary absolute left-10 bottom-[1%]" />
+      <div class="w-[5px] h-[86%] m-auto bg-primary absolute left-15 bottom-[1%]" />
+
+      
     </div>
     
     <Container>
       <div class="relative z-10 text-center max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-primary mb-6 leading-tight">
           {titlePage}
         </h1>
-        
-        {description && (
-          <div class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            <p>{description.raw}</p>
+      
+          <div class="text-lg text-gray-600 leading-relaxed font-helvetica w-full mx-auto">
+            {descriptionText}
           </div>
-        )}
         
         <div class="mt-8 flex justify-center">
-          <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+          <div class="w-24 h-1 bg-gradient-to-r from-tertiary to-secondary rounded-full"></div>
         </div>
       </div>
     </Container>
@@ -53,90 +60,127 @@ const {
 
   <!-- Projects Grid Section -->
   {content && content.length > 0 && (
-    <section class="py-16 md:py-24 bg-gray-50/50">
+    <section class="py-16 md:py-18 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
+      <!-- Decorative Elements -->
+      <div class="absolute top-0 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      
       <Container>
-        <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Nuestros Proyectos
+        {/* <div class="text-center mb-20 relative z-10">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl mb-6 mx-auto">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            Nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Proyectos</span>
           </h2>
-          <p class="text-gray-600 max-w-2xl mx-auto">
-            Descubre algunos de nuestros trabajos más destacados y las soluciones innovadoras que hemos desarrollado para nuestros clientes.
+          <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Cada proyecto es una historia única de innovación y creatividad. Descubre cómo transformamos ideas en experiencias extraordinarias.
           </p>
-        </div>
+          <div class="flex items-center justify-center mt-8">
+            <div class="flex space-x-2">
+              <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <div class="w-2 h-2 bg-secondary rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+              <div class="w-2 h-2 bg-primary rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+            </div>
+          </div>
+        </div> */}
 
-        <!-- Projects Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <!-- Projects Masonry Grid -->
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 relative z-10 w-full">
           {content.map((project: any, index: number) => (
-            <article class={`group relative bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden ${
-              project.isFeatured ? 'md:col-span-2 lg:col-span-2' : ''
+            <article class={`group relative break-inside-avoid mb-8 ${
+              project.isFeatured ? 'lg:mb-12' : ''
             }`}>
-              <!-- Project Image -->
-              <div class="relative aspect-[4/3] overflow-hidden">
-                {project.coverImage?.url && (
-                  <img 
-                    src={project.coverImage.url} 
-                    alt={project.title}
-                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    loading={index < 6 ? "eager" : "lazy"}
-                  />
-                )}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                <!-- Featured Badge -->
-                {project.isFeatured && (
-                  <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                    Destacado
-                  </div>
-                )}
-                
-                <!-- Hover Overlay -->
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <a 
-                    href={`/proyectos/${project.slug}`}
-                    class="bg-white/90 backdrop-blur-sm text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-white transition-colors duration-200 transform hover:scale-105"
-                  >
-                    Ver Proyecto
-                  </a>
-                </div>
-              </div>
-
-              <!-- Project Content -->
-              <div class="p-6 md:p-8">
-                <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
-                  <a href={`/proyectos/${project.slug}`} class="hover:underline">
-                    {project.title}
-                  </a>
-                </h3>
-                
-                {project.description && (
-                  <p class="text-gray-600 leading-relaxed mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-                )}
-                
-                <div class="flex items-center justify-between">
-                  <a 
-                    href={`/proyectos/${project.slug}`}
-                    class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors duration-200"
-                  >
-                    Leer más
-                    <svg class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
-                  
-                  {project.gallery && project.gallery.length > 0 && (
-                    <span class="text-sm text-gray-500 flex items-center">
-                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                      </svg>
-                      {project.gallery.length + 1} fotos
-                    </span>
+              <div class="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-700 overflow-hidden border border-gray-100/50 hover:border-primary/20 transform hover:-translate-y-2">
+                <!-- Project Image -->
+                <div class="relative overflow-hidden">
+                  {project.coverImage?.url && (
+                    <img 
+                      src={project.coverImage.url} 
+                      alt={project.title}
+                      class={`w-full object-cover group-hover:scale-105 transition-transform duration-1000 ${
+                        project.isFeatured ? 'h-80' : index % 3 === 0 ? 'h-64' : index % 3 === 1 ? 'h-72' : 'h-56'
+                      }`}
+                      loading={index < 6 ? "eager" : "lazy"}
+                    />
                   )}
+                  
+                  <!-- Gradient Overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <!-- Featured Badge -->
+                  {project.isFeatured && (
+                    <div class="absolute top-4 left-4">
+                      <div class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg backdrop-blur-sm">
+                        ⭐ Destacado
+                      </div>
+                    </div>
+                  )}
+                  
+                  <!-- Floating Action Button -->
+                  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    <a 
+                      href={`/proyectos/${project.slug}`}
+                      class="flex items-center justify-center w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-300"
+                    >
+                      <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Project Content -->
+                <div class="p-6 md:p-8">
+                  <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300 flex-1 pr-4">
+                      <a href={`/proyectos/${project.slug}`} class="hover:underline decoration-2 underline-offset-4">
+                        {project.title}
+                      </a>
+                    </h3>
+                    {project.gallery && project.gallery.length > 0 && (
+                      <div class="flex items-center space-x-1 text-gray-400 text-sm bg-gray-50 px-3 py-1 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>{project.gallery.length + 1}</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {project.resume && (
+                    <p class="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                      {project.resume}
+                    </p>
+                  )}
+                  
+                  <!-- Action Button -->
+                  <div class="flex items-center justify-between">
+                    <a 
+                      href={`/proyectos/${project.slug}`}
+                      class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-primary hover:to-secondary text-primary hover:text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg group/btn"
+                    >
+                      <span>Explorar proyecto</span>
+                      <svg class="ml-2 w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               </div>
             </article>
           ))}
+        </div>
+
+        <!-- Bottom Decoration -->
+        <div class="text-center mt-16 relative z-10">
+          <div class="flex items-center space-x-2 text-gray-400">
+            <div class="w-8 h-px bg-gradient-to-r from-transparent to-gray-300"></div>
+            <span class="text-sm font-medium">Más proyectos próximamente</span>
+            <div class="w-8 h-px bg-gradient-to-l from-transparent to-gray-300"></div>
+          </div>
         </div>
       </Container>
     </section>
@@ -154,7 +198,7 @@ const {
         </p>
         <a 
           href={`https://wa.me/57${general?.whatsapp}?text=Bienvenido%20a%20Arkava%20Quiero%20iniciar%20un%20proyecto`}
-          class="inline-block bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
+          class="inline-flex bg-tertiary text-white px-8 py-4 rounded-full font-semibold hover:bg-tertiary/90 transition-all duration-300 transform hover:scale-105"
         >
           Deseo agendar visita
         </a>

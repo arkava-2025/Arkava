@@ -1,12 +1,15 @@
 ---
+import { markdownToHtml } from '@/lib/utils/markdown';
 import getProject from '@/lib/hygraph/queries/getProject';
 import getAllProjects from '@/lib/hygraph/queries/getAllProjects';
 import { isPreview } from '@/lib/utils/sections/index';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/molecules/Container.astro';
-import Title from '@/components/atoms/Title.astro';
 import ProjectGallery from '@/components/organisms/ProjectGallery';
 import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
+import ClientIcon from '@/icons/client.astro';
+import LocationIcon from '@/icons/location.astro';
+import ServicesIcon from '@/icons/services.astro';
 
 const general = await getGeneralPage();
 
@@ -41,7 +44,23 @@ if (!relatedProject) {
   throw new Error('Datos del proyecto relacionado no encontrados.');
 }
 
-const { title, description, coverImage, gallery } = relatedProject;
+const {
+  title,
+  description,
+  coverImage,
+  gallery,
+  ubicacion,
+  cliente,
+  servicios,
+} = relatedProject;
+
+const infoProject = [
+  { label: 'Ubicación', value: ubicacion, Icon: LocationIcon },
+  { label: 'Cliente', value: cliente, Icon: ClientIcon },
+  { label: 'Servicios Ejecutados', value: servicios, Icon: ServicesIcon },
+];
+
+const htmlDescription = markdownToHtml(description || '');
 
 const galleryImageUrls =
   gallery?.map((image: { url: string }) => image.url).filter(Boolean) || [];
@@ -70,10 +89,11 @@ const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
         <div class="text-center text-white">
           <h1 class="text-4xl md:text-6xl font-bold mb-4">{title}</h1>
           {
-            description && (
-              <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto leading-relaxed">
-                {description}
-              </p>
+            htmlDescription && (
+              <div
+                class="prose text-sm sm:text-lg mt-12 font-helvetica"
+                set:html={htmlDescription}
+              />
             )
           }
         </div>
@@ -81,12 +101,45 @@ const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
     </div>
   </section>
 
+  <!-- Project Details Section -->
+  {
+    (ubicacion || cliente || servicios) && (
+      <section class="py-12 bg-white border-b border-gray-100">
+        <Container>
+          <div class="max-w-4xl mx-auto">
+            <div
+              class={`grid grid-cols-1 ${!cliente ? 'sm:grid-cols-2' : 'sm:grid-cols-3'} gap-8 justify-center`}
+            >
+              {infoProject
+                .filter((card) => card.value) // solo renderiza si hay valor
+                .map((card) => (
+                  <div class="text-center group">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <card.Icon />
+                    </div>
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                      {card.label}
+                    </h3>
+                    <p
+                      class={`text-base font-medium text-gray-900 ${servicios && 'w-[80%] mx-auto'}`}
+                    >
+                      {card.value}
+                    </p>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+    )
+  }
+
   <!-- Gallery Section -->
   {
     combinedImageUrls.length > 0 && (
       <section class="py-16 bg-gray-50">
         <Container>
-          <div class="text-center mb-12">
+          <div class="text-center mb-12 w-full">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Galería del Proyecto
             </h2>

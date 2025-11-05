@@ -12,6 +12,9 @@ const query = graphql(`
         id
         title
         description
+        ubicacion
+        cliente
+        servicios
         coverImage {
           url
         }

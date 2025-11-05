@@ -21,7 +21,7 @@ const query = graphql(`
                 slug
                 seoTitle
                 seoDescription
-                description
+                resume
                 coverImage {
                     url
                 }
