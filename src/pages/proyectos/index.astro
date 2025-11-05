@@ -1,7 +1,164 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/molecules/Container.astro';
+import getProyectosPage from '@/lib/hygraph/queries/getPageProjects';
+import { isPreview } from '@/lib/utils/sections/index';
+import type { ProyectosPageQuery } from '@/gql/graphql';
+import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
+
+const general = await getGeneralPage();
+
+const { pageInternal }: ProyectosPageQuery = await getProyectosPage(
+  'proyectos',
+  isPreview() ? 'DRAFT' : 'PUBLISHED',
+);
+
+const [projectsData] = pageInternal;
+const {
+  titlePage,
+  metaTitle,
+  metaDescripcion,
+  backgroundPage,
+  description,
+  content,
+} = projectsData;
+
 ---
 
-<BaseLayout title={'Proyectos - Arkava'}>
-  <section>Proyectos</section>
+<BaseLayout title={metaTitle || 'Proyectos - Arkava'} description={metaDescripcion}>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-primary/5 via-white to-secondary/5 py-20 md:py-32">
+    <div class="absolute inset-0 opacity-40">
+      <div class="w-full h-full" style="background-image: url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><g fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;><g fill=&quot;%23000000&quot; fill-opacity=&quot;0.02&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot;/></g></g></svg>');"></div>
+    </div>
+    
+    <Container>
+      <div class="relative z-10 text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+          {titlePage}
+        </h1>
+        
+        {description && (
+          <div class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+            <p>{description.raw}</p>
+          </div>
+        )}
+        
+        <div class="mt-8 flex justify-center">
+          <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Projects Grid Section -->
+  {content && content.length > 0 && (
+    <section class="py-16 md:py-24 bg-gray-50/50">
+      <Container>
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Nuestros Proyectos
+          </h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">
+            Descubre algunos de nuestros trabajos más destacados y las soluciones innovadoras que hemos desarrollado para nuestros clientes.
+          </p>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          {content.map((project: any, index: number) => (
+            <article class={`group relative bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden ${
+              project.isFeatured ? 'md:col-span-2 lg:col-span-2' : ''
+            }`}>
+              <!-- Project Image -->
+              <div class="relative aspect-[4/3] overflow-hidden">
+                {project.coverImage?.url && (
+                  <img 
+                    src={project.coverImage.url} 
+                    alt={project.title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading={index < 6 ? "eager" : "lazy"}
+                  />
+                )}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <!-- Featured Badge -->
+                {project.isFeatured && (
+                  <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                    Destacado
+                  </div>
+                )}
+                
+                <!-- Hover Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <a 
+                    href={`/proyectos/${project.slug}`}
+                    class="bg-white/90 backdrop-blur-sm text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-white transition-colors duration-200 transform hover:scale-105"
+                  >
+                    Ver Proyecto
+                  </a>
+                </div>
+              </div>
+
+              <!-- Project Content -->
+              <div class="p-6 md:p-8">
+                <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
+                  <a href={`/proyectos/${project.slug}`} class="hover:underline">
+                    {project.title}
+                  </a>
+                </h3>
+                
+                {project.description && (
+                  <p class="text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+                )}
+                
+                <div class="flex items-center justify-between">
+                  <a 
+                    href={`/proyectos/${project.slug}`}
+                    class="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors duration-200"
+                  >
+                    Leer más
+                    <svg class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                  
+                  {project.gallery && project.gallery.length > 0 && (
+                    <span class="text-sm text-gray-500 flex items-center">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                      {project.gallery.length + 1} fotos
+                    </span>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+  )}
+
+  <!-- Call to Action Section -->
+  <section class="py-16 md:py-20 bg-gradient-to-r from-primary to-secondary">
+    <Container style="justify-center">
+      <div class="text-center text-white">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          ¿Tienes un proyecto en mente?
+        </h2>
+        <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+          Trabajemos juntos para convertir tu idea en realidad. Contáctanos y comencemos a crear algo extraordinario.
+        </p>
+        <a 
+          href={`https://wa.me/57${general?.whatsapp}?text=Bienvenido%20a%20Arkava%20Quiero%20iniciar%20un%20proyecto`}
+          class="inline-block bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
+        >
+          Deseo agendar visita
+        </a>
+      </div>
+    </Container>
+  </section>
 </BaseLayout>

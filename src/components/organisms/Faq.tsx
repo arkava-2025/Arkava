@@ -1,4 +1,3 @@
-import React from 'react';
 
 type FaqItem = {
   question: string;
@@ -14,7 +13,7 @@ type Props = {
 };
 
 function Faq({ data }: Props) {
-  const title = data?.title ?? 'Preguntas frecuentes sdad';
+  const title = data?.title ?? 'Preguntas frecuentes';
   const items = data?.items ?? [];
 
   return (

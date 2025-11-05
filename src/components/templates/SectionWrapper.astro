@@ -1,6 +1,6 @@
 ---
 import Faq from '@/components/organisms/Faq';
-import Test from '@/components/organisms/Test.jsx';
+import Alianzas from '@/components/organisms/Alianzas.jsx';
 import NoComponentFile from '@/components/NoComponentFile.astro';
 
 const { __typename, ...rest } = Astro.props;
@@ -9,7 +9,7 @@ const typeKey = (
 ).toLowerCase();
 ---
 
-{typeKey === 'test' && <Test {...rest} client:load />}
+{typeKey === 'alianzas' && <Alianzas {...rest} client:load />}
 {typeKey === 'faq' && <Faq {...rest} client:load />}
 
-{typeKey !== 'test' && typeKey !== 'faq' && <NoComponentFile {...rest} />}
+{typeKey !== 'alianzas' && typeKey !== 'faq' && <NoComponentFile {...rest} />}

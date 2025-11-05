@@ -1,11 +1,179 @@
 ---
+import getProject from '@/lib/hygraph/queries/getProject';
+import getAllProjects from '@/lib/hygraph/queries/getAllProjects';
+import { isPreview } from '@/lib/utils/sections/index';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/molecules/Container.astro';
+import Title from '@/components/atoms/Title.astro';
+import ProjectGallery from '@/components/organisms/ProjectGallery';
+import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
+
+const general = await getGeneralPage();
+
+// Exporta getStaticPaths - REQUERIDO para rutas dinámicas
 export async function getStaticPaths() {
-  return [
-    { params: { slug: 'proyecto-1' } },
-    { params: { slug: 'proyecto-2' } },
-  ];
+  const projects = await getAllProjects();
+
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
 }
+
 const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error('El slug del proyecto no está definido.');
+}
+
+// Llamar al query para obtener los detalles del proyecto
+const { singleProjectPage } = await getProject(
+  slug,
+  isPreview() ? 'DRAFT' : 'PUBLISHED',
+);
+
+if (!singleProjectPage) {
+  throw new Error('Proyecto no encontrado.');
+}
+
+const { project, relatedProject } = singleProjectPage;
+
+if (!relatedProject) {
+  throw new Error('Datos del proyecto relacionado no encontrados.');
+}
+
+const { title, description, coverImage, gallery } = relatedProject;
+
+const galleryImageUrls =
+  gallery?.map((image: { url: string }) => image.url).filter(Boolean) || [];
+const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
+  (url): url is string => Boolean(url),
+);
 ---
 
-<div>{slug}</div>
+<BaseLayout title={title}>
+  <!-- Hero Section -->
+  <section class="relative h-[60vh] min-h-[400px] overflow-hidden">
+    {
+      coverImage?.url && (
+        <div class="absolute inset-0">
+          <img
+            src={coverImage.url}
+            alt={title}
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-black/40" />
+        </div>
+      )
+    }
+    <div class="relative z-10 h-full flex items-center justify-center">
+      <Container>
+        <div class="text-center text-white">
+          <h1 class="text-4xl md:text-6xl font-bold mb-4">{title}</h1>
+          {
+            description && (
+              <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto leading-relaxed">
+                {description}
+              </p>
+            )
+          }
+        </div>
+      </Container>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  {
+    combinedImageUrls.length > 0 && (
+      <section class="py-16 bg-gray-50">
+        <Container>
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Galería del Proyecto
+            </h2>
+            <div class="w-24 h-1 bg-primary mx-auto" />
+          </div>
+
+          <ProjectGallery
+            images={combinedImageUrls}
+            title={title}
+            client:load
+          />
+        </Container>
+      </section>
+    )
+  }
+
+  <!-- Project Details Section -->
+  <!-- <section class="py-16">
+    <Container>
+      <div class="max-w-4xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              Detalles del Proyecto
+            </h3>
+            <div class="space-y-4 text-gray-600">
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-primary rounded-full"></div>
+                <span class="font-medium">Proyecto completado con éxito</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-primary rounded-full"></div>
+                <span class="font-medium">Diseño moderno y funcional</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-primary rounded-full"></div>
+                <span class="font-medium"
+                  >Optimizado para todos los dispositivos</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div
+              class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur"
+            >
+            </div>
+            <div class="relative bg-white p-8 rounded-2xl shadow-xl">
+              <h4 class="text-xl font-bold text-gray-900 mb-4">
+                ¿Interesado en un proyecto similar?
+              </h4>
+              <p class="text-gray-600 mb-6">
+                Contáctanos para discutir tu próximo proyecto y cómo podemos
+                ayudarte a alcanzar tus objetivos.
+              </p>
+              <button
+                class="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300"
+              >
+                Contactar Ahora
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section> -->
+
+  <!-- Call to Action Section -->
+  <section
+    class="py-16 md:py-20 bg-gradient-to-r from-primary to-secondary w-full"
+  >
+    <Container style="justify-center">
+      <div class="text-center text-white">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          ¿Tienes un proyecto en mente?
+        </h2>
+        <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+          Trabajemos juntos para convertir tu idea en realidad. Contáctanos y
+          comencemos a crear algo extraordinario.
+        </p>
+        <a
+          href={`https://wa.me/57${general?.whatsapp}?text=Bienvenido%20a%20Arkava%20Quiero%20iniciar%20un%20proyecto`}
+          class="inline-block bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
+        >
+          ¡Iniciemos tu proyecto!
+        </a>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

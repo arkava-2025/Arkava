@@ -13,7 +13,7 @@ export const sectionOrder = [
   'HowWeWorks',
   'ProyectosHome',
   'Faq',
-  'Test',
+  'Alianzas',
 ];
 
 type Mapping = { [name: string]: any };
@@ -25,7 +25,7 @@ export const sectionMapping: Mapping = {
   HowWeWorks,
   ProyectosHome,
   Faq: SectionWrapper,
-  Test: SectionWrapper,
+  Alianzas: SectionWrapper,
 };
 
 export function getComponentForName(name: string) {
