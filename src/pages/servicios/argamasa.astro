@@ -3,6 +3,9 @@ import Section from '@/components/atoms/Section.astro';
 
 const { title, description, imageService, iconService } = Astro.props;
 
+const src_image_one = imageService?.[0]?.url || '';
+const src_image_two = imageService?.[1]?.url || '';
+
 const descriptionText = description?.raw?.children?.map((block: any) =>
   block.children.map((child: any) => child.text),
 );
@@ -37,7 +40,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             class="w-full md:w-4/5 lg:w-10/12 xl:w-8/12 transform relative top-0 md:-top-12 lg:top-34 2xl:top-20"
           >
             <img
-              src={imageService[1].url}
+              src={src_image_two}
               alt="Argamasa aplicación"
               class="img-frame w-full h-[420px] lg:h-[580px] object-cover"
             />
@@ -49,7 +52,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
           class="absolute left-4 md:left-0 lg:-left-10 bottom-0 md:bottom-8 lg:bottom-14 w-64 md:w-84 lg:w-90 transform -translate-y-6 md:-translate-y-10 lg:translate-y-40 2xl:translate-y-26"
         >
           <img
-            src={imageService[0].url}
+            src={src_image_one}
             alt="Revoque"
             class="w-full h-auto object-cover grayscale filter img-frame border-2 border-white/10"
           />
