@@ -6,6 +6,13 @@ const { title, description, imageService, iconService } = Astro.props;
 const descriptionText = description?.raw?.children?.map((block: any) =>
   block.children.map((child: any) => child.text),
 );
+
+const getImageUrl = (index: number) => {
+  if (imageService && Array.isArray(imageService) && imageService.length > index) {
+    return imageService[index]?.url || '';
+  }
+  return '';
+};
 ---
 
 <Section style="h-auto md:h-[90vh] bg-primary">
@@ -49,7 +56,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             class="absolute left-1/2 top-0 -translate-x-1/2 md:left-[18%] md:-translate-x-0 w-[70%] md:w-[70%] h-full rounded-sm shadow-xl overflow-hidden bg-gray-100"
           >
             <img
-              src={imageService[1].url}
+              src={getImageUrl(1)}
               alt="muro central"
               class="w-full h-full object-cover"
             />
@@ -60,7 +67,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             class="absolute left-0 bottom-0 w-[42%] md:w-[40%] h-[180px] md:h-[220px] lg:h-[300px] -translate-y-6 md:-translate-y-10 shadow-lg overflow-hidden rounded-sm bg-gray-50"
           >
             <img
-              src={imageService[2].url}
+              src={getImageUrl(2)}
               alt="muro lateral"
               class="w-full h-full object-cover"
             />
@@ -71,7 +78,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             class="absolute right-0 md:-right-8 bottom-[-10%] md:bottom-6 w-[55%] md:w-[55%] h-[220px] md:h-[240px] lg:h-[300px] shadow-2xl overflow-hidden rounded-sm bg-gray-50 border border-white/5"
           >
             <img
-              src={imageService[0].url}
+              src={getImageUrl(0)}
               alt="estructura"
               class="w-full h-full object-cover"
             />

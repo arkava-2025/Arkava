@@ -1,7 +1,7 @@
 ---
 import Section from '@/components/atoms/Section.astro';
 
-const { title, description, imageService, iconService } = Astro.props;
+const { title, description, imageService = [], iconService } = Astro.props;
 
 const descriptionText = description?.raw?.children?.map((block: any) =>
   block.children.map((child: any) => child.text),
@@ -49,12 +49,12 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
         class="absolute top-0 right-0 w-[80%] md:w-[75%] h-[260px] md:h-[300px] lg:h-[420px] overflow-hidden shadow-xl flex gap-2"
       >
         <img
-          src={imageService[0].url}
+          src={imageService?.[0]?.url}
           alt="textura decorativa"
           class="w-[50%] h-full object-cover"
         />
         <img
-          src={imageService[3].url}
+          src={imageService?.[3]?.url}
           alt="textura decorativa"
           class="w-[50%] h-full object-cover"
         />
@@ -65,7 +65,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
         class="absolute top-44 md:top-48 left-[10%] w-[65%] md:w-[45%] h-[260px] lg:h-[340px] xl:h-[400px] overflow-hidden shadow-xl"
       >
         <img
-          src={imageService[2].url}
+          src={imageService?.[2]?.url}
           alt="textura decorativa 2"
           class="w-full h-full object-cover"
         />
@@ -76,7 +76,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
         class="absolute bottom-0 xl:-bottom-16 left-0 w-[60%] md:w-[40%] h-[250px] lg:h-[350px] xl:h-[400px] overflow-hidden shadow-xl"
       >
         <img
-          src={imageService[1].url}
+          src={imageService?.[1]?.url}
           alt="muro tipo mármol"
           class="w-full h-full object-cover"
         />

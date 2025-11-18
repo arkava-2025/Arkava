@@ -4,7 +4,7 @@ import Section from '@/components/atoms/Section.astro';
 const { title, description, imageService, iconService } = Astro.props;
 
 const descriptionText = description?.raw?.children?.map((block: any) =>
-  block.children.map((child: any) => child.text),
+  block.children?.map((child: any) => child.text),
 );
 ---
 
@@ -16,7 +16,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
     <!-- IMAGEN PRINCIPAL GRANDE IZQUIERDA -->
     <div class="lg:col-span-5 w-full h-auto lg:h-full flex">
       <img
-        src={imageService[0].url}
+        src={imageService && imageService[0]?.url}
         alt="Pasillo con estuco"
         class="w-full h-[380px] md:h-[520px] lg:h-full object-cover shadow-lg"
       />
@@ -43,7 +43,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <div class="grid-cols-1 gap-6 lg:h-1/2 hidden lg:flex">
         <!-- Imagen superior -->
         <img
-          src={imageService[1].url}
+          src={imageService && imageService[1]?.url}
           alt="Estuco pared"
           class="w-full h-[260px] md:h-[420px] lg:h-full object-cover flex"
         />

@@ -34,7 +34,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <!-- BOTTOM LEFT IMAGE (horizontal) -->
       <div class="w-full h-[360px] md:h-[full] overflow-hidden mt-6">
         <img
-          src={imageService[1].url}
+          src={imageService?.[1]?.url}
           alt="Enchape piso madera"
           class="w-full h-full object-cover"
         />
@@ -46,7 +46,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <!-- TOP LARGE IMAGE -->
       <div class="w-full h-[360px] md:h-full overflow-hidden">
         <img
-          src={imageService[0].url}
+          src={imageService?.[0]?.url}
           alt="Enchape ejemplo principal"
           class="w-full h-full object-cover"
         />
