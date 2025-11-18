@@ -1,5 +1,4 @@
 ---
-import Faq from '@/components/organisms/Faq';
 import Alianzas from '@/components/organisms/Alianzas.jsx';
 import NoComponentFile from '@/components/NoComponentFile.astro';
 
@@ -9,7 +8,6 @@ const typeKey = (
 ).toLowerCase();
 ---
 
-{typeKey === 'alianzas' && <Alianzas {...rest} client:load />}
-{typeKey === 'faq' && <Faq {...rest} client:load />}
-
-{typeKey !== 'alianzas' && typeKey !== 'faq' && <NoComponentFile {...rest} />}
+<!-- {typeKey === 'alianzas' && <Alianzas {...rest} client:load />} -->{
+  typeKey !== 'alianzas' && <NoComponentFile {...rest} />
+}

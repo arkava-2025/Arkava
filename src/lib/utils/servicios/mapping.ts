@@ -10,7 +10,7 @@ import Argamasa from '@/pages/servicios/argamasa.astro';
 
 // Mapeo de IDs a componentes
 export const serviciosComponents = {
-    'argamasa': Argamasa,
+  'argamasa': Argamasa,
   'carpinteria': Carpinteria,
   'cielo-raso': CieloRaso,
   'enchape': Enchape,

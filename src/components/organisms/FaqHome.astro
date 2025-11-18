@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+
+const props = Astro.props as {
+  faqs?: Awaited<ReturnType<typeof getCollection>>;
+};
+const faqs = props.faqs ?? (await getCollection('faqs'));
+---
+
+<section class="mx-auto p-6" itemscope itemtype="https://schema.org/FAQPage">
+  <div
+    class="mx-auto flex flex-wrap gap-4 justify-between items-start md:px-4 py-4 2xl:px-0 md:py-8 max-w-[1290px]"
+  >
+    <div class="text-center w-full mb-8">
+      <h2
+        class="text-center font-bold text-3xl lg:text-4xl 2xl:text-5xl mt-6 mb-8"
+        itemprop="name"
+      >
+        Preguntas Frecuentes
+      </h2>
+      <p
+        class="text-base font-secondary text-primary/85 text-center font-normal w-[90%] mx-auto leading-relaxed mt-[20px] 2xl:mt-[40px]"
+        itemprop="description"
+      >
+        Descubre las respuestas a las dudas más comunes sobre nuestros servicios
+        de construcción, remodelación y acabados arquitectónicos. En Arkava te
+        orientamos en cada etapa para que tu proyecto avance con seguridad y
+        confianza.
+      </p>
+    </div>
+
+    <div
+      class="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden w-full"
+    >
+      {
+        faqs.map((faq: any) => (
+          <details
+            class="border-b border-gray-200 last:border-b-0 group"
+            itemscope
+            itemtype="https://schema.org/Question"
+            itemprop="mainEntity"
+          >
+            <summary class="w-full py-6 px-4 text-left hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:bg-gray-50 list-none cursor-pointer">
+              <div class="flex justify-between items-center">
+                <h3
+                  class="text-base lg:text-lg font-semibold transition-all pr-4 text-primary group-open:text-tertiary"
+                  itemprop="name"
+                >
+                  {faq.data.question}
+                </h3>
+                <div class="flex-shrink-0">
+                  <svg
+                    class="w-5 h-5 text-gray-600 transform transition-transform duration-200 group-open:rotate-180"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 9l6 6 6-6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </summary>
+
+            {/* Animated answer panel without JS using CSS grid trick */}
+            <div
+              class="overflow-hidden transition-all duration-500 ease-in-out grid grid-rows-[0fr] opacity-0 group-open:grid-rows-[1fr] group-open:opacity-100"
+              itemscope
+              itemtype="https://schema.org/Answer"
+              itemprop="acceptedAnswer"
+            >
+              <div class="px-4 pb-6 min-h-0 overflow-hidden">
+                <p
+                  class="text-gray-800 text-base leading-relaxed pt-4 font-helvetica font-[600]"
+                  itemprop="text"
+                >
+                  {faq.data.answer}
+                </p>
+              </div>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+
+    <!-- <div
+      class="hidden w-full md:w-[36%] lg:flex md:justify-end lg:justify-around self-start"
+    >
+      <img
+        class="h-full md:h-[280px] lg:h-[400px] 2xl:h-[480px] w-[50%] md:w-[160px] lg:w-[220px] 2xl:w-[240px] bg-cover bg-no-repeat bg-center object-cover relative 2xl:left-4"
+        src="https://3yr9uftxjxnhk36f.public.blob.vercel-storage.com/phones/comfortHome.gif"
+        alt="Portafolio proyectos diseño interiores"
+        width={100}
+        height={100}
+        loading="lazy"
+      />
+      <img
+        class="md:h-[280px] lg:h-[400px] 2xl:h-[480px] w-[50%] md:w-[160px] lg:w-[230px] bg-cover bg-no-repeat bg-center object-contain relative 2xl:left-4"
+        src="https://3yr9uftxjxnhk36f.public.blob.vercel-storage.com/phones/comfortHome.png"
+        alt="website comfort design medellín"
+        width={100}
+        height={100}
+        loading="lazy"
+      />
+    </div> -->
+
+    <div class="mt-8 text-center w-full">
+      <p class="text-gray-600 mb-4">¿No encontraste lo que buscabas?</p>
+      <a
+        href="/contacto"
+        aria-label="Pagina de Contacto"
+        class="bg-tertiary hover:bg-tertiary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg top-1 relative"
+      >
+        Contáctanos
+      </a>
+    </div>
+  </div>
+</section>

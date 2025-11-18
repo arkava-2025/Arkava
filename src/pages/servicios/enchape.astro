@@ -1,10 +1,56 @@
 ---
 import Section from '@/components/atoms/Section.astro';
-import Container from '@/components/molecules/Container.astro';
+
+const { title, description, imageService, iconService } = Astro.props;
+
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
 ---
 
-<Section style="h-[75vh] bg-[#C18778]">
-  <Container>
-    <h2>Enchape</h2>
-  </Container>
+<Section style="h-auto md:h-[90vh] bg-[#C18778] !py-0">
+  <div
+    class="container mx-auto flex flex-col px-6 py-8 lg:py-16 md:flex-row gap-6 lg:gap-10 items-start h-full"
+  >
+    <!-- LEFT COLUMN -->
+    <div class="flex flex-col justify-start w-full lg:w-[45%] h-full">
+      <!-- TEXT -->
+      <div class="h-[45%]">
+        <h2
+          class="text-white text-5xl md:text-6xl font-bold tracking-widest mb-8 uppercase"
+        >
+          {title}
+        </h2>
+
+        <div class="border-l-2 border-white/50 pl-5 mb-10">
+          <p
+            class="text-white text-base md:text-lg leading-relaxed font-helvetica xl:w-[75%]"
+          >
+            {descriptionText}
+          </p>
+        </div>
+      </div>
+
+      <!-- BOTTOM LEFT IMAGE (horizontal) -->
+      <div class="w-full h-[360px] md:h-[full] overflow-hidden mt-6">
+        <img
+          src={imageService[1].url}
+          alt="Enchape piso madera"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN IMAGES -->
+    <div class="w-full grid grid-cols-1 gap-6 md:w-[55%] h-full">
+      <!-- TOP LARGE IMAGE -->
+      <div class="w-full h-[360px] md:h-full overflow-hidden">
+        <img
+          src={imageService[0].url}
+          alt="Enchape ejemplo principal"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
 </Section>

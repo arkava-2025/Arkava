@@ -1,10 +1,60 @@
 ---
 import Section from '@/components/atoms/Section.astro';
-import Container from '@/components/molecules/Container.astro';
+
+const { title, description, imageService, iconService } = Astro.props;
+
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
 ---
 
-<Section style="h-[75vh] bg-[#C18778]">
-  <Container>
-    <h2>Argamasa</h2>
-  </Container>
+<Section style="h-auto md:h-[90vh] bg-terracota">
+  <div class="container mx-auto px-6 lg:px-12 py-0 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Columna izquierda: texto -->
+      <section class="col-span-5">
+        <h2
+          class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase"
+          style="letter-spacing: .65rem;"
+        >
+          {title}
+        </h2>
+
+        <div class="border-l-2 border-white/50 pl-5 mb-10">
+          <p
+            class="text-white text-base md:text-lg leading-relaxed font-helvetica"
+          >
+            {descriptionText}
+          </p>
+        </div>
+      </section>
+
+      <!-- Espacio para que las imágenes estén a la derecha -->
+      <section class="col-span-7 relative">
+        <!-- Imagen grande a la derecha - responsive -->
+        <div class="relative w-full flex justify-end">
+          <figure
+            class="w-full md:w-4/5 lg:w-10/12 xl:w-8/12 transform relative top-0 md:-top-12 lg:top-34 2xl:top-20"
+          >
+            <img
+              src={imageService[1].url}
+              alt="Argamasa aplicación"
+              class="img-frame w-full h-[420px] lg:h-[580px] object-cover"
+            />
+          </figure>
+        </div>
+
+        <!-- Imagen pequeña superpuesta (grayscale) -->
+        <div
+          class="absolute left-4 md:left-0 lg:-left-10 bottom-0 md:bottom-8 lg:bottom-14 w-64 md:w-84 lg:w-90 transform -translate-y-6 md:-translate-y-10 lg:translate-y-40 2xl:translate-y-26"
+        >
+          <img
+            src={imageService[0].url}
+            alt="Revoque"
+            class="w-full h-auto object-cover grayscale filter img-frame border-2 border-white/10"
+          />
+        </div>
+      </section>
+    </div>
+  </div>
 </Section>

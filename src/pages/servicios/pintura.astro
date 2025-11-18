@@ -1,10 +1,79 @@
 ---
 import Section from '@/components/atoms/Section.astro';
-import Container from '@/components/molecules/Container.astro';
+
+const { title, description, imageService, iconService } = Astro.props;
+
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
 ---
 
-<Section style="h-[75vh] bg-primary">
-  <Container>
-    <h2>Pintura</h2>
-  </Container>
+<Section style="h-auto lg:h-[90vh] bg-primary !p-0">
+  <!-- Contenedor principal: grid responsivo -->
+  <div class="relative z-10 container mx-auto px-6 py-6 lg:py-0 h-full">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-0 items-start h-full"
+    >
+      <!-- COLUMNA IZQUIERDA: Texto (fondo verde oscuro ocupando columna completa a la izquierda en desktop) -->
+      <div class="lg:col-span-4">
+        <div
+          class="text-white rounded-sm py-8 md:py-10 lg:pt-20 md:px-0 h-full flex flex-col justify-start"
+        >
+          <!-- Título grande con tracking amplio -->
+          <h2
+            class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6"
+          >
+            {title}
+          </h2>
+
+          <div class="flex gap-6">
+            <!-- Línea vertical decorativa -->
+            <span class="hidden md:block w-[2px] bg-white/60 rounded h-40 mt-1"
+            ></span>
+
+            <!-- Parrafo descriptivo -->
+            <p
+              class="text-sm md:text-base lg:text-lg text-white/90 leading-relaxed font-helvetica pr-4"
+            >
+              {descriptionText}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMNA CENTRAL: Imagen principal grande (ocupa el centro del layout) -->
+      <div class="lg:col-span-5 h-full">
+        <figure class="w-full md:h-full">
+          <img
+            src={imageService[0].url}
+            alt="Gran foto central - escalera / efecto artístico"
+            class="w-full h-[280px] md:h-[360px] lg:h-full object-cover rounded shadow-xl"
+          />
+        </figure>
+      </div>
+
+      <!-- COLUMNA DERECHA: Dos columnas de imágenes apiladas (derecha estrecha) -->
+      <div
+        class="lg:col-span-3 flex flex-col gap-6 md:gap-0 justify-between lg:h-full"
+      >
+        <!-- Contenedor superior: imagen pequeña (ajustada al borde derecho) -->
+        <div class="w-full h-[49.5%]">
+          <img
+            src={imageService[1].url}
+            alt="Edificio en obra - elevador y balcones"
+            class="w-full h-[220px] md:h-[360px] lg:h-full object-cover shadow-md"
+          />
+        </div>
+
+        <!-- Contenedor inferior: imagen mediana (apilada debajo) -->
+        <div class="w-full h-[49.5%]">
+          <img
+            src={imageService[2].url}
+            alt="Pintor aplicando pintura"
+            class="w-full h-[260px] md:h-[360px] lg:h-full object-cover shadow-md"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </Section>

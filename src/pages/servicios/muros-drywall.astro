@@ -1,10 +1,83 @@
 ---
 import Section from '@/components/atoms/Section.astro';
-import Container from '@/components/molecules/Container.astro';
+
+const { title, description, imageService, iconService } = Astro.props;
+
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
 ---
 
-<Section style="h-[75vh] bg-primary">
-  <Container>
-    <h2>Muros Drywall</h2>
-  </Container>
+<Section style="h-auto md:h-[90vh] bg-primary">
+  <div class="container mx-auto px-6 lg:px-12 py-0 relative z-10">
+    <!-- Decoración diagonal -->
+    <div
+      class="hidden md:block absolute -right-8 top-24 rotate-[330deg] opacity-30 w-40 h-40 bg-[#1d4a41]"
+      aria-hidden
+    >
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+      <!-- Texto -->
+      <aside class="md:col-span-4 flex flex-col justify-start">
+        <h2
+          class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase"
+        >
+          {title}
+        </h2>
+
+        <h2
+          class="font-bold text-base md:text-2xl tracking-widest uppercase text-white/90 mb-6"
+        >
+          EN DRYWALL Y SUPERBOARD
+        </h2>
+
+        <div class="border-l-2 border-white/30 pl-5 pr-3">
+          <p class="text-sm md:text-base leading-relaxed text-white/90">
+            {descriptionText}
+          </p>
+        </div>
+      </aside>
+
+      <!-- Imágenes principales -->
+      <div class="md:col-span-8 relative flex items-center justify-center">
+        <div
+          class="relative w-full h-[420px] md:h-[520px] lg:h-[620px] mx-auto"
+        >
+          <!-- Imagen central -->
+          <div
+            class="absolute left-1/2 top-0 -translate-x-1/2 md:left-[18%] md:-translate-x-0 w-[70%] md:w-[70%] h-full rounded-sm shadow-xl overflow-hidden bg-gray-100"
+          >
+            <img
+              src={imageService[1].url}
+              alt="muro central"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Imagen izquierda -->
+          <div
+            class="absolute left-0 bottom-0 w-[42%] md:w-[40%] h-[180px] md:h-[220px] lg:h-[300px] -translate-y-6 md:-translate-y-10 shadow-lg overflow-hidden rounded-sm bg-gray-50"
+          >
+            <img
+              src={imageService[2].url}
+              alt="muro lateral"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Imagen derecha -->
+          <div
+            class="absolute right-0 md:-right-8 bottom-[-10%] md:bottom-6 w-[55%] md:w-[55%] h-[220px] md:h-[240px] lg:h-[300px] shadow-2xl overflow-hidden rounded-sm bg-gray-50 border border-white/5"
+          >
+            <img
+              src={imageService[0].url}
+              alt="estructura"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </Section>

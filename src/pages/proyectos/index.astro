@@ -31,12 +31,12 @@ const descriptionText = description?.raw?.children
 
 <BaseLayout title={metaTitle || 'Proyectos - Arkava'} description={metaDescripcion}>
   <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-primary/5 via-white to-secondary/5 py-20 md:py-16">
+  <section class="relative bg-gradient-to-br from-primary/5 via-white to-secondary/5 py-10 md:py-16">
     <div class="absolute inset-0">
       <!-- <div class="w-full h-full" style="background-image: url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><g fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;><g fill=&quot;%23000000&quot; fill-opacity=&quot;0.02&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot;/></g></g></svg>');"></div> -->
-      <div class="w-[5px] h-[98%] m-auto bg-primary absolute left-5 top-0 bottom-0" />
-      <div class="w-[5px] h-[92%] m-auto bg-primary absolute left-10 bottom-[1%]" />
-      <div class="w-[5px] h-[86%] m-auto bg-primary absolute left-15 bottom-[1%]" />
+      <div class="hidden xl:flex w-[5px] h-[98%]  m-auto bg-primary absolute left-5  top-0 bottom-0" />
+      <div class="hidden xl:flex w-[5px] h-[92%]  m-auto bg-primary absolute left-10 bottom-[1%]" />
+      <div class="hidden xl:flex w-[5px] h-[86%]  m-auto bg-primary absolute left-15 bottom-[1%]" />
 
       
     </div>
@@ -160,7 +160,7 @@ const descriptionText = description?.raw?.children
                   <div class="flex items-center justify-between">
                     <a 
                       href={`/proyectos/${project.slug}`}
-                      class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-primary hover:to-secondary text-primary hover:text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg group/btn"
+                      class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-terracota hover:to-secondary text-primary hover:text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg group/btn"
                     >
                       <span>Explorar proyecto</span>
                       <svg class="ml-2 w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -24,6 +24,9 @@ const query = graphql(`
                         raw
                     }
                     iconService
+                    imageService {
+                        url
+                    }
                 }
             }
         }

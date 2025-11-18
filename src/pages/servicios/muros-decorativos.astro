@@ -1,10 +1,86 @@
 ---
 import Section from '@/components/atoms/Section.astro';
-import Container from '@/components/molecules/Container.astro';
+
+const { title, description, imageService, iconService } = Astro.props;
+
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
 ---
 
-<Section style="h-[75vh] bg-[#C18778]">
-  <Container>
-    <h2>Muros Decorativos</h2>
-  </Container>
+<Section style="h-auto md:h-[90vh] bg-terracota">
+  <div
+    class="container mx-auto px-6 lg:px-12 py-0 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-10"
+  >
+    <!-- ---- TEXTO ---- -->
+    <div class="md:col-span-4 flex flex-col justify-start">
+      <h2
+        class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans"
+      >
+        {title}
+      </h2>
+
+      <div class="border-l-2 border-white/40 pl-5 mb-6">
+        <p
+          class="text-white/90 leading-relaxed font-helvetica text-sm md:text-base"
+        >
+          {descriptionText}
+        </p>
+      </div>
+
+      <ul
+        class="space-y-1 text-white/90 font-bold text-sm md:text-base leading-relaxed"
+      >
+        <li>• Microcemento</li>
+        <li>• Venecianos</li>
+        <li>• Porcelanato líquido</li>
+        <li>• Corev</li>
+        <li>• Graniacril</li>
+        <li>• Esgrafiado</li>
+        <li>• Imitación de roca</li>
+        <li>• Texturas vintage</li>
+      </ul>
+    </div>
+
+    <!-- ---- CONTENEDOR DE IMÁGENES ---- -->
+    <div class="md:col-span-8 relative w-full h-[600px] md:h-[650px]">
+      <!-- Imagen fondo derecha -->
+      <div
+        class="absolute top-0 right-0 w-[80%] md:w-[75%] h-[260px] md:h-[300px] lg:h-[420px] overflow-hidden shadow-xl flex gap-2"
+      >
+        <img
+          src={imageService[0].url}
+          alt="textura decorativa"
+          class="w-[50%] h-full object-cover"
+        />
+        <img
+          src={imageService[3].url}
+          alt="textura decorativa"
+          class="w-[50%] h-full object-cover"
+        />
+      </div>
+
+      <!-- Imagen textura grande centro -->
+      <div
+        class="absolute top-44 md:top-48 left-[10%] w-[65%] md:w-[45%] h-[260px] lg:h-[340px] xl:h-[400px] overflow-hidden shadow-xl"
+      >
+        <img
+          src={imageService[2].url}
+          alt="textura decorativa 2"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Imagen inferior marmol -->
+      <div
+        class="absolute bottom-0 xl:-bottom-16 left-0 w-[60%] md:w-[40%] h-[250px] lg:h-[350px] xl:h-[400px] overflow-hidden shadow-xl"
+      >
+        <img
+          src={imageService[1].url}
+          alt="muro tipo mármol"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
 </Section>

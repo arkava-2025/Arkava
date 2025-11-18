@@ -1,10 +1,60 @@
 ---
 import Section from '@/components/atoms/Section.astro';
-import Container from '@/components/molecules/Container.astro';
+
+const { title, description, imageService, iconService } = Astro.props;
+
+const descriptionText = description?.raw?.children?.map((block: any) =>
+  block.children.map((child: any) => child.text),
+);
 ---
 
-<Section style="h-[75vh] bg-[#fff]">
-  <Container>
-    <h2>Cielo Raso</h2>
-  </Container>
+<Section style="h-auto md:h-[90vh] bg-white !py-0">
+  <div
+    class="container mx-auto flex flex-col items-center px-6 py-8 lg:py-0 md:flex-row gap-6 h-full"
+  >
+    <!-- LEFT: BIG IMAGE -->
+    <div
+      class="w-full md:w-[50%] h-full flex flex-col justify-between items-end"
+    >
+      <img
+        src={imageService[0].url}
+        alt="Cielo raso madera"
+        class="w-full h-[48.5%] object-cover"
+      />
+      <img
+        src={imageService[2].url}
+        alt="Instalación cielo raso"
+        class="w-full h-[48.5%] lg:w-[65%] flex justify-end object-cover"
+      />
+    </div>
+
+    <!-- RIGHT: TEXT -->
+    <div class="h-full w-full md:w-[50%] flex flex-col justify-between">
+      <div
+        class="h-[48.5%] w-full py-6 px-4 lg:px-12 lg:py-18 flex md:items-center flex-col justify-center"
+      >
+        <h2
+          class="text-5xl md:text-6xl font-bold uppercase tracking-[0.25em] text-gray-800 mb-6 font-pp-sans"
+        >
+          {title}
+        </h2>
+
+        <div class="border-l-2 border-gray-500/70 pl-5 mb-10">
+          <p
+            class="text-gray-700 text-base md:text-lg leading-relaxed font-helvetica"
+          >
+            {descriptionText}
+          </p>
+        </div>
+      </div>
+
+      <div class="w-full h-64 md:h-[48.5%] overflow-hidden hidden md:block">
+        <img
+          src={imageService[1].url}
+          alt="Drywall terminado"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
 </Section>
