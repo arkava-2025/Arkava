@@ -17,12 +17,12 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       class="w-full md:w-[50%] h-full flex flex-col justify-between items-end"
     >
       <img
-        src={imageService[0].url}
+        src={imageService?.[0]?.url}
         alt="Cielo raso madera"
         class="w-full h-[48.5%] object-cover"
       />
       <img
-        src={imageService[2].url}
+        src={imageService?.[2]?.url}
         alt="Instalación cielo raso"
         class="w-full h-[48.5%] lg:w-[65%] flex justify-end object-cover"
       />
@@ -50,7 +50,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
 
       <div class="w-full h-64 md:h-[48.5%] overflow-hidden hidden md:block">
         <img
-          src={imageService[1].url}
+          src={imageService?.[1]?.url}
           alt="Drywall terminado"
           class="w-full h-full object-cover"
         />
