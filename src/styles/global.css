@@ -198,3 +198,26 @@
 .keen-slider__slide > div:hover {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
+
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Efecto circular: escala según posición */
+.carousel-item {
+  --x: 0; /* será reemplazado con JS o CSS variable */
+  transform-origin: center;
+  transition: transform 0.2s linear;
+}
+
+/* Escala basada en una curva suave */
+.carousel-item {
+  transform: scale(calc(0.6 + (0.4 * (1 - var(--x)))));
+  opacity: calc(0.5 + (0.5 * (1 - var(--x))));
+}

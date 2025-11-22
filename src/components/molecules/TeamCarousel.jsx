@@ -1,111 +1,84 @@
-import React, { useRef, useEffect } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import { motion } from "framer-motion";
-import "keen-slider/keen-slider.min.css";
+import { useEffect, useState, useRef } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
 
-export default function CarouselFramer07({ items }) {
-  const raf = useRef(null);
-  const [sliderRef, sliderInstance] = useKeenSlider({
-    loop: true,
-    mode: "free-snap",
-    slides: { perView: "auto", spacing: 32 },
-    created(s) {
-      animate(s);
-    },
-    updated(s) {
-      animate(s);
-    },
-    slideChanged(s) {
-      animate(s);
-    },
-  });
+// Utilidad: mapea un valor desde un rango a otro
+function mapRange(value, inMin, inMax, outMin, outMax) {
+  return outMin + ((value - inMin) * (outMax - outMin)) / (inMax - inMin);
+}
 
-  function animate(s) {
-    cancelAnimationFrame(raf.current);
-    const slides = s.slides;
-    const container = s.container;
-    const center = container.clientWidth / 2;
+export default function TeamCarousel({ images }) {
+  const containerRef = useRef(null);
+  const [offset, setOffset] = useState(0); // 0..1
+  const [radii, setRadii] = useState({ rx: 420, ry: 40, rz: 140 });
 
-    function frame() {
-      slides.forEach((slide) => {
-        if (!slide || !slide.node) return;
-
-        const el = slide.node;
-        const rect = el.getBoundingClientRect();
-        const slideCenter = rect.left + rect.width / 2;
-        const dist = (slideCenter - center) / center;
-        const clamp = Math.max(-1, Math.min(1, dist));
-
-        // Valores calibrados: centro MUY pequeño, lados más grandes
-        const abs = Math.abs(clamp);
-        // centro ~0.6, extremos ~1.2
-        const scale = 0.6 + abs * 0.6;
-        // mantiene buena visibilidad en todos los slides
-        const opacity = 0.7 + abs * 0.3;
-        const translateX = clamp * -10; // ligera corrección horizontal
-        const rotateY = clamp * 20; // rotación en eje Y para efecto "curvo"
-
-        el.style.transform = `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`;
-        el.style.opacity = opacity;
-      });
-      raf.current = requestAnimationFrame(frame);
+  // Actualiza radios según el ancho del contenedor
+  useEffect(() => {
+    function updateRadii() {
+      const w = containerRef.current?.clientWidth || 800;
+      setRadii({ rx: Math.max(280, w * 0.38), ry: 40, rz: 140 });
     }
-
-    frame();
-  }
-
-  useEffect(() => {
-    const slider = sliderInstance && sliderInstance.current;
-
-    if (!slider || typeof slider.next !== "function") return;
-
-    const interval = setInterval(() => {
-      slider.next();
-    }, 2500);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [sliderInstance]);
-
-  useEffect(() => {
-    return () => cancelAnimationFrame(raf.current);
+    updateRadii();
+    window.addEventListener("resize", updateRadii);
+    return () => window.removeEventListener("resize", updateRadii);
   }, []);
 
+  // Movimiento continuo (usar delta para velocidad constante)
+  useAnimationFrame((t, delta) => {
+    const speed = 0.00006; // fracción por ms (ajusta para más rápido/lento)
+    setOffset(prev => (prev + speed * delta) % 1);
+  });
+
+  const N = images.length;
 
   return (
-    <div className="relative py-12">
-      {/* Gradientes laterales para simular el fade del diseño */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#f5efe6] to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#f5efe6] to-transparent z-10" />
-
+    <div className="w-full py-16 overflow-hidden">
       <div
-        ref={sliderRef}
-        className="keen-slider overflow-visible flex items-center"
-        style={{ perspective: "1200px" }}
+        ref={containerRef}
+        className="relative mx-auto w-full"
+        style={{ height: 360, perspective: "1400px", perspectiveOrigin: "center center" }}
       >
-        {items.map((item, i) => (
-          <div
-            key={i}
-            className="keen-slider__slide flex justify-center items-center"
-            style={{ width: "230px" }}
-          >
-            <motion.div
-              className="relative w-[210px] h-[320px] rounded-3xl shadow-xl bg-neutral-900/40 overflow-hidden border border-white/10"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            >
-              <img
-                src={item}
-                alt={"Team member " + (i + 1)}
-                className="h-full w-full object-cover"
-              />
+        {images.map((img, i) => {
+          // Ángulo alrededor del anillo (centro pequeño cuando cos= -1)
+          const theta = ((i / N) + offset) * Math.PI * 2;
+          const { rx, ry, rz } = radii;
 
-              {/* overlay suave para dar profundidad similar al ejemplo */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10" />
+          // Proyección elíptica
+          const x = rx * Math.sin(theta);
+          const z = rz * Math.cos(theta);
+          const y = mapRange(Math.cos(theta), -1, 1, 0, ry); // arco hacia abajo
+
+          // Escala/opacity según profundidad
+          const zNorm = (z + rz) / (2 * rz); // 0 (fondo) .. 1 (frente)
+          const scale = mapRange(zNorm, 0, 1, 0.6, 1.15);
+          const opacity = mapRange(zNorm, 0, 1, 0.5, 0.95);
+          const rotateY = mapRange(Math.sin(theta), -1, 1, -22, 22);
+
+          return (
+            <motion.div
+              key={`${img}-${i}`}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] shadow-2xl bg-white aspect-[3/4] w-[180px]"
+              style={{ transformStyle: "preserve-3d", zIndex: Math.round(10 + zNorm * 100) }}
+              animate={{
+                // translate3d desde el centro
+                x,
+                y,
+                z,
+                rotateY,
+                scale,
+                opacity,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 90,
+                damping: 28,
+                mass: 0.6,
+              }}
+            >
+              <img src={img} alt={`team-${i}`} className="w-full h-full object-cover" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/5 to-transparent" />
             </motion.div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

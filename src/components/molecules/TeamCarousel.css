@@ -1,0 +1,69 @@
+/* Estilos base para todas las posiciones */
+[class^="image-"] {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+/* POSICIONES FIJAS PARA 8 IMÁGENES */
+/* Cada posición tiene su estilo fijo, las imágenes rotan entre ellas */
+
+/* Posición 1 - Extremo izquierdo */
+.image-1 {
+  transform: scale(1) translateY(40px) translateZ(30px) rotateY(25deg);
+  opacity: 0.95;
+  z-index: 3;
+}
+
+/* Posición 2 - Izquierda lejana */
+.image-2 {
+  transform: scale(0.95) translateY(35px) translateZ(25px) rotateY(22deg);
+  opacity: 0.85;
+  z-index: 3;
+}
+
+/* Posición 3 - Izquierda media */
+.image-3 {
+  transform: scale(0.85) translateY(25px) translateZ(20px) rotateY(18deg);
+  opacity: 0.75;
+  z-index: 2;
+}
+
+/* Posición 4 - Izquierda cerca */
+.image-4 {
+  transform: scale(0.75) translateY(15px) translateZ(10px) rotateY(10deg);
+  opacity: 0.65;
+  z-index: 2;
+}
+
+/* Posición 5 - CENTRO (la más pequeña) */
+.image-5 {
+  transform: scale(0.65) translateY(0px) translateZ(0px) rotateY(0deg);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* Posición 6 - Derecha cerca */
+.image-6 {
+  transform: scale(0.75) translateY(15px) translateZ(10px) rotateY(-10deg);
+  opacity: 0.65;
+  z-index: 2;
+}
+
+/* Posición 7 - Derecha media */
+.image-7 {
+  transform: scale(0.85) translateY(25px) translateZ(20px) rotateY(-18deg);
+  opacity: 0.75;
+  z-index: 2;
+}
+
+/* Posición 8 - Extremo derecho */
+.image-8 {
+  transform: scale(1) translateY(40px) translateZ(30px) rotateY(-25deg);
+  opacity: 0.95;
+  z-index: 3;
+}
+
+/* Hover state */
+[class^="image-"]:hover {
+  z-index: 10 !important;
+}
