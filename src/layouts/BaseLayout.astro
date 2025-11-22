@@ -2,6 +2,7 @@
 import Analytics from '@vercel/analytics/astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import Header from '@components/organisms/Header.astro';
+import Footer from '@components/organisms/Footer.astro';
 import WhatsappHome from '@/components/atoms/WhatsappHome.astro';
 import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
 import '@styles/global.css';
@@ -17,6 +18,7 @@ const headerInfo = {
   logoDark: generalInfoArkava?.logoDark?.url,
   instagram: generalInfoArkava?.urlInstagram,
   whatsapp: generalInfoArkava?.whatsapp,
+  email: generalInfoArkava?.email,
 };
 ---
 
@@ -39,5 +41,6 @@ const headerInfo = {
     <Analytics />
     <SpeedInsights />
     <slot />
+    <Footer headerInfo={headerInfo} />
   </body>
 </html>

@@ -10,6 +10,7 @@ const query = graphql(`
             whatsapp
             title
             urlInstagram
+            email
             logo {
                 url
             }

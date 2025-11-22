@@ -1,0 +1,58 @@
+---
+import Container from '@/components/molecules/Container.astro';
+import { Image } from 'astro:assets';
+import Whatsapp from '@icons/whatsapp.astro';
+import Instagram from '@icons/instagram.astro';
+import Email from '@icons/email.astro';
+
+const currentYear = new Date();
+const { headerInfo } = Astro.props;
+const { title, logo, instagram, email } = headerInfo;
+---
+
+<footer class="bg-terracota mx-auto max-w-full">
+  <Container style="md:!py-4">
+    <div class="flex flex-col justify-center items-center gap-2 w-full pt-2">
+      <!-- ©  {currentYear.getFullYear()} -->
+
+      <Image
+        src={logo}
+        alt={title}
+        format="webp"
+        loading="lazy"
+        width={90}
+        height={90}
+        decoding="async"
+        class="aspect-auto"
+      />
+      <span
+        class="font-pp-sans text-white text-base opacity-90 mt-2 text-center"
+      >
+        Especialistas en acabados arquitectónicos en Medellín
+      </span>
+      <span class="font-pp-sans text-white text-sm opacity-90"
+        >Todos los derechos reservados. - ©{currentYear.getFullYear()}</span
+      >
+    </div>
+    <div class="flex justify-center items-center gap-x-4 w-full">
+      <a
+        href={instagram}
+        target="_blank"
+        rel="noopener"
+        aria-label="Síguenos en Instagram"><Instagram /></a
+      >
+      <a
+        href={`mailto:${email}`}
+        target="_blank"
+        aria-label="Escribenos a nuesro Email"
+      >
+        <Email />
+      </a>
+      <!-- <a
+        href={`https://wa.me/57${whatsapp}?text=Hola%20me%20gustaría%20recibir%20más%20información%20sobre%20Comfort%20Design`}
+        target="_blank"
+        aria-label="Escribenos a nuestro Whatsapp"><Whatsapp /></a
+      > -->
+    </div>
+  </Container>
+</footer>

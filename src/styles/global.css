@@ -182,3 +182,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+/* Tailwind ya debe estar configurado */
+
+.keen-slider__slide {
+  will-change: transform, opacity;
+}
+
+.keen-slider__slide > div {
+  transition: box-shadow 0.2s;
+}
+
+.keen-slider__slide > div:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
