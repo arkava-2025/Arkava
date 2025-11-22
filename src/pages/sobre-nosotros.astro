@@ -9,18 +9,15 @@ const imgs = [
   'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
   'https://framerusercontent.com/images/U9l9kstfWWpRl449CvhR4d0JeT0.jpeg?scale-down-to=2048',
   'https://framerusercontent.com/images/0SE7AXQ2fF2cbI9VpejbLJajyDM.jpeg',
-  'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
   'https://framerusercontent.com/images/U9l9kstfWWpRl449CvhR4d0JeT0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/0SE7AXQ2fF2cbI9VpejbLJajyDM.jpeg',
   'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
+  'https://framerusercontent.com/images/0SE7AXQ2fF2cbI9VpejbLJajyDM.jpeg',
 ];
 ---
 
 <BaseLayout title={'Sobre Nosotros - Arkava'}>
   <section>
-    <div>
-      <h1>Sobre nosotros</h1>
-
+    <div class="py-20 w-full overflow-hidden">
       <TeamCarousel images={imgs} client:load />
     </div>
   </section>
