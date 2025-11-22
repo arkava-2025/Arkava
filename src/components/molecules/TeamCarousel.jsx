@@ -6,7 +6,7 @@ function mapRange(value, inMin, inMax, outMin, outMax) {
   return outMin + ((value - inMin) * (outMax - outMin)) / (inMax - inMin);
 }
 
-const CARD_W = 320; // ancho de cada tarjeta
+const CARD_W = 300; // ancho de cada tarjeta
 const CARD_PAD = 1; // separación interna
 const RING_PX = 10;  // grosor de separación blanca visible (ring ~10-15px)
 
@@ -19,9 +19,8 @@ export default function TeamCarousel({ images }) {
   useEffect(() => {
     function updateRadii() {
       const w = containerRef.current?.clientWidth || 1200;
-      // rx calculado para que la tarjeta extrema toque el borde del viewport,
-      // considerando el ring blanco exterior
-      const rx = Math.max(280, (w / 2) - ((CARD_W + RING_PX * 2) / 2) - 1);
+      // rx calculado para que la tarjeta extrema toque el borde del viewport
+      const rx = Math.max(280, (w / 2) - (CARD_W / 2) - 1);
       setRadii({ rx, ry: 120, rz: 210 });
     }
     updateRadii();
@@ -31,7 +30,7 @@ export default function TeamCarousel({ images }) {
 
   // Movimiento continuo (usar delta para velocidad constante)
   useAnimationFrame((t, delta) => {
-    const speed = 0.000005; // aún más lento
+    const speed = 0.000008; // más lento aún
     setOffset(prev => (prev + speed * delta) % 1);
   });
 
@@ -72,6 +71,10 @@ export default function TeamCarousel({ images }) {
           const yAmp = 40; // amplitud total del arco vertical
           const y = mapRange(Math.cos(theta), -1, 1, -yAmp / 2, yAmp / 2);
 
+          // Corrección de separación visual en pantalla (compensa la perspectiva)
+          const k = 0.26; // intensidad de corrección (0.18–0.30)
+          const xAdj = x * (1 - k * (z / rz));
+
           // Escala/opacity según profundidad
           const zNorm = (z + rz) / (2 * rz); // 0 (fondo) .. 1 (frente)
           const scale = mapRange(zNorm, 0, 1, 0.62, 1.30);
@@ -85,21 +88,20 @@ export default function TeamCarousel({ images }) {
             opacity = 1 - t; // 1 -> 0
           }
           // Inward fuerte: los lados miran claramente hacia el centro (más vertical)
-          const rotateY = mapRange(Math.sin(theta), -1, 1, 72, -72);
+          const maxAngle = 88; // grados
+          const rotateY = -(x / rx) * maxAngle; // signos opuestos en lados, más vertical
           const rotateZ = 0; // mantener vertical
 
           return (
             <motion.div
               key={`${i}-${img}`}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] aspect-[3/4]"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] aspect-[3/4]"
               style={{ transformStyle: "preserve-3d", zIndex: Math.round(10 + zNorm * 100) }}
               animate={{
                 // translate3d desde el centro
-                x,
+                x: xAdj,
                 y,
                 z,
-                rotateY,
-                rotateZ,
                 opacity,
               }}
               transition={{
@@ -110,8 +112,9 @@ export default function TeamCarousel({ images }) {
               }}
             >
               <motion.div
-                className="w-full h-full overflow-hidden rounded-[28px] shadow-2xl bg-white"
-                animate={{ scale }}
+                className="w-full h-full overflow-hidden rounded-[28px] shadow-2xl bg-white ring-[10px] ring-white"
+                style={{ transformOrigin: "center center", transformStyle: "preserve-3d" }}
+                animate={{ scale, rotateY, rotateZ }}
                 transition={{ type: "spring", stiffness: 90, damping: 28, mass: 0.6 }}
               >
                 <img src={img} alt={`team-${i}`} className="w-full h-full object-cover rounded-[22px]" style={{ padding: CARD_PAD }} />
@@ -122,17 +125,16 @@ export default function TeamCarousel({ images }) {
           );
         })}
 
-        {/* Faders laterales suaves (no recortan, solo suavizan) */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#f5efe6] via-[#f5efe6]/60 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#f5efe6] via-[#f5efe6]/60 to-transparent" />
-        {/* Faders superior e inferior para recorte vertical suave */}
-        <div className="pointer-events-none absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#f5efe6] via-[#f5efe6]/70 to-transparent" />
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#f5efe6] via-[#f5efe6]/70 to-transparent" />
-        {/* Esquinas borrosas para simular el glow del mock */}
-        <div className="pointer-events-none absolute -left-24 -top-24 w-[42vw] h-[42vh] bg-[radial-gradient(ellipse_at_top_left,rgba(245,239,230,0.9),rgba(245,239,230,0.6),transparent_60%)] blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 -top-24 w-[42vw] h-[42vh] bg-[radial-gradient(ellipse_at_top_right,rgba(245,239,230,0.9),rgba(245,239,230,0.6),transparent_60%)] blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 -bottom-24 w-[42vw] h-[42vh] bg-[radial-gradient(ellipse_at_bottom_left,rgba(245,239,230,0.9),rgba(245,239,230,0.6),transparent_60%)] blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 -bottom-24 w-[42vw] h-[42vh] bg-[radial-gradient(ellipse_at_bottom_right,rgba(245,239,230,0.9),rgba(245,239,230,0.6),transparent_60%)] blur-3xl" />
+        {/* Faders laterales y verticales en blanco (nube) */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-56 bg-gradient-to-r from-white via-white/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-56 bg-gradient-to-l from-white via-white/70 to-transparent" />
+        <div className="pointer-events-none absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-white via-white/60 to-transparent" />
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-white via-white/60 to-transparent" />
+        {/* Niebla blanca en esquinas para ocultación suave */}
+        <div className="pointer-events-none absolute -left-16 -top-16 w-[38vw] h-[38vh] bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.95),rgba(255,255,255,0.6),transparent_60%)] blur-[40px]" />
+        <div className="pointer-events-none absolute -right-16 -top-16 w-[38vw] h-[38vh] bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.95),rgba(255,255,255,0.6),transparent_60%)] blur-[40px]" />
+        <div className="pointer-events-none absolute -left-16 -bottom-16 w-[38vw] h-[38vh] bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,255,255,0.95),rgba(255,255,255,0.6),transparent_60%)] blur-[40px]" />
+        <div className="pointer-events-none absolute -right-16 -bottom-16 w-[38vw] h-[38vh] bg-[radial-gradient(ellipse_at_bottom_right,rgba(255,255,255,0.95),rgba(255,255,255,0.6),transparent_60%)] blur-[40px]" />
       </div>
     </div>
   );
