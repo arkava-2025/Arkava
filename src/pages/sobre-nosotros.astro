@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TeamCarousel from '@/components/molecules/TeamCarousel.jsx';
+import MisionVision from '@/components/organisms/MisionVision.astro';
+import OurHistory from '@/components/organisms/OurHistory.astro';
 
 const imgs = [
   'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
@@ -17,8 +19,81 @@ const imgs = [
 
 <BaseLayout title={'Sobre Nosotros - Arkava'}>
   <section>
-    <div class="py-20 w-full overflow-hidden">
+    <div class="text-center relative top-40 z-10">
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight"
+      >
+        Sobre Nosotros
+      </h1>
+      <h2 class="text-3xl md:text-4xl font-light text-gray-800 mt-2">
+        subtitle about us
+      </h2>
+      <p
+        class="mt-4 text-lg text-gray-600 max-w-xl mx-auto font-helvetica opacity-75"
+      >
+        Conócenos mejor y descubre el equipo detrás de Arkava, nuestra pasión
+        por la innovación y la excelencia nos impulsa a crear soluciones que
+        marquen la diferencia.
+      </p>
+    </div>
+
+    <div class="w-full overflow-hidden">
       <TeamCarousel images={imgs} client:load />
     </div>
+
+    <div class="relative -top-40 md:-top-24 lg:-top-36 z-10">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div
+            class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-6 md:p-7 text-center"
+          >
+            <div
+              class="inline-block rounded-md bg-primary/50 text-primary px-3 py-1 text-sm font-semibold"
+            >
+              Real-Time Collaboration
+            </div>
+            <p
+              class="mt-3 text-gray-600 text-sm font-helvetica leading-relaxed"
+            >
+              Communicate seamlessly and keep everyone in sync with built-in
+              messaging, file sharing, and live updates.
+            </p>
+          </div>
+          <div
+            class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-6 md:p-7 text-center"
+          >
+            <div
+              class="inline-block rounded-md bg-primary/50 text-primary px-3 py-1 text-sm font-semibold"
+            >
+              Task & Project Tracking
+            </div>
+            <p
+              class="mt-3 text-gray-600 text-sm font-helvetica leading-relaxed"
+            >
+              Assign tasks, set deadlines, and visualize progress with boards,
+              lists, and timelines.
+            </p>
+          </div>
+          <div
+            class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-6 md:p-7 text-center"
+          >
+            <div
+              class="inline-block rounded-md bg-primary/50 text-primary px-3 py-1 text-sm font-semibold"
+            >
+              Performance Insights
+            </div>
+            <p
+              class="mt-3 text-gray-600 text-sm font-helvetica leading-relaxed"
+            >
+              Make smarter decisions with analytics that show productivity
+              trends and workload balance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <div><MisionVision /></div>
+  <div><OurHistory /></div>
 </BaseLayout>
