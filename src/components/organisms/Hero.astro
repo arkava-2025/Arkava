@@ -1,21 +1,31 @@
 ---
 import Carousel from '@/components/molecules/Carousel.jsx';
+import { isMobile } from '@/lib/utils/isMobile';
 
 const { data } = Astro.props;
 ---
 
 <section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
-  {/* Capa del carrusel al 100% */}
   <div class="absolute inset-0">
     <Carousel client:only="react">
-      <video
-        src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
-        class="h-full w-full object-cover"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"></video>
+      {
+        isMobile() ? (
+          <img
+            src="https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/hero-bf-mobile.gif"
+            class="w-full h-full object-cover"
+          />
+        ) : (
+          <video
+            src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            class="w-full h-full object-cover"
+          />
+        )
+      }
     </Carousel>
   </div>
 
