@@ -8,15 +8,6 @@ const { data } = Astro.props;
   {/* Capa del carrusel al 100% */}
   <div class="absolute inset-0">
     <Carousel client:only="react">
-      <!-- {
-        data?.images.map((image: any) => (
-          <img
-            src="/gif/hero.gif"
-            alt="ARKAVA"
-            class="h-full w-full object-cover"
-          />
-        ))
-      } -->
       <video
         src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
         class="h-full w-full object-cover"
