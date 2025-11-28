@@ -6,14 +6,23 @@ const { data } = Astro.props;
 <section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
   <div class="absolute inset-0">
     <!-- <Carousel client:only="react"> -->
-    <img
+    <!-- <img
       src="https://res.cloudinary.com/dx9vtev71/image/upload/v1764300038/mobile-hero_vs7e1g.gif"
       style="image-rendering: auto;"
       alt="Mobile Hero"
       loading="lazy"
       decoding="async"
       class="flex md:hidden w-full h-full object-cover"
-    />
+    /> -->
+
+    <video
+      src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764353621/mobile_1_gblhox.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      class="flex md:hidden w-full h-full object-cover"></video>
 
     <video
       src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
