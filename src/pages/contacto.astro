@@ -1,7 +1,144 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/molecules/Container.astro';
+import Phone from '@/icons/phone.astro';
+import Email from '@/icons/email.astro';
+import Instagram from '@/icons/instagram.astro';
+// import type { ContactQuery } from '@/gql/graphql';
+// import FormContact from '@/components/FormContact.astro';
+
+// import getContactPage from '../queries/getContactPage';
+// import GoogleMap from '@/components/GoogleMap.astro';
+
+const slug = 'contactanos';
+const stage = 'PUBLISHED';
+
+// const { contact }: ContactQuery = await getContactPage(slug, stage);
 ---
 
-<BaseLayout title={'Contacto - Arkava'}>
-  <section>Contacto</section>
+<BaseLayout title={'Contactanos'} metaTitle={'Contactanos'}>
+  <section class="mx-auto">
+    <div
+      class="w-screen h-[300px] sm:h-[380px] lg:h-[380px] xl:h-[460px] relative"
+    >
+      <div class="w-full h-full order-1 md:-order-none bg-black">
+        <Image
+          src={'https://arkava.com.co/og-image.png'}
+          alt={'Contactanos'}
+          width={1440}
+          height={532}
+          class="w-full h-full object-cover object-center animate-in slide-in-from-top duration-700 transition-all opacity-60"
+          loading="eager"
+        />
+      </div>
+    </div>
+
+    <Container>
+      <!-- Información de contacto -->
+      <div class="space-y-6 mt-5 md:mt-0 w-full">
+        <h1 class="max-w-[520px] md:mb-4 m-auto text-center text-3xl">
+          Contactanos
+        </h1>
+
+        <h2 class="text-center text-secondary !mt-0 !text-2xl">
+          Información de Contacto
+        </h2>
+
+        <p class="text-gray-600 font-secondary text-center m-auto">
+          Información de Contacto
+        </p>
+
+        <div
+          class="m-auto grid grid-cols-1 sm:grid-cols-3 sm:place-items-center my-8 pb-10"
+        >
+          <div class="flex items-center space-x-4">
+            <div
+              class="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center"
+            >
+              <Email />
+            </div>
+            <div>
+              <h3 class="font-semibold">Email</h3>
+              <a href={`mailto:contacto@arkava.com.co`}>
+                <p class="text-gray-600">contacto@arkava.com.co</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 mt-8 md:mt-0">
+            <div
+              class="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center"
+            >
+              <Phone />
+            </div>
+            <div>
+              <h3 class="font-semibold">Teléfono</h3>
+              <p class="text-gray-600">+57 312 222 22 22</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 mt-8 md:mt-0">
+            <div
+              class="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center"
+            >
+              <Instagram />
+            </div>
+            <div>
+              <h3 class="font-semibold">instagram</h3>
+              <a
+                class="text-gray-600"
+                href="https://www.instagram.com/comfortdesign.med/"
+                target="_blank"
+              >
+                comfortdesign.med
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 w-full">
+        <!-- Mapa -->
+        <div class="w-full h-[55vh] md:h-[70vh] xl:h-full">
+          <!-- <GoogleMap latitude={6.2705734} longitude={-75.5762646} /> -->
+        </div>
+
+        <!-- Formulario -->
+        <!-- <FormContact /> -->
+      </div>
+    </Container>
+  </section>
+  <!-- LocalBusiness Microdata (hidden) -->
+  <div class="hidden" aria-hidden="true">
+    <div itemscope itemtype="https://schema.org/LocalBusiness">
+      <meta
+        itemprop="@id"
+        content={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/#business`}
+      />
+      <meta itemprop="name" content={'Contactanos'} />
+      <link
+        itemprop="url"
+        href={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/contacto`}
+      />
+      <meta itemprop="email" content={'contacto@arkava.com.co'} />
+      <meta itemprop="telephone" content={'+57 312 222 22 22'} />
+      <meta
+        itemprop="areaServed"
+        content="Medellín, Envigado, Itagüí, Sabaneta, Bello, Antioquia"
+      />
+      <meta itemprop="availableLanguage" content="es-CO" />
+      <div
+        itemprop="geo"
+        itemscope
+        itemtype="https://schema.org/GeoCoordinates"
+      >
+        <meta itemprop="latitude" content="6.2705734" />
+        <meta itemprop="longitude" content="-75.5762646" />
+      </div>
+      <div itemprop="sameAs">
+        <link href="https://www.instagram.com/comfortdesign.med/" />
+      </div>
+    </div>
+  </div>
 </BaseLayout>

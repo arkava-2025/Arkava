@@ -1,32 +1,29 @@
 ---
 import Carousel from '@/components/molecules/Carousel.jsx';
-import { isMobile } from '@/lib/utils/isMobile';
-
 const { data } = Astro.props;
 ---
 
 <section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
   <div class="absolute inset-0">
-    <Carousel client:only="react">
-      {
-        isMobile() ? (
-          <img
-            src="https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/hero-bf-mobile.gif"
-            class="w-full h-full object-cover"
-          />
-        ) : (
-          <video
-            src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            class="w-full h-full object-cover"
-          />
-        )
-      }
-    </Carousel>
+    <!-- <Carousel client:only="react"> -->
+    <img
+      src="https://res.cloudinary.com/dx9vtev71/image/upload/v1764300038/mobile-hero_vs7e1g.gif"
+      style="image-rendering: auto;"
+      alt="Mobile Hero"
+      loading="lazy"
+      decoding="async"
+      class="flex md:hidden w-full h-full object-cover"
+    />
+
+    <video
+      src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      class="hidden md:flex w-full h-full object-cover"></video>
+    <!-- </Carousel> -->
   </div>
 
   {/* Overlay para mejorar contraste del texto (opcional) */}
