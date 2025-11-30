@@ -6,10 +6,10 @@ import Phone from '@/icons/phone.astro';
 import Email from '@/icons/email.astro';
 import Instagram from '@/icons/instagram.astro';
 // import type { ContactQuery } from '@/gql/graphql';
-// import FormContact from '@/components/FormContact.astro';
+import FormContact from '@/components/molecules/FormContact.astro';
 
 // import getContactPage from '../queries/getContactPage';
-// import GoogleMap from '@/components/GoogleMap.astro';
+import GoogleMap from '@/components/molecules/GoogleMap.astro';
 
 const slug = 'contactanos';
 const stage = 'PUBLISHED';
@@ -41,13 +41,9 @@ const stage = 'PUBLISHED';
           Contactanos
         </h1>
 
-        <h2 class="text-center text-secondary !mt-0 !text-2xl">
+        <h2 class="text-center text-tertiary !mt-0 !text-2xl">
           Información de Contacto
         </h2>
-
-        <p class="text-gray-600 font-secondary text-center m-auto">
-          Información de Contacto
-        </p>
 
         <div
           class="m-auto grid grid-cols-1 sm:grid-cols-3 sm:place-items-center my-8 pb-10"
@@ -74,7 +70,7 @@ const stage = 'PUBLISHED';
             </div>
             <div>
               <h3 class="font-semibold">Teléfono</h3>
-              <p class="text-gray-600">+57 312 222 22 22</p>
+              <p class="text-gray-600">3207672761</p>
             </div>
           </div>
 
@@ -88,10 +84,10 @@ const stage = 'PUBLISHED';
               <h3 class="font-semibold">instagram</h3>
               <a
                 class="text-gray-600"
-                href="https://www.instagram.com/comfortdesign.med/"
+                href="https://www.instagram.com/arkava_remodelacion?igsh=a2Ixcjh4aXR5aHY0"
                 target="_blank"
               >
-                comfortdesign.med
+                arkava_remodelacion
               </a>
             </div>
           </div>
@@ -99,13 +95,16 @@ const stage = 'PUBLISHED';
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 w-full">
+        <!-- Formulario -->
+        <FormContact />
         <!-- Mapa -->
         <div class="w-full h-[55vh] md:h-[70vh] xl:h-full">
-          <!-- <GoogleMap latitude={6.2705734} longitude={-75.5762646} /> -->
+          <GoogleMap
+            latitude={6.2705734}
+            longitude={-75.5762646}
+            mapStyle="dark"
+          />
         </div>
-
-        <!-- Formulario -->
-        <!-- <FormContact /> -->
       </div>
     </Container>
   </section>
@@ -137,7 +136,7 @@ const stage = 'PUBLISHED';
         <meta itemprop="longitude" content="-75.5762646" />
       </div>
       <div itemprop="sameAs">
-        <link href="https://www.instagram.com/comfortdesign.med/" />
+        <link href="https://www.instagram.com/arkava_remodelacion/" />
       </div>
     </div>
   </div>

@@ -1,0 +1,283 @@
+---
+const apiKey = import.meta.env.GOOGLE_MAPS_API_KEY;
+const {
+  latitude = 6.2476,
+  longitude = -75.5658,
+  zoom = 11,
+  title = 'Arkava',
+  mapStyle = 'muted',
+} = Astro.props;
+---
+
+<script lang="js" is:inline>
+  function initMap() {
+    const el = document.getElementById('arkava-map');
+    if (!el) return;
+    const lat = parseFloat(el.getAttribute('data-lat') || '6.2476');
+    const lng = parseFloat(el.getAttribute('data-lng') || '-75.5658');
+    const zoom = parseInt(el.getAttribute('data-zoom') || '11', 10);
+    const center = { lat, lng };
+
+    const styleName = el.getAttribute('data-style') || 'muted';
+
+    function getStyles(name) {
+      if (name === 'dark') {
+        return [
+          { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+          {
+            elementType: 'labels.text.stroke',
+            stylers: [{ color: '#242f3e' }],
+          },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+          {
+            featureType: 'administrative.locality',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#d59563' }],
+          },
+          {
+            featureType: 'poi',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#d59563' }],
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'geometry',
+            stylers: [{ color: '#263c3f' }],
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#6b9a76' }],
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [{ color: '#38414e' }],
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#212a37' }],
+          },
+          {
+            featureType: 'road',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#9ca5b3' }],
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry',
+            stylers: [{ color: '#746855' }],
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#1f2835' }],
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#f3d19c' }],
+          },
+          {
+            featureType: 'transit',
+            elementType: 'geometry',
+            stylers: [{ color: '#2f3948' }],
+          },
+          {
+            featureType: 'transit.station',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#d59563' }],
+          },
+          {
+            featureType: 'water',
+            elementType: 'geometry',
+            stylers: [{ color: '#17263c' }],
+          },
+          {
+            featureType: 'water',
+            elementType: 'labels.text.fill',
+            stylers: [{ color: '#515c6d' }],
+          },
+          {
+            featureType: 'water',
+            elementType: 'labels.text.stroke',
+            stylers: [{ color: '#17263c' }],
+          },
+        ];
+      }
+      if (name === 'retro') {
+        return [
+          { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
+          {
+            elementType: 'labels.text.stroke',
+            stylers: [{ color: '#f5f1e6' }],
+          },
+          {
+            featureType: 'administrative',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#c9b2a6' }],
+          },
+          {
+            featureType: 'poi',
+            elementType: 'geometry',
+            stylers: [{ color: '#dfd2ae' }],
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#a5b076' }],
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [{ color: '#f5f1e6' }],
+          },
+          {
+            featureType: 'road.arterial',
+            elementType: 'geometry',
+            stylers: [{ color: '#fdfcf8' }],
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry',
+            stylers: [{ color: '#f8c967' }],
+          },
+          {
+            featureType: 'road.highway',
+            elementType: 'geometry.stroke',
+            stylers: [{ color: '#e9bc62' }],
+          },
+          {
+            featureType: 'transit',
+            elementType: 'geometry',
+            stylers: [{ color: '#dfd2ae' }],
+          },
+          {
+            featureType: 'water',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#b9d3c2' }],
+          },
+        ];
+      }
+      // muted (brand-aligned, claro)
+      return [
+        { elementType: 'geometry', stylers: [{ color: '#f7faf8' }] },
+        { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#2E483E' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
+        {
+          featureType: 'administrative',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#ccd7d2' }],
+        },
+        {
+          featureType: 'poi',
+          elementType: 'geometry',
+          stylers: [{ color: '#edf5f1' }],
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#d7ede5' }],
+        },
+        { featureType: 'poi.business', stylers: [{ visibility: 'off' }] },
+        { featureType: 'poi.school', stylers: [{ visibility: 'off' }] },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{ color: '#ffffff' }],
+        },
+        {
+          featureType: 'road.arterial',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#eaf2ef' }],
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#dfe9e4' }],
+        },
+        {
+          featureType: 'road',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#758a81' }],
+        },
+        {
+          featureType: 'transit',
+          elementType: 'geometry',
+          stylers: [{ color: '#e7efe9' }],
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#cfe9e6' }],
+        },
+      ];
+    }
+
+    const styles = getStyles(styleName);
+
+    const map = new google.maps.Map(el, {
+      center,
+      zoom,
+      styles,
+      disableDefaultUI: true,
+      zoomControl: true,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+      gestureHandling: 'cooperative',
+    });
+
+    const iw = new google.maps.InfoWindow({
+      content: `<div style="font-family: 'PP Supply Sans', system-ui, sans-serif; color:#2E483E; font-size:16px;"><strong>${title}</strong> en todo el Valle de Aburrá</div>`,
+      ariaLabel: 'Arkava',
+    });
+
+    let marker;
+    if (google.maps.marker && google.maps.marker.AdvancedMarkerElement) {
+      const pin = document.createElement('div');
+      pin.style.width = '18px';
+      pin.style.height = '18px';
+      pin.style.borderRadius = '9999px';
+      pin.style.background = '#2E483E';
+      pin.style.boxShadow = '0 8px 18px rgba(46,72,62,0.35)';
+      marker = new google.maps.marker.AdvancedMarkerElement({
+        map,
+        position: center,
+        title: `${title}`,
+        content: pin,
+      });
+      marker.addListener('click', () => iw.open({ map, anchor: marker }));
+    } else {
+      marker = new google.maps.Marker({
+        map,
+        position: center,
+        title: `${title}`,
+      });
+      marker.addListener('click', () => iw.open(map, marker));
+    }
+  }
+
+  window.initMap = initMap;
+</script>
+
+<div
+  class="relative w-full h-full rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-xl"
+>
+  <div
+    id="arkava-map"
+    class="w-full h-full"
+    data-lat={latitude}
+    data-lng={longitude}
+    data-zoom={zoom}
+    data-style={mapStyle}
+    aria-label="Mapa de ubicación"
+  >
+  </div>
+</div>
+<script
+  src=`https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap&libraries=marker&v=beta&solution_channel=GMP_CCS_infowindows_v2`
+  defer></script>

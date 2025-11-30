@@ -1,0 +1,124 @@
+---
+// Input.astro
+interface Props extends astroHTML.JSX.InputHTMLAttributes {
+  type:
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'date'
+    | 'url'
+    | 'tel'
+    | 'search';
+  id: string;
+  name: string;
+  label?: string;
+  value?: string;
+  placeholder?: string;
+  helperText?: string;
+  error?: string;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  required?: boolean;
+  disabled?: boolean;
+}
+
+const {
+  type = 'text',
+  id,
+  name,
+  label,
+  value = '',
+  placeholder = '',
+  helperText,
+  error,
+  size = 'md',
+  className = '',
+  required = false,
+  disabled = false,
+  ...rest
+} = Astro.props;
+
+// Tamaños predefinidos
+const sizeStyles = {
+  sm: 'h-8 text-sm px-2',
+  md: 'h-10 text-base px-3',
+  lg: 'h-12 text-lg px-4',
+};
+
+// Estilos base del input
+const baseStyles = `
+    w-full
+    rounded-lg
+    border
+    bg-white
+    transition-all
+    duration-200
+    focus:outline-none
+    focus:ring-2
+    disabled:cursor-not-allowed
+    disabled:bg-gray-100
+    disabled:opacity-75
+`;
+
+// Estados del input
+const stateStyles = error
+  ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
+  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200';
+
+// Combinamos todos los estilos
+const inputStyles = [baseStyles, sizeStyles[size], stateStyles, className].join(
+  ' ',
+);
+---
+
+<div class="flex flex-col gap-1">
+  {/* Label */}
+  {
+    label && (
+      <label
+        for={id}
+        class:list={[
+          'text-base font-semibold font-primary text-gray-700',
+          required && "after:content-['*'] after:ml-0.5 after:text-red-500",
+        ]}
+      >
+        {label}
+      </label>
+    )
+  }
+
+  {/* Input container para posicionar íconos si se necesitan después */}
+  <div class="relative">
+    <input
+      {...rest}
+      type={type}
+      id={id}
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      disabled={disabled}
+      required={required}
+      class=`font-bold font-primary ${inputStyles}`
+      aria-describedby={`${id}-helper ${id}-error`}
+    />
+  </div>
+
+  {/* Texto de ayuda */}
+  {
+    helperText && !error && (
+      <p id={`${id}-helper`} class="text-sm text-gray-500">
+        {helperText}
+      </p>
+    )
+  }
+
+  {/* Mensaje de error */}
+  {
+    error && (
+      <p id={`${id}-error`} class="text-sm text-red-500">
+        {error}
+      </p>
+    )
+  }
+</div>
