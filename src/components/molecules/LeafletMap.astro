@@ -1,0 +1,157 @@
+---
+const {
+  latitude = 6.2705734,
+  longitude = -75.5762646,
+  zoom = 12,
+  title = 'Arkava',
+  mapStyle = 'muted',
+} = Astro.props;
+
+let tileUrl;
+let tileAttribution;
+
+if (mapStyle === 'dark') {
+  tileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  tileAttribution = '&copy; OpenStreetMap contributors &copy; CARTO';
+} else if (mapStyle === 'brand') {
+  tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  tileAttribution = '&copy; OpenStreetMap contributors &copy; CARTO';
+} else {
+  tileUrl = 'https://{s}.basemaps.cartocdn.com/positron/{z}/{x}/{y}{r}.png';
+  tileAttribution = '&copy; OpenStreetMap contributors &copy; CARTO';
+}
+
+const mapId = 'arkava-leaflet-map';
+const zoomInId = `${mapId}-zin`;
+const zoomOutId = `${mapId}-zout`;
+
+const controlClass =
+  mapStyle === 'dark'
+    ? 'bg-gray-900/80 text-white border border-gray-700 hover:bg-gray-800'
+    : 'bg-white/90 text-gray-700 border border-gray-200 hover:bg-white';
+
+const showTint = mapStyle === 'brand';
+---
+
+<div
+  class="relative w-full h-full rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-xl"
+>
+  <div
+    id={mapId}
+    class="w-full h-full"
+    data-lat={latitude}
+    data-lng={longitude}
+    data-zoom={zoom}
+    data-title={title}
+    data-tile={tileUrl}
+    data-att={tileAttribution}
+    aria-label="Mapa de ubicación"
+  >
+  </div>
+  {
+    showTint && (
+      <div
+        class={`pointer-events-none absolute inset-0 mix-blend-multiply bg-[#2E483E]/20`}
+      />
+    )
+  }
+  <div class="absolute right-3 top-3 z-[401] flex flex-col gap-2">
+    <!-- <button
+      id={zoomInId}
+      type="button"
+      aria-label="Acercar"
+      class={`rounded-xl ${controlClass} w-10 h-10 flex items-center justify-center shadow ring-1 ring-black/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2E483E]`}
+    >
+      <span class="sr-only">Acercar</span>
+      <span aria-hidden="true" class="text-lg font-semibold">+</span>
+    </button> -->
+    <!-- <button
+      id={zoomOutId}
+      type="button"
+      aria-label="Alejar"
+      class={`rounded-xl ${controlClass} w-10 h-10 flex items-center justify-center shadow ring-1 ring-black/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2E483E]`}
+    >
+      <span class="sr-only">Alejar</span>
+      <span aria-hidden="true" class="text-lg font-semibold">-</span>
+    </button> -->
+  </div>
+</div>
+
+<link
+  id="leaflet-css"
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin="anonymous"
+/>
+<script
+  id="leaflet-js"
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin="anonymous"
+  defer></script>
+
+<script is:inline>
+  (function () {
+    const mapId = 'arkava-leaflet-map';
+    const zoomInId = '${zoomInId}';
+    const zoomOutId = '${zoomOutId}';
+
+    function initMap() {
+      const el = document.getElementById(mapId);
+      if (!el) return;
+
+      const lat = parseFloat(el.getAttribute('data-lat') || '6.2476');
+      const lng = parseFloat(el.getAttribute('data-lng') || '-75.5658');
+      const zoom = parseInt(el.getAttribute('data-zoom') || '11', 10);
+      const mapTitle = el.getAttribute('data-title') || 'Arkava';
+      const tile =
+        el.getAttribute('data-tile') ||
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      const attribution =
+        el.getAttribute('data-att') || '&copy; OpenStreetMap contributors';
+
+      if (!window.L) {
+        // Wait until Leaflet is available (in case defer hasn't loaded yet)
+        setTimeout(initMap, 50);
+        return;
+      }
+
+      const map = L.map(el, {
+        center: [lat, lng],
+        zoom,
+        zoomControl: false,
+      });
+
+      L.tileLayer(tile, {
+        attribution,
+        maxZoom: 20,
+      }).addTo(map);
+
+      const zin = document.getElementById(zoomInId);
+      const zout = document.getElementById(zoomOutId);
+      zin && zin.addEventListener('click', () => map.zoomIn());
+      zout && zout.addEventListener('click', () => map.zoomOut());
+
+      const icon = L.divIcon({
+        className: 'arkava-divicon',
+        html: `<div class="relative"><span class="absolute -inset-2 rounded-full bg-[#2E483E]/30 animate-ping"></span><span class="relative block w-3.5 h-3.5 rounded-full bg-[#2E483E] ring-4 ring-white shadow-md"></span></div>`,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -8],
+      });
+      const marker = L.marker([lat, lng], { title: mapTitle, icon });
+      marker
+        .addTo(map)
+        .bindPopup(
+          `<div class="px-3 py-2 text-sm font-semibold text-[#2E483E]">${mapTitle}</div>`,
+        );
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMap);
+    } else {
+      initMap();
+    }
+  })();
+</script>

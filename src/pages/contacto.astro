@@ -9,7 +9,7 @@ import Instagram from '@/icons/instagram.astro';
 import FormContact from '@/components/molecules/FormContact.astro';
 
 // import getContactPage from '../queries/getContactPage';
-import GoogleMap from '@/components/molecules/GoogleMap.astro';
+import LeafletMap from '@/components/molecules/LeafletMap.astro';
 
 const slug = 'contactanos';
 const stage = 'PUBLISHED';
@@ -99,10 +99,10 @@ const stage = 'PUBLISHED';
         <FormContact />
         <!-- Mapa -->
         <div class="w-full h-[55vh] md:h-[70vh] xl:h-full">
-          <GoogleMap
+          <LeafletMap
             latitude={6.2705734}
             longitude={-75.5762646}
-            mapStyle="dark"
+            mapStyle="brand"
           />
         </div>
       </div>
