@@ -19,6 +19,7 @@ const {
     const center = { lat, lng };
 
     const styleName = el.getAttribute('data-style') || 'muted';
+    const mapTitle = el.getAttribute('data-title') || 'Arkava';
 
     function getStyles(name) {
       if (name === 'dark') {
@@ -232,7 +233,7 @@ const {
     });
 
     const iw = new google.maps.InfoWindow({
-      content: `<div style="font-family: 'PP Supply Sans', system-ui, sans-serif; color:#2E483E; font-size:16px;"><strong>${title}</strong> en todo el Valle de Aburrá</div>`,
+      content: `<div style="font-family: 'PP Supply Sans', system-ui, sans-serif; color:#2E483E; font-size:16px;"><strong>${mapTitle}</strong> en todo el Valle de Aburrá</div>`,
       ariaLabel: 'Arkava',
     });
 
@@ -247,7 +248,7 @@ const {
       marker = new google.maps.marker.AdvancedMarkerElement({
         map,
         position: center,
-        title: `${title}`,
+        title: `${mapTitle}`,
         content: pin,
       });
       marker.addListener('click', () => iw.open({ map, anchor: marker }));
@@ -255,7 +256,7 @@ const {
       marker = new google.maps.Marker({
         map,
         position: center,
-        title: `${title}`,
+        title: `${mapTitle}`,
       });
       marker.addListener('click', () => iw.open(map, marker));
     }
@@ -274,6 +275,7 @@ const {
     data-lng={longitude}
     data-zoom={zoom}
     data-style={mapStyle}
+    data-title={title}
     aria-label="Mapa de ubicación"
   >
   </div>
