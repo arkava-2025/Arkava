@@ -38,7 +38,7 @@ const showTint = mapStyle === 'brand';
 >
   <div
     id={mapId}
-    class="w-full h-full"
+    class="w-full h-full touch-pan-y md:touch-auto"
     data-lat={latitude}
     data-lng={longitude}
     data-zoom={zoom}
@@ -127,6 +127,28 @@ const showTint = mapStyle === 'brand';
         attribution,
         maxZoom: 20,
       }).addTo(map);
+
+      function setInteractivity() {
+        const isTouch = window.matchMedia('(pointer: coarse)').matches;
+        const isSmall = window.matchMedia('(max-width: 768px)').matches;
+        const enable = !(isTouch || isSmall);
+
+        if (enable) {
+          map.dragging.enable();
+          map.touchZoom.enable();
+          map.scrollWheelZoom.enable();
+          map.doubleClickZoom.enable();
+          map.boxZoom.enable();
+        } else {
+          map.dragging.disable();
+          map.touchZoom.disable();
+          map.scrollWheelZoom.disable();
+          map.doubleClickZoom.disable();
+          map.boxZoom.disable();
+        }
+      }
+      setInteractivity();
+      window.addEventListener('resize', setInteractivity);
 
       const zin = document.getElementById(zoomInId);
       const zout = document.getElementById(zoomOutId);

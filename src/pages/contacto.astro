@@ -96,9 +96,11 @@ const stage = 'PUBLISHED';
 
       <div class="grid grid-cols-1 lg:grid-cols-2 w-full">
         <!-- Formulario -->
-        <FormContact />
+        <FormContact style="order-2 lg:order-1" />
         <!-- Mapa -->
-        <div class="w-full h-[55vh] md:h-[70vh] xl:h-full">
+        <div
+          class="w-full h-[55vh] md:h-[70vh] xl:h-full order-1 lg:order-2 z-10"
+        >
           <LeafletMap
             latitude={6.2705734}
             longitude={-75.5762646}
