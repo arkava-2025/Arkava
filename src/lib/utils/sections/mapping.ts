@@ -5,6 +5,7 @@ import HowWeWorks from '@/components/organisms/HowWeWorks.astro';
 import ProyectosHome from '@/components/organisms/ProyectosHome.astro';
 import NoComponentFile from '@/components/NoComponentFile.astro';
 import FaqHome from '@/components/organisms/FaqHome.astro';
+import TestimonialsHome from '@/components/organisms/TestimonialsHome.astro';
 import SectionWrapper from '@/components/templates/SectionWrapper.astro';
 
 export const sectionOrder = [
@@ -14,6 +15,7 @@ export const sectionOrder = [
   'HowWeWorks',
   'ProyectosHome',
   'FaqHome',
+  'TestimonialsHome',
   'Alianzas',
 ];
 
@@ -26,6 +28,7 @@ export const sectionMapping: Mapping = {
   HowWeWorks,
   ProyectosHome,
   FaqHome,
+  TestimonialsHome,
   Alianzas: SectionWrapper,
 };
 
