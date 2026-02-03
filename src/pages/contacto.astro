@@ -19,25 +19,10 @@ const stage = 'PUBLISHED';
 
 <BaseLayout title={'Contactanos'} metaTitle={'Contactanos'}>
   <section class="mx-auto">
-    <div
-      class="w-screen h-[300px] sm:h-[380px] lg:h-[380px] xl:h-[460px] relative"
-    >
-      <div class="w-full h-full order-1 md:-order-none bg-primary/80">
-        <Image
-          src="https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/bg-contact.webp"
-          alt={'Contactanos'}
-          width={1440}
-          height={532}
-          class="w-full h-full object-cover object-center animate-in slide-in-from-top duration-700 transition-all"
-          loading="eager"
-        />
-      </div>
-    </div>
-
     <Container>
       <!-- Información de contacto -->
       <div class="space-y-6 mt-5 md:mt-0 w-full">
-        <h1 class="max-w-[520px] md:mb-4 m-auto text-center text-3xl">
+        <h1 class="max-w-[520px] md:mb-4 m-auto text-center mt-12 text-5xl">
           Contactanos
         </h1>
 
@@ -91,6 +76,19 @@ const stage = 'PUBLISHED';
               </a>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="w-screen h-full relative mb-12">
+        <div class="w-full h-full order-1 md:-order-none">
+          <Image
+            src="https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/contacto.webp"
+            alt={'Contactanos'}
+            width={1440}
+            height={532}
+            class="w-full h-full object-contain object-top animate-in slide-in-from-top duration-700 transition-all"
+            loading="eager"
+          />
         </div>
       </div>
 
