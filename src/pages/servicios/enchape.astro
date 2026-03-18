@@ -1,13 +1,42 @@
 ---
+import ConditionalLayout from '@/layouts/ConditionalLayout.astro';
 import Section from '@/components/atoms/Section.astro';
+import getServicioByIds from '@/lib/hygraph/queries/getServicioByIds';
 
-const { title, description, imageService, iconService } = Astro.props;
+const isStandalone = !Astro.props.title;
+let { title, description, imageService, iconService } = Astro.props;
+
+if (isStandalone) {
+  const service = await getServicioByIds('enchape');
+  title = service?.title ?? 'Enchape';
+  description = service?.description;
+  imageService = service?.imageService ?? [];
+  iconService = service?.iconService;
+}
+
+const SEO_DESCRIPTION = 'Instalación de enchapes, cerámica y porcelana en pisos y muros en Medellín. Revestimientos para baños, cocinas y fachadas con acabado impecable. Arkava.';
+const serviceSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: title,
+  description: SEO_DESCRIPTION,
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  areaServed: 'Medellín, Colombia',
+  serviceType: 'Enchapes y revestimientos',
+});
 
 const descriptionText = description?.raw?.children?.map((block: any) =>
   block.children.map((child: any) => child.text),
 );
 ---
 
+<ConditionalLayout
+  enabled={isStandalone}
+  title={`${title} en Medellín | Acabados Arkava`}
+  description={SEO_DESCRIPTION}
+  schema={serviceSchema}
+>
+  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto md:h-[90vh] bg-[#C18778] !py-0">
   <div
     class="container mx-auto flex flex-col px-6 py-8 lg:py-16 md:flex-row gap-6 lg:gap-10 items-start h-full"
@@ -54,3 +83,4 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
     </div>
   </div>
 </Section>
+</ConditionalLayout>

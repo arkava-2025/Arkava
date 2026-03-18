@@ -1,7 +1,7 @@
 ---
-quote: "El equipo más profesional con el que hemos trabajado. Los resultados hablan por sí solos: refinado, moderno y altamente efectivo para nuestra audiencia."
-name: "Elena Rodriguez"
-role: "VP of Engineering"
-company: "Orbit"
-avatarUrl: "https://media.graphassets.com/2nK7pV1sQ9mD8xL3aB4z"
+quote: "Como arquitecta soy muy exigente con los acabados. Arkava ejecutó los muros decorativos en microcemento y el revestimiento en madera con un nivel de detalle que pocas empresas logran en Medellín. Los recomiendo sin ninguna duda."
+name: "Carolina Gómez"
+role: "Arquitecta"
+company: "Proyecto residencial en El Retiro, Antioquia"
+featured: false
 ---

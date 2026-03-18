@@ -1,13 +1,42 @@
 ---
+import ConditionalLayout from '@/layouts/ConditionalLayout.astro';
 import Section from '@/components/atoms/Section.astro';
+import getServicioByIds from '@/lib/hygraph/queries/getServicioByIds';
 
-const { title, description, imageService, iconService } = Astro.props;
+const isStandalone = !Astro.props.title;
+let { title, description, imageService, iconService } = Astro.props;
+
+if (isStandalone) {
+  const service = await getServicioByIds('pintura');
+  title = service?.title ?? 'Pintura';
+  description = service?.description;
+  imageService = service?.imageService ?? [];
+  iconService = service?.iconService;
+}
+
+const SEO_DESCRIPTION = 'Servicio de pintura de interiores y exteriores en Medellín. Acabados premium en muros, cielos y fachadas para proyectos residenciales y comerciales. Arkava.';
+const serviceSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: title,
+  description: SEO_DESCRIPTION,
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  areaServed: 'Medellín, Colombia',
+  serviceType: 'Pintura arquitectónica',
+});
 
 const descriptionText = description?.raw?.children?.map((block: any) =>
   block.children.map((child: any) => child.text),
 );
 ---
 
+<ConditionalLayout
+  enabled={isStandalone}
+  title={`${title} en Medellín | Acabados Arkava`}
+  description={SEO_DESCRIPTION}
+  schema={serviceSchema}
+>
+  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto lg:h-[90vh] bg-primary !p-0">
   <!-- Contenedor principal: grid responsivo -->
   <div class="relative z-10 container mx-auto px-6 py-6 lg:py-0 h-full">
@@ -77,3 +106,4 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
     </div>
   </div>
 </Section>
+</ConditionalLayout>

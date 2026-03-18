@@ -15,6 +15,7 @@ interface Props {
   description?: string;
   ogImage?: string;
   canonicalURL?: string;
+  schema?: string;
 }
 
 // Imagen OG por defecto — reemplazar con imagen branded 1200x630px en /public/og-image.jpg
@@ -26,7 +27,48 @@ const {
   description = 'Empresa especializada en acabados arquitectónicos de alto nivel y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.',
   ogImage = OG_FALLBACK,
   canonicalURL = Astro.url.href,
+  schema,
 } = Astro.props;
+
+const phone = generalInfoArkava?.whatsapp
+  ? `+57${String(generalInfoArkava.whatsapp).replace(/\D/g, '')}`
+  : undefined;
+
+const localBusinessSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Arkava',
+  description:
+    'Empresa especializada en acabados arquitectónicos y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.',
+  url: 'https://arkava.com.co',
+  ...(phone && { telephone: phone }),
+  ...(generalInfoArkava?.email && { email: generalInfoArkava.email }),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Medellín',
+    addressRegion: 'Antioquia',
+    addressCountry: 'CO',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Medellín' },
+    { '@type': 'AdministrativeArea', name: 'Antioquia' },
+  ],
+  priceRange: '$$',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios de Acabados Arquitectónicos',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Pintura de interiores y exteriores' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Enchapes y revestimientos cerámicos' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Estuco decorativo' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Muros en Drywall y Superboard' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Muros decorativos y microcemento' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cielo rasos' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Carpintería a medida' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Argamasa y revoque' } },
+    ],
+  },
+});
 
 const headerInfo = {
   logo: generalInfoArkava?.logo?.url,
@@ -73,6 +115,10 @@ const headerInfo = {
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={localBusinessSchema} />
+    {schema && <script type="application/ld+json" set:html={schema} />}
   </head>
   <body class="min-h-dvh bg-white antialiased font-pp-sans">
     <Header headerInfo={headerInfo} />

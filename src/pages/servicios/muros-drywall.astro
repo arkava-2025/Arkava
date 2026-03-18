@@ -1,7 +1,29 @@
 ---
+import ConditionalLayout from '@/layouts/ConditionalLayout.astro';
 import Section from '@/components/atoms/Section.astro';
+import getServicioByIds from '@/lib/hygraph/queries/getServicioByIds';
 
-const { title, description, imageService, iconService } = Astro.props;
+const isStandalone = !Astro.props.title;
+let { title, description, imageService, iconService } = Astro.props;
+
+if (isStandalone) {
+  const service = await getServicioByIds('muros-drywall');
+  title = service?.title ?? 'Muros Drywall';
+  description = service?.description;
+  imageService = service?.imageService ?? [];
+  iconService = service?.iconService;
+}
+
+const SEO_DESCRIPTION = 'Instalación de muros en Drywall y Superboard en Medellín. Sistemas livianos de construcción para divisiones, cielos rasos y fachadas. Arkava.';
+const serviceSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: title,
+  description: SEO_DESCRIPTION,
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  areaServed: 'Medellín, Colombia',
+  serviceType: 'Construcción en seco Drywall',
+});
 
 const descriptionText = description?.raw?.children?.map((block: any) =>
   block.children.map((child: any) => child.text),
@@ -15,6 +37,13 @@ const getImageUrl = (index: number) => {
 };
 ---
 
+<ConditionalLayout
+  enabled={isStandalone}
+  title={`${title} en Medellín | Acabados Arkava`}
+  description={SEO_DESCRIPTION}
+  schema={serviceSchema}
+>
+  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto md:h-[90vh] bg-primary">
   <div class="container mx-auto px-6 lg:px-12 py-0 relative z-10">
     <!-- Decoración diagonal -->
@@ -88,3 +117,4 @@ const getImageUrl = (index: number) => {
     </div>
   </div>
 </Section>
+</ConditionalLayout>

@@ -1,8 +1,7 @@
 ---
-quote: "La atención al detalle y la estética sofisticada que aportaron a nuestro proyecto fue inigualable. Una experiencia premium de principio a fin."
-name: "Sarah Jenkins"
-role: "Chief Design Officer"
-company: "Linear"
-avatarUrl: "https://media.graphassets.com/1mE6q2r6Q0qJY2Kc9pH1"
+quote: "Arkava transformó por completo nuestro apartamento en El Poblado. Los enchapes del baño y la cocina quedaron perfectos, el estuco de las paredes tiene un acabado impecable y cumplieron los tiempos al pie de la letra. Totalmente recomendados."
+name: "Valentina Restrepo"
+role: "Propietaria"
+company: "Remodelación en El Poblado, Medellín"
 featured: true
 ---
