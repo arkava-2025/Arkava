@@ -18,12 +18,12 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
     >
       <img
         src={imageService?.[0]?.url}
-        alt="Cielo raso madera"
+        alt={`Instalación de ${title} en madera - Arkava Medellín`}
         class="w-full h-[48.5%] object-cover"
       />
       <img
         src={imageService?.[2]?.url}
-        alt="Instalación cielo raso"
+        alt={`${title} terminado - proyecto residencial Arkava`}
         class="w-full h-[48.5%] lg:w-[65%] flex justify-end object-cover"
       />
     </div>
@@ -51,7 +51,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <div class="w-full h-64 md:h-[48.5%] overflow-hidden hidden md:block">
         <img
           src={imageService?.[1]?.url}
-          alt="Drywall terminado"
+          alt={`Detalle de ${title} con drywall - acabado Arkava`}
           class="w-full h-full object-cover"
         />
       </div>

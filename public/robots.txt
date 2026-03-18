@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Bloquear rutas que no deben indexarse
+Disallow: /404
+Disallow: /draft/
+Disallow: /_astro/
+
+# Sitemap
+Sitemap: https://arkava.com.co/sitemap-index.xml

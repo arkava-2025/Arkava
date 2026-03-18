@@ -17,7 +17,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
     <div class="lg:col-span-5 w-full h-auto lg:h-full flex">
       <img
         src={imageService && imageService[0]?.url}
-        alt="Pasillo con estuco"
+        alt={`Aplicación de ${title} en interiores - Arkava Medellín`}
         class="w-full h-[380px] md:h-[520px] lg:h-full object-cover shadow-lg"
       />
     </div>
@@ -44,7 +44,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
         <!-- Imagen superior -->
         <img
           src={imageService && imageService[1]?.url}
-          alt="Estuco pared"
+          alt={`Detalle de ${title} en pared - acabado premium Arkava`}
           class="w-full h-[260px] md:h-[420px] lg:h-full object-cover flex"
         />
       </div>

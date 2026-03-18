@@ -69,7 +69,13 @@ const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
 );
 ---
 
-<BaseLayout title={title}>
+<BaseLayout
+  title={`${title} | Proyecto Arkava Medellín`}
+  description={relatedProject.description
+    ? relatedProject.description.slice(0, 155)
+    : `Proyecto de remodelación y acabados arquitectónicos en Medellín por Arkava. ${servicios ? `Servicios: ${servicios}.` : ''}`}
+  ogImage={coverImage?.url}
+>
   <!-- Hero Section -->
   <section class="relative h-[60vh] min-h-[400px] overflow-hidden">
     {

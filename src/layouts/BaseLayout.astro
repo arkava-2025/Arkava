@@ -10,7 +10,23 @@ import '@styles/fonts.css';
 
 const generalInfoArkava = await getGeneralPage();
 
-const { title = 'Arkava' } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+}
+
+// Imagen OG por defecto — reemplazar con imagen branded 1200x630px en /public/og-image.jpg
+// Mientras tanto usa una imagen real del portafolio como fallback
+const OG_FALLBACK = 'https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/contacto.webp';
+
+const {
+  title = 'Arkava | Acabados Arquitectónicos y Remodelación en Medellín',
+  description = 'Empresa especializada en acabados arquitectónicos de alto nivel y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.',
+  ogImage = OG_FALLBACK,
+  canonicalURL = Astro.url.href,
+} = Astro.props;
 
 const headerInfo = {
   logo: generalInfoArkava?.logo?.url,
@@ -25,15 +41,38 @@ const headerInfo = {
 <html lang="es-CO">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO primario -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Arkava" />
+    <meta name="publisher" content="Arkava" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Arkava" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).href} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="es_CO" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).href} />
+
+    <!-- Preload fuentes críticas (evita FOIT/CLS) -->
+    <link rel="preload" href="/fonts/PP-Supply/PPSupplySans-Regular.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/Helvetica/Helvetica.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta property="og:image" content="/og-image.jpg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="author" content={'Isa Corrales - CEO Arkava'} />
-    <meta name="publisher" content="Arkava" />
-    <meta name="description" content="" />
-    <title>{title}</title>
   </head>
   <body class="min-h-dvh bg-white antialiased font-pp-sans">
     <Header headerInfo={headerInfo} />
