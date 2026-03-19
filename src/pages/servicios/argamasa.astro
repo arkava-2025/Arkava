@@ -39,18 +39,16 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
-  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto md:h-[90vh] bg-terracota">
   <div class="container mx-auto px-6 lg:px-12 py-0 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <!-- Columna izquierda: texto -->
       <section class="col-span-5">
-        <h2
-          class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase"
-          style="letter-spacing: .65rem;"
-        >
-          {title}
-        </h2>
+        {isStandalone ? (
+          <h1 class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase" style="letter-spacing: .65rem;">{title}</h1>
+        ) : (
+          <h2 class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase" style="letter-spacing: .65rem;">{title}</h2>
+        )}
 
         <div class="border-l-2 border-white/50 pl-5 mb-10">
           <p
@@ -72,6 +70,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
               src={src_image_two}
               alt={`Aplicación de ${title} en muros - Arkava Medellín`}
               class="img-frame w-full h-[420px] lg:h-[580px] object-cover"
+              loading="lazy"
             />
           </figure>
         </div>
@@ -84,6 +83,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             src={src_image_one}
             alt={`${title} y revoque - acabado arquitectónico Arkava`}
             class="w-full h-auto object-cover grayscale filter img-frame border-2 border-white/10"
+            loading="lazy"
           />
         </div>
       </section>

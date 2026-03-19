@@ -40,7 +40,6 @@ const imageUrl2 = imageService?.[2]?.url;
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
-  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto 2xl:h-[93vh] bg-primary">
   <div
     class="container mx-auto px-6 lg:px-12 py-0 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 h-full xl:max-h-max"
@@ -50,11 +49,11 @@ const imageUrl2 = imageService?.[2]?.url;
       class="md:col-span-7 flex flex-col justify-start z-20 h-full md:h-[90vh] xl:h-[80vh]"
     >
       <div class="md:h-[28%]">
-        <h2
-          class="text-4xl md:text-6xl font-bold tracking-[0.20em] mb-3 text-white uppercase font-pp-sans"
-        >
-          {title}
-        </h2>
+        {isStandalone ? (
+          <h1 class="text-4xl md:text-6xl font-bold tracking-[0.20em] mb-3 text-white uppercase font-pp-sans">{title}</h1>
+        ) : (
+          <h2 class="text-4xl md:text-6xl font-bold tracking-[0.20em] mb-3 text-white uppercase font-pp-sans">{title}</h2>
+        )}
 
         <div class="border-l-2 border-white/40 pl-5 mb-6">
           <p
@@ -74,6 +73,7 @@ const imageUrl2 = imageService?.[2]?.url;
               src={imageUrl0}
               alt={`Servicio de ${title} a medida - Arkava Medellín`}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           )
         }
@@ -91,6 +91,7 @@ const imageUrl2 = imageService?.[2]?.url;
               src={imageUrl2}
               alt={`${title} en madera - proyecto ejecutado por Arkava`}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           )
         }
@@ -105,6 +106,7 @@ const imageUrl2 = imageService?.[2]?.url;
               src={imageUrl1}
               alt={`Detalle de ${title} arquitectónica - Arkava`}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           )
         }

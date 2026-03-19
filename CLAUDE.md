@@ -18,6 +18,7 @@ Aliado integral "llave en mano": desde evaluación técnica inicial hasta entreg
 - Carpintería arquitectónica a medida
 - Muros decorativos artesanales
 - Mantenimiento de planta física: obras civiles, plomería, electricidad
+- Diseño arquitectonico
 
 ### Metodología de 5 etapas
 1. Evaluación técnica

@@ -36,18 +36,17 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
-  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto md:h-[90vh] bg-terracota">
   <div
     class="container mx-auto px-6 lg:px-12 py-0 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-10"
   >
     <!-- ---- TEXTO ---- -->
     <div class="md:col-span-4 flex flex-col justify-start">
-      <h2
-        class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans"
-      >
-        {title}
-      </h2>
+      {isStandalone ? (
+        <h1 class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans">{title}</h1>
+      ) : (
+        <h2 class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans">{title}</h2>
+      )}
 
       <div class="border-l-2 border-white/40 pl-5 mb-6">
         <p
@@ -81,11 +80,13 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
           src={imageService?.[0]?.url}
           alt={`${title} - microcemento y venecianos Arkava Medellín`}
           class="w-[50%] h-full object-cover"
+          loading="lazy"
         />
         <img
           src={imageService?.[3]?.url}
           alt={`Acabado de ${title} artesanal - proyecto Arkava`}
           class="w-[50%] h-full object-cover"
+          loading="lazy"
         />
       </div>
 
@@ -97,6 +98,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
           src={imageService?.[2]?.url}
           alt={`${title} con porcelanato líquido - Arkava`}
           class="w-full h-full object-cover"
+          loading="lazy"
         />
       </div>
 
@@ -108,6 +110,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
           src={imageService?.[1]?.url}
           alt={`${title} imitación mármol - acabado premium Arkava Medellín`}
           class="w-full h-full object-cover"
+          loading="lazy"
         />
       </div>
     </div>

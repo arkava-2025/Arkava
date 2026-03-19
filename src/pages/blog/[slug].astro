@@ -1,0 +1,267 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const allPosts = await getCollection('blog');
+const related = allPosts
+  .filter((p) => p.slug !== post.slug && p.data.category === post.data.category)
+  .slice(0, 3);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('es-CO', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: 'Arkava',
+    url: 'https://arkava.com.co',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Arkava',
+    url: 'https://arkava.com.co',
+    logo: { '@type': 'ImageObject', url: 'https://arkava.com.co/favicon.png' },
+  },
+  image: post.data.image ?? 'https://arkava.com.co/og-image.jpg',
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `https://arkava.com.co/blog/${post.slug}`,
+  },
+});
+---
+
+<BaseLayout
+  title={`${post.data.title} | Blog Arkava`}
+  description={post.data.description}
+  ogImage={post.data.image}
+  schema={articleSchema}
+>
+  <!-- Breadcrumb -->
+  <nav class="bg-secondary border-b border-gray-200/60 py-3">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <ol class="flex items-center gap-2 text-xs font-helvetica text-gray-500">
+        <li>
+          <a href="/" class="hover:text-primary transition-colors">Inicio</a>
+        </li>
+        <li class="text-gray-300">/</li>
+        <li>
+          <a href="/blog" class="hover:text-primary transition-colors">Blog</a>
+        </li>
+        <li class="text-gray-300">/</li>
+        <li class="text-primary font-semibold truncate max-w-[200px]">
+          {post.data.title}
+        </li>
+      </ol>
+    </div>
+  </nav>
+
+  <article class="max-w-4xl mx-auto px-4 md:px-8 py-16">
+    <!-- Header del artículo -->
+    <header class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <span
+          class="bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wide font-helvetica"
+        >
+          {post.data.category}
+        </span>
+        <span class="text-gray-300">·</span>
+        <span class="text-xs text-gray-400 font-helvetica"
+          >{post.data.readTime} min de lectura</span
+        >
+      </div>
+
+      <h1
+        class="text-3xl md:text-5xl font-bold text-primary font-pp-sans leading-tight mb-6"
+      >
+        {post.data.title}
+      </h1>
+
+      <p class="text-xl text-gray-600 font-helvetica leading-relaxed mb-8">
+        {post.data.description}
+      </p>
+
+      <!-- Meta autor + fecha -->
+      <div
+        class="flex items-center justify-between pb-8 border-b border-gray-100"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0"
+          >
+            <span class="text-white text-sm font-bold font-pp-sans">A</span>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-800">
+              {post.data.author}
+            </p>
+            <p class="text-xs text-gray-400 font-helvetica">
+              {formatDate(post.data.pubDate)}
+            </p>
+          </div>
+        </div>
+
+        {
+          post.data.tags && post.data.tags.length > 0 && (
+            <div class="hidden md:flex items-center gap-2 flex-wrap justify-end">
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <span class="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md font-helvetica">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </header>
+
+    <!-- Imagen hero del artículo -->
+    {
+      post.data.image && (
+        <div class="mb-12 rounded-2xl overflow-hidden shadow-lg">
+          <img
+            src={post.data.image}
+            alt={post.data.imageAlt ?? post.data.title}
+            class="w-full h-72 md:h-96 object-cover object-top"
+            loading="eager"
+          />
+        </div>
+      )
+    }
+
+    <!-- Contenido MDX -->
+    <div
+      class="prose prose-lg max-w-none
+      prose-headings:font-pp-sans prose-headings:text-primary prose-headings:font-bold
+      prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-3 prose-h2:border-b prose-h2:border-gray-100
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-gray-800
+      prose-p:font-helvetica prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base prose-p:md:text-lg
+      prose-a:text-tertiary prose-a:font-semibold prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-gray-900 prose-strong:font-bold
+      prose-ul:font-helvetica prose-ul:text-gray-700
+      prose-ol:font-helvetica prose-ol:text-gray-700
+      prose-li:my-1
+      prose-blockquote:border-l-4 prose-blockquote:border-tertiary prose-blockquote:bg-secondary/50 prose-blockquote:rounded-r-xl prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-gray-700
+      prose-hr:border-gray-100
+      prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:text-primary"
+    >
+      <Content />
+    </div>
+
+    <!-- CTA dentro del artículo -->
+    <div class="mt-16 bg-primary rounded-2xl p-8 md:p-10 text-center">
+      <h3 class="text-2xl md:text-3xl font-bold text-white font-pp-sans mb-3">
+        ¿Listo para transformar tu espacio?
+      </h3>
+      <p class="text-white/70 font-helvetica mb-7 max-w-lg mx-auto">
+        Agenda una visita técnica gratuita y recibe un presupuesto transparente
+        sin compromiso.
+      </p>
+      <a
+        href="https://wa.me/573178121212?text=Hola, quiero agendar una visita técnica"
+        target="_blank"
+        class="inline-flex items-center gap-2 bg-secondary text-primary font-semibold px-8 py-3.5 rounded-full hover:bg-white transition-all duration-300 hover:shadow-lg"
+      >
+        Solicitar visita técnica
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+  </article>
+
+  <!-- Artículos relacionados -->
+  {
+    related.length > 0 && (
+      <section class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+          <h2 class="text-2xl md:text-3xl font-bold text-primary font-pp-sans mb-8">
+            Artículos relacionados
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {related.map((p) => (
+              <a href={`/blog/${p.slug}`} class="group block">
+                <article class="h-full rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-400">
+                  {p.data.image && (
+                    <div class="h-44 overflow-hidden">
+                      <img
+                        src={p.data.image}
+                        alt={p.data.imageAlt ?? p.data.title}
+                        class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div class="p-5">
+                    <span class="text-xs text-tertiary font-semibold uppercase tracking-wide font-helvetica">
+                      {p.data.category}
+                    </span>
+                    <h3 class="text-base font-bold text-gray-900 font-pp-sans mt-1 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {p.data.title}
+                    </h3>
+                    <span class="text-xs text-gray-400 font-helvetica">
+                      {p.data.readTime} min
+                    </span>
+                  </div>
+                </article>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Volver al blog -->
+  <div class="max-w-4xl mx-auto px-4 md:px-8 py-10">
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-2 text-primary font-semibold font-helvetica hover:text-tertiary transition-colors duration-200"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4 h-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+      </svg>
+      Volver al blog
+    </a>
+  </div>
+</BaseLayout>

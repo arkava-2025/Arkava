@@ -43,7 +43,6 @@ const getImageUrl = (index: number) => {
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
-  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto md:h-[90vh] bg-primary">
   <div class="container mx-auto px-6 lg:px-12 py-0 relative z-10">
     <!-- Decoración diagonal -->
@@ -56,11 +55,11 @@ const getImageUrl = (index: number) => {
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
       <!-- Texto -->
       <aside class="md:col-span-4 flex flex-col justify-start">
-        <h2
-          class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase"
-        >
-          {title}
-        </h2>
+        {isStandalone ? (
+          <h1 class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase">{title}</h1>
+        ) : (
+          <h2 class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase">{title}</h2>
+        )}
 
         <h2
           class="font-bold text-base md:text-2xl tracking-widest uppercase text-white/90 mb-6"
@@ -88,6 +87,7 @@ const getImageUrl = (index: number) => {
               src={getImageUrl(1)}
               alt={`Instalación de ${title} - Arkava Medellín`}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
 
@@ -99,6 +99,7 @@ const getImageUrl = (index: number) => {
               src={getImageUrl(2)}
               alt={`${title} terminado - proyecto ejecutado por Arkava`}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
 
@@ -110,6 +111,7 @@ const getImageUrl = (index: number) => {
               src={getImageUrl(0)}
               alt={`Estructura de ${title} en Superboard - Arkava`}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>

@@ -5,15 +5,15 @@ import MisionVision from '@/components/organisms/MisionVision.astro';
 import OurHistory from '@/components/organisms/OurHistory.astro';
 
 const imgs = [
-  'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/U9l9kstfWWpRl449CvhR4d0JeT0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/0SE7AXQ2fF2cbI9VpejbLJajyDM.jpeg',
-  'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/U9l9kstfWWpRl449CvhR4d0JeT0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/0SE7AXQ2fF2cbI9VpejbLJajyDM.jpeg',
-  'https://framerusercontent.com/images/U9l9kstfWWpRl449CvhR4d0JeT0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/57FQ23G8YHiC363dq9ZuPtwr0.jpeg?scale-down-to=2048',
-  'https://framerusercontent.com/images/0SE7AXQ2fF2cbI9VpejbLJajyDM.jpeg',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773872440/isa_ypovxq.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773872440/santi_rwbdmx.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773872440/diego_txhsbx.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773872441/alfred_pys569.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773875634/cami-disen%CC%83o_gmpj4c.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773876348/edgar_l3qsx3.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773872440/diego_txhsbx.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773872441/alfred_pys569.webp',
+  'https://res.cloudinary.com/dx9vtev71/image/upload/v1773875634/cami-disen%CC%83o_gmpj4c.webp',
 ];
 ---
 
@@ -22,7 +22,7 @@ const imgs = [
   description={'Conoce el equipo de Arkava, empresa de acabados arquitectónicos y remodelación en Medellín. Profesionales en enchapes, pintura, estuco, drywall y carpintería con más de 10 años de experiencia.'}
 >
   <section>
-    <div class="text-center relative top-40 z-10">
+    <div class="text-center relative top-20 z-10 pb-20">
       <h1
         class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight"
       >
@@ -44,7 +44,7 @@ const imgs = [
       <TeamCarousel images={imgs} client:load />
     </div>
 
-    <div class="relative -top-40 md:-top-24 lg:-top-36 z-10">
+    <div class="relative -top-40 md:-top-24 lg:-top-0 z-10">
       <div class="mx-auto max-w-6xl px-4 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div
@@ -103,5 +103,5 @@ const imgs = [
   </section>
 
   <div><MisionVision /></div>
-  <div><OurHistory /></div>
+  <!-- <div><OurHistory /></div> -->
 </BaseLayout>

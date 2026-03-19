@@ -36,7 +36,6 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
-  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto lg:h-[90vh] bg-primary !p-0">
   <!-- Contenedor principal: grid responsivo -->
   <div class="relative z-10 container mx-auto px-6 py-6 lg:py-0 h-full">
@@ -49,11 +48,11 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
           class="text-white rounded-sm py-8 md:py-10 lg:pt-20 md:px-0 h-full flex flex-col justify-start"
         >
           <!-- Título grande con tracking amplio -->
-          <h2
-            class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6"
-          >
-            {title}
-          </h2>
+          {isStandalone ? (
+            <h1 class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6">{title}</h1>
+          ) : (
+            <h2 class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6">{title}</h2>
+          )}
 
           <div class="flex gap-6">
             <!-- Línea vertical decorativa -->
@@ -77,6 +76,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             src={imageService?.[0]?.url}
             alt={`Servicio de ${title} - trabajo ejecutado por Arkava en Medellín`}
             class="w-full h-[280px] md:h-[360px] lg:h-full object-cover rounded shadow-xl"
+            loading="lazy"
           />
         </figure>
       </div>
@@ -91,6 +91,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             src={imageService?.[1]?.url}
             alt={`Detalle de ${title} profesional - Arkava Medellín`}
             class="w-full h-[220px] md:h-[360px] lg:h-full object-cover shadow-md"
+            loading="lazy"
           />
         </div>
 
@@ -100,6 +101,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
             src={imageService?.[2]?.url}
             alt={`Acabado de ${title} de alta calidad - proyecto Arkava`}
             class="w-full h-[260px] md:h-[360px] lg:h-full object-cover shadow-md"
+            loading="lazy"
           />
         </div>
       </div>

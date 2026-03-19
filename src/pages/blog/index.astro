@@ -1,0 +1,228 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// Artículos reales de la colección
+const allPosts = await getCollection('blog');
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featured = posts.find(p => p.data.featured) ?? posts[0];
+const rest      = posts.filter(p => p.slug !== featured?.slug);
+
+// Categorías únicas para el filtro visual
+const categories = ['Todos', ...new Set(posts.map(p => p.data.category))];
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<BaseLayout
+  title="Blog | Consejos de Remodelación y Acabados en Medellín — Arkava"
+  description="Artículos, guías y consejos sobre remodelación, acabados arquitectónicos y decoración de interiores en Medellín. Aprende con el equipo de Arkava."
+>
+  <!-- ======== HERO ======== -->
+  <section class="bg-primary pt-24 pb-32 relative overflow-hidden">
+    <!-- Decoración de fondo -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/[0.03] rounded-full -translate-y-1/2 translate-x-1/4"></div>
+      <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-tertiary/10 rounded-full translate-y-1/2 -translate-x-1/4"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-3/4 bg-white/5"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <span class="inline-block text-tertiary font-helvetica text-sm tracking-[0.3em] uppercase mb-6">
+        Conocimiento que transforma espacios
+      </span>
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white font-pp-sans leading-none tracking-tight mb-6">
+        Blog Arkava
+      </h1>
+      <p class="text-white/70 text-lg md:text-xl max-w-2xl mx-auto font-helvetica leading-relaxed">
+        Guías, consejos y tendencias sobre remodelación y acabados arquitectónicos
+        para que cada decisión sea la correcta.
+      </p>
+
+      <!-- Línea decorativa -->
+      <div class="flex items-center justify-center gap-3 mt-10">
+        <div class="h-px w-16 bg-white/20"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div>
+        <div class="h-px w-16 bg-white/20"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== ARTÍCULO DESTACADO ======== -->
+  {featured && (
+    <section class="max-w-7xl mx-auto px-4 md:px-8 -mt-16 relative z-10 mb-20">
+      <a href={`/blog/${featured.slug}`} class="group block">
+        <article class="grid grid-cols-1 lg:grid-cols-2 rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 hover:shadow-[0_32px_80px_-12px_rgba(46,72,62,0.18)] transition-all duration-700">
+          <!-- Imagen -->
+          <div class="relative h-72 lg:h-auto overflow-hidden">
+            {featured.data.image ? (
+              <img
+                src={featured.data.image}
+                alt={featured.data.imageAlt ?? featured.data.title}
+                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-1000"
+                loading="eager"
+              />
+            ) : (
+              <div class="w-full h-full bg-primary/10 flex items-center justify-center">
+                <span class="text-primary/30 font-pp-sans text-6xl font-bold">A</span>
+              </div>
+            )}
+            <div class="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent lg:bg-none"></div>
+            <!-- Badge destacado -->
+            <span class="absolute top-5 left-5 bg-tertiary text-white text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide uppercase">
+              Destacado
+            </span>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-8 md:p-12 flex flex-col justify-center">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="text-xs font-semibold text-tertiary uppercase tracking-widest font-helvetica">
+                {featured.data.category}
+              </span>
+              <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+              <span class="text-xs text-gray-400 font-helvetica">
+                {featured.data.readTime} min de lectura
+              </span>
+            </div>
+
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary font-pp-sans leading-tight mb-4 group-hover:text-tertiary transition-colors duration-300">
+              {featured.data.title}
+            </h2>
+
+            <p class="text-gray-600 font-helvetica leading-relaxed mb-8 text-base md:text-lg line-clamp-3">
+              {featured.data.description}
+            </p>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                  <span class="text-white text-xs font-bold font-pp-sans">A</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-gray-800">{featured.data.author}</p>
+                  <p class="text-xs text-gray-400 font-helvetica">{formatDate(featured.data.pubDate)}</p>
+                </div>
+              </div>
+              <span class="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:text-tertiary transition-colors duration-300">
+                Leer artículo
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </article>
+      </a>
+    </section>
+  )}
+
+  <!-- ======== GRID DE ARTÍCULOS ======== -->
+  <section class="hidden max-w-7xl mx-auto px-4 md:px-8 pb-24">
+
+    <!-- Cabecera sección -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div>
+        <span class="text-tertiary text-xs font-semibold tracking-[0.3em] uppercase font-helvetica">Todos los artículos</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-primary font-pp-sans mt-1">Más publicaciones</h2>
+      </div>
+      <!-- Filtros (visual, sin JS por ahora) -->
+      <div class="flex flex-wrap gap-2">
+        {categories.map((cat, i) => (
+          <span class={[
+            'px-4 py-1.5 rounded-full text-sm font-semibold font-helvetica cursor-pointer border transition-all duration-200',
+            i === 0
+              ? 'bg-primary text-white border-primary'
+              : 'bg-white text-gray-500 border-gray-200 hover:border-primary hover:text-primary'
+          ].join(' ')}>
+            {cat}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <!-- Grid -->
+    {rest.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {rest.map((post) => (
+          <a href={`/blog/${post.slug}`} class="group block">
+            <article class="h-full rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
+              <!-- Imagen -->
+              <div class="relative h-56 overflow-hidden">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt={post.data.imageAlt ?? post.data.title}
+                    class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-primary/8 flex items-center justify-center">
+                    <span class="text-primary/20 font-pp-sans text-5xl font-bold">A</span>
+                  </div>
+                )}
+                <!-- Categoría sobre imagen -->
+                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
+                  {post.data.category}
+                </span>
+              </div>
+
+              <!-- Contenido -->
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3 text-xs text-gray-400 font-helvetica">
+                  <span>{formatDate(post.data.pubDate)}</span>
+                  <span>·</span>
+                  <span>{post.data.readTime} min</span>
+                </div>
+
+                <h3 class="text-lg font-bold text-gray-900 font-pp-sans leading-snug mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                  {post.data.title}
+                </h3>
+
+                <p class="text-gray-500 font-helvetica text-sm leading-relaxed line-clamp-3 mb-5">
+                  {post.data.description}
+                </p>
+
+                <span class="inline-flex items-center gap-1.5 text-primary font-semibold text-sm group-hover:text-tertiary transition-colors duration-300">
+                  Leer más
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-gray-400 font-helvetica py-16">Próximamente más artículos.</p>
+    )}
+  </section>
+
+  <!-- ======== CTA FINAL ======== -->
+  <section class="bg-secondary py-20">
+    <div class="max-w-3xl mx-auto px-4 md:px-8 text-center">
+      <span class="text-tertiary text-xs font-semibold tracking-[0.3em] uppercase font-helvetica">¿Tienes un proyecto?</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-primary font-pp-sans mt-3 mb-5">
+        Hablemos de tu remodelación
+      </h2>
+      <p class="text-gray-600 font-helvetica leading-relaxed mb-8">
+        Agenda una visita técnica. Te presentamos un presupuesto transparente
+        y te acompañamos desde el diseño hasta la entrega.
+      </p>
+      <a
+        href="https://wa.me/573178121212?text=Hola, quiero agendar una visita técnica"
+        target="_blank"
+        class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-8 py-3.5 rounded-full hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+      >
+        Solicitar visita técnica
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

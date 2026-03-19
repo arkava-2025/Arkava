@@ -36,7 +36,6 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
-  {isStandalone && <h1 class="sr-only">{title} — Servicio de Acabados Arkava Medellín</h1>}
 <Section style="h-auto md:h-[90vh] bg-white !py-0">
   <div
     class="container mx-auto flex flex-col items-center px-6 py-8 lg:py-0 md:flex-row gap-6 h-full"
@@ -49,11 +48,13 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
         src={imageService?.[0]?.url}
         alt={`Instalación de ${title} en madera - Arkava Medellín`}
         class="w-full h-[48.5%] object-cover"
+        loading="lazy"
       />
       <img
         src={imageService?.[2]?.url}
         alt={`${title} terminado - proyecto residencial Arkava`}
         class="w-full h-[48.5%] lg:w-[65%] flex justify-end object-cover"
+        loading="lazy"
       />
     </div>
 
@@ -62,11 +63,11 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <div
         class="h-[48.5%] w-full py-6 px-4 lg:px-12 lg:py-18 flex md:items-center flex-col justify-center"
       >
-        <h2
-          class="text-5xl md:text-6xl font-bold uppercase tracking-[0.25em] text-gray-800 mb-6 font-pp-sans"
-        >
-          {title}
-        </h2>
+        {isStandalone ? (
+          <h1 class="text-5xl md:text-6xl font-bold uppercase tracking-[0.25em] text-gray-800 mb-6 font-pp-sans">{title}</h1>
+        ) : (
+          <h2 class="text-5xl md:text-6xl font-bold uppercase tracking-[0.25em] text-gray-800 mb-6 font-pp-sans">{title}</h2>
+        )}
 
         <div class="border-l-2 border-gray-500/70 pl-5 mb-10">
           <p
@@ -82,6 +83,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
           src={imageService?.[1]?.url}
           alt={`Detalle de ${title} con drywall - acabado Arkava`}
           class="w-full h-full object-cover"
+          loading="lazy"
         />
       </div>
     </div>
