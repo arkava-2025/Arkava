@@ -134,10 +134,6 @@ El drywall con acabado liso y pintura. Las habitaciones no tienen humedad ni des
 
 Sí, pero el material importa. El PVC es la opción más recomendada para baños por su resistencia total al agua y bajo mantenimiento. El drywall también funciona si se usa placa resistente a la humedad (tipo H) y el baño tiene ventilación adecuada. La yeso tradicional y los paneles baratos se deterioran rápidamente con el vapor.
 
-### ¿Cuánto cuesta instalar cielo raso en Colombia?
-
-Depende del material y el área. En general: PVC entre $15.000 y $25.000 COP/m²; drywall entre $35.000 y $50.000 COP/m²; fibra mineral entre $45.000 y $60.000 COP/m²; madera o MDF entre $40.000 y $70.000 COP/m². Diseños con foseados o iluminación indirecta tienen un costo adicional.
-
 ### ¿Cuánto tiempo tarda la instalación de un cielo raso?
 
 Para un espacio residencial de 50 a 80 m², entre 2 y 4 días. Diseños complejos con foseados, curvas o niveles escalonados pueden requerir de 5 a 7 días. Proyectos comerciales grandes se estiman individualmente.
