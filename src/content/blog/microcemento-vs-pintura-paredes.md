@@ -134,10 +134,6 @@ Depende del uso. El microcemento es mejor en zonas húmedas, proyectos de diseñ
 
 Con aplicación correcta y sellado cada 2 a 3 años, el microcemento en paredes dura entre 15 y 25 años. En zonas secas sin impactos mecánicos, la vida útil puede ser mayor.
 
-### ¿Cuánto cuesta el microcemento por m² en Medellín?
-
-En Medellín, el precio del microcemento instalado oscila entre $80.000 y $150.000 COP por m², dependiendo del tipo de material, la complejidad de la superficie y el nivel de acabado. La pintura acrílica premium instalada cuesta entre $18.000 y $35.000 COP por m².
-
 ### ¿Puede aplicarse microcemento sobre pintura existente?
 
 Sí, siempre que la pintura esté bien adherida y sin descascaramientos. Si la pintura tiene problemas de adherencia, primero hay que sanear la superficie. Aplicar microcemento sobre pintura en mal estado garantiza que el resultado falle.
