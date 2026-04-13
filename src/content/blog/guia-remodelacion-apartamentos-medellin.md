@@ -5,7 +5,7 @@ pubDate: 2026-03-18
 author: "Equipo Arkava"
 category: "Guías"
 tags: ["remodelación", "apartamentos", "Medellín", "costos", "acabados"]
-image: "https://res.cloudinary.com/dx9vtev71/image/upload/v1773883609/guia_ktqffv.webp"
+image: "https://res.cloudinary.com/dx9vtev71/image/upload/q_auto/f_auto/v1776042340/FB_IMG_1773686765734_seg0za.webp"
 imageAlt: "Remodelación de apartamento en Medellín — Arkava"
 featured: true
 readTime: 9
