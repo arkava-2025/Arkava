@@ -169,3 +169,11 @@ Remodelar la cocina es la inversión con mayor retorno en cualquier inmueble. La
 En **Arkava** acompañamos el proceso completo, desde la visita técnica hasta la entrega final, con presupuesto transparente, contrato legal y pólizas de cumplimiento. Si tienes una cocina que transformar en Medellín, estamos listos para hacerlo bien.
 
 **[Agenda tu visita técnica →](/contacto)**
+
+---
+
+## También te puede interesar
+
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — El baño y la cocina son el combo que más valoriza un apartamento. Aquí los precios reales por ítem.
+- [Microcemento vs pintura vs estuco: comparativa 2026](/blog/microcemento-vs-pintura-paredes) — Para los muros de tu cocina: cuál acabado aguanta más y qué conviene según el presupuesto.
+- [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin) — Si el proyecto incluye más espacios, esta guía tiene los costos y etapas del proceso completo.

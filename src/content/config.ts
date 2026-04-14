@@ -30,6 +30,7 @@ const blog = defineCollection({
     imageAlt:    z.string().optional(),
     featured:    z.boolean().optional(),
     readTime:    z.number().optional(),
+    faq:         z.array(z.object({ q: z.string(), a: z.string() })).optional(),
   }),
 });
 

@@ -26,7 +26,7 @@ function formatDate(date: Date) {
   });
 }
 
-const articleSchema = JSON.stringify({
+const articleSchemaObj = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: post.data.title,
@@ -48,7 +48,23 @@ const articleSchema = JSON.stringify({
     '@type': 'WebPage',
     '@id': `https://arkava.com.co/blog/${post.slug}`,
   },
-});
+};
+
+const schemaItems: object[] = [articleSchemaObj];
+
+if (post.data.faq && post.data.faq.length > 0) {
+  schemaItems.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: post.data.faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  });
+}
+
+const articleSchema = JSON.stringify(schemaItems.length === 1 ? schemaItems[0] : schemaItems);
 ---
 
 <BaseLayout

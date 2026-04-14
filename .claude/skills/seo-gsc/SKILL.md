@@ -1,28 +1,28 @@
 ---
 name: seo-gsc
 description: >
-  Google Search Console real-data analysis for Comfort Design (comfortdesign.com.co).
+  Google Search Console real-data analysis for Arkava (arkava.com.co).
   Connects live to GSC API via service account to fetch clicks, impressions, CTR and
   position data. Use when user says "/seo-gsc", "keywords de oportunidad", "datos de
   Search Console", "qué páginas optimizo", "brief con datos reales", "cómo va el sitio
   en Google", "qué buscan los usuarios", or "rendimiento en buscadores".
 metadata:
-  author: comfort-design-local
+  author: arkava-local
   type: local
-  site: comfortdesign.com.co
-  property: sc-domain:comfortdesign.com.co
+  site: arkava.com.co
+  property: sc-domain:arkava.com.co
 ---
 
-# seo-gsc — Google Search Console para Comfort Design
+# seo-gsc — Google Search Console para Arkava
 
-Skill que extrae datos reales de Google Search Console para `comfortdesign.com.co`
+Skill que extrae datos reales de Google Search Console para `arkava.com.co`
 y los convierte en decisiones SEO accionables. Siempre trabaja con datos frescos de la API.
 
 ## Credenciales
 
 ```
-SA_FILE = "/Users/bryanvillamil/Documents/comfort-design-443921-0b0d92bc2dc8.json"
-PROPERTY = "sc-domain:comfortdesign.com.co"
+SA_FILE = "/Users/bryanvillamil/Documents/arkava-490622-652600940733.json"
+PROPERTY = "https://www.arkava.com.co/"
 SCOPES   = ["https://www.googleapis.com/auth/webmasters.readonly"]
 ```
 

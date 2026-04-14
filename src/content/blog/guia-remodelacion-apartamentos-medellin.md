@@ -1,6 +1,6 @@
 ---
-title: "Guía completa para remodelar un apartamento en Medellín: costos, etapas y consejos"
-description: "Todo lo que necesitas saber antes de remodelar tu apartamento en Medellín. Costos reales por metro cuadrado, etapas del proceso, materiales recomendados y cómo elegir una empresa confiable."
+title: "Remodelación de apartamentos en Medellín: costos reales 2026, etapas y consejos"
+description: "¿Cuánto cuesta remodelar un apartamento en Medellín? Desde $850.000/m² integral hasta enchapes por $120.000/m². Costos reales 2026, etapas y cómo elegir empresa confiable."
 pubDate: 2026-03-18
 author: "Equipo Arkava"
 category: "Guías"
@@ -9,11 +9,22 @@ image: "https://res.cloudinary.com/dx9vtev71/image/upload/q_auto/f_auto/v1776042
 imageAlt: "Remodelación de apartamento en Medellín — Arkava"
 featured: true
 readTime: 9
+faq:
+  - q: "¿Cuánto cuesta remodelar un apartamento en Medellín?"
+    a: "Una remodelación integral en Medellín puede costar entre $850.000 y $1.800.000 por metro cuadrado, dependiendo del nivel de acabado. La pintura de interiores cuesta entre $18.000 y $35.000/m² y el enchape de baños entre $120.000 y $280.000/m²."
+  - q: "¿Cuánto tarda una remodelación de apartamento en Medellín?"
+    a: "Un apartamento de 60-80 m² con remodelación media tarda entre 6 y 10 semanas. Los plazos se acuerdan en el contrato de acuerdo al análisis técnico de la visita."
+  - q: "¿Vale la pena remodelar antes de vender el apartamento?"
+    a: "En la mayoría de los casos, sí. Una remodelación estratégica en baños, cocina, pisos y pintura puede aumentar el precio de venta un 12-25% y reducir el tiempo de venta significativamente."
+  - q: "¿Cómo elegir una empresa de remodelación en Medellín?"
+    a: "Verifica que ofrezca contrato legal, pólizas de cumplimiento, pagos por avance (nunca el total al inicio) y visita técnica inicial. Una empresa seria como Arkava siempre formaliza el acuerdo con documentos que especifiquen alcances, plazos y materiales."
 ---
 
-Remodelar un apartamento en Medellín es una de las decisiones más importantes que puedes tomar como propietario o arrendador. Ya sea para mejorar la calidad de vida, aumentar el valor del inmueble o prepararlo para arriendo temporal, una remodelación bien ejecutada puede transformar completamente un espacio.
+La **remodelación de apartamentos en Medellín** es una de las decisiones más importantes que puedes tomar como propietario o arrendador. Ya sea para mejorar la calidad de vida, aumentar el valor del inmueble o prepararlo para arriendo temporal, una remodelación bien ejecutada puede transformar completamente un espacio.
 
-En esta guía te explicamos **todo lo que debes saber antes de comenzar**: costos reales, etapas del proceso, materiales recomendados y cómo evitar los errores más comunes.
+En esta guía encontrarás **costos reales actualizados a 2026**, las etapas de un proceso profesional, qué acabados tienen mejor retorno y cómo evitar los errores más comunes al contratar en Medellín.
+
+> **¿Listo para cotizar tu proyecto?** [Agenda visita técnica →](/contacto)
 
 ---
 
@@ -167,3 +178,12 @@ Remodelar un apartamento en Medellín es una inversión que, bien ejecutada, mej
 En **Arkava** llevamos más de doce años ejecutando proyectos de remodelación y acabados arquitectónicos en toda el área metropolitana de Medellín. Si tienes un proyecto en mente, con gusto te hacemos una visita técnica y te presentamos una propuesta transparente.
 
 **[Contáctanos y agenda tu visita técnica →](/contacto)**
+
+---
+
+## También te puede interesar
+
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — Precios reales por ítem: enchape, sanitarios, grifería y mano de obra.
+- [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales) — La cocina y el baño son el combo con mayor retorno. Aquí los precios completos.
+- [Tipos de cielo raso en Medellín: precios 2026](/blog/tipos-cielo-raso-hogar) — Drywall, PVC, fibra mineral: cuál elegir según el espacio y cuánto cuesta instalar.
+- [Microcemento vs pintura vs estuco: cuál elegir para tus paredes](/blog/microcemento-vs-pintura-paredes) — Comparativa de acabados con precios reales para ayudarte a decidir.

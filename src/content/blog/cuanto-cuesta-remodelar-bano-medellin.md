@@ -1,6 +1,6 @@
 ---
-title: "¿Cuánto cuesta remodelar un baño en Medellín? Guía de precios 2026"
-description: "Guía actualizada con precios reales para remodelar un baño en Medellín en 2026. Costos por ítem, tipos de remodelación y consejos para no desperdiciar tu presupuesto."
+title: "¿Cuánto cuesta remodelar un baño en Medellín? Precios de enchape 2026"
+description: "Enchapar un baño en Medellín cuesta entre $90.000 y $350.000/m². Guía de precios reales 2026: enchape, sanitarios, grifería, mano de obra y qué no hacer. Cotización gratis."
 pubDate: 2026-04-12
 author: "Equipo Arkava"
 category: "Guías"
@@ -9,6 +9,15 @@ image: "https://res.cloudinary.com/dx9vtev71/image/upload/q_auto/f_auto/v1776038
 imageAlt: "Baño remodelado con enchapes modernos — proyecto Arkava en Medellín"
 featured: true
 readTime: 10
+faq:
+  - q: "¿Cuánto cuesta enchapar un baño en Medellín?"
+    a: "En Medellín, el enchape de baño cuesta entre $90.000 y $350.000 por m² instalado (materiales + mano de obra). Cerámica económica: $90.000–$130.000/m². Porcelanato nacional: $140.000–$200.000/m². Porcelanato rectificado o importado: $220.000–$350.000/m²."
+  - q: "¿Cuánto cuesta remodelar un baño completo en Medellín?"
+    a: "Una remodelación completa de baño en Medellín cuesta entre $6.000.000 y $12.000.000 incluyendo enchape total, sanitarios, grifería e iluminación. Proyectos premium con materiales importados pueden superar los $25.000.000."
+  - q: "¿Cuánto cobra la mano de obra para enchapar un baño en Colombia?"
+    a: "La mano de obra de enchape en Medellín cuesta entre $30.000 y $60.000 por m², sin incluir materiales. La mano de obra total para remodelación completa de baño oscila entre $1.800.000 y $3.500.000."
+  - q: "¿Cuánto tiempo tarda remodelar un baño?"
+    a: "Una remodelación completa de baño con enchape total tarda entre 10 y 15 días. Proyectos con cambio de puntos hidráulicos pueden requerir hasta 25 días."
 ---
 
 Remodelar un baño en Medellín cuesta entre **$2.500.000 y $20.000.000**, dependiendo del tamaño, los materiales y el nivel de acabado. Si incluyes cambio de sanitarios, grifería y enchapes de alto nivel, un baño premium puede superar los $25.000.000.
@@ -163,3 +172,11 @@ El costo de remodelar un baño en Medellín depende de las decisiones que tomes 
 En **Arkava** hacemos la visita técnica para darte un presupuesto real, detallado y sin sorpresas. Nuestros proyectos en El Poblado, Laureles, Envigado y toda el área metropolitana hablan por nosotros.
 
 **[Solicita tu cotización →](/contacto)**
+
+---
+
+## También te puede interesar
+
+- [Tipos de cielo raso en Medellín: precios reales 2026](/blog/tipos-cielo-raso-hogar) — Si también renovarás el techo, esta guía te muestra qué material se adapta a cada espacio y cuánto cuesta realmente.
+- [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales) — Después del baño, la cocina es el espacio con mayor retorno de inversión. Guía completa de precios.
+- [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin) — Si tu proyecto va más allá del baño, aquí están los costos y etapas de una remodelación completa.
