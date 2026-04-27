@@ -20,7 +20,8 @@ interface Props {
 
 // Imagen OG por defecto — reemplazar con imagen branded 1200x630px en /public/og-image.jpg
 // Mientras tanto usa una imagen real del portafolio como fallback
-const OG_FALLBACK = 'https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/contacto.webp';
+const OG_FALLBACK =
+  'https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/contacto.webp';
 
 const {
   title = 'Arkava | Acabados Arquitectónicos y Remodelación en Medellín',
@@ -58,14 +59,50 @@ const localBusinessSchema = JSON.stringify({
     '@type': 'OfferCatalog',
     name: 'Servicios de Acabados Arquitectónicos',
     itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Pintura de interiores y exteriores' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Enchapes y revestimientos cerámicos' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Estuco decorativo' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Muros en Drywall y Superboard' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Muros decorativos y microcemento' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cielo rasos' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Carpintería a medida' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Argamasa y revoque' } },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Pintura de interiores y exteriores',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Enchapes y revestimientos cerámicos',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Estuco decorativo' },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Muros en Drywall y Superboard',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Muros decorativos y microcemento',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Cielo rasos' },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Carpintería a medida' },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Argamasa y revoque' },
+      },
     ],
   },
 });
@@ -98,7 +135,12 @@ const headerInfo = {
     <meta property="og:site_name" content="Arkava" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).href} />
+    <meta
+      property="og:image"
+      content={ogImage.startsWith('http')
+        ? ogImage
+        : new URL(ogImage, Astro.site).href}
+    />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="es_CO" />
 
@@ -106,11 +148,31 @@ const headerInfo = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).href} />
+    <meta
+      name="twitter:image"
+      content={ogImage.startsWith('http')
+        ? ogImage
+        : new URL(ogImage, Astro.site).href}
+    />
+
+    <!-- Pinterest -->
+    <meta name="p:domain_verify" content="29fd07084c729214eeb62b40aab8a34b" />
 
     <!-- Preload fuentes críticas (evita FOIT/CLS) -->
-    <link rel="preload" href="/fonts/PP-Supply/PPSupplySans-Regular.otf" as="font" type="font/otf" crossorigin="anonymous" />
-    <link rel="preload" href="/fonts/Helvetica/Helvetica.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+    <link
+      rel="preload"
+      href="/fonts/PP-Supply/PPSupplySans-Regular.otf"
+      as="font"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Helvetica/Helvetica.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
