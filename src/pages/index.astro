@@ -1,5 +1,4 @@
 ---
-import type { HomePageQuery } from '@/gql/graphql';
 import getHomePage from '@/lib/hygraph/queries/getHomePage';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ComponentRenderer from '@/components/ComponentRenderer.astro';
@@ -10,10 +9,11 @@ import {
   buildOrderedSections,
 } from '@/lib/utils/sections/index';
 
-const { page }: HomePageQuery = await getHomePage(
+const homeData = await getHomePage(
   'home',
   isPreview() ? 'DRAFT' : 'PUBLISHED',
 );
+const page = homeData.page;
 
 const general = await getGeneralPage();
 
@@ -21,11 +21,26 @@ const orderedSections = buildOrderedSections(
   page?.sections as any[],
   sectionOrder,
 );
+
+const rawHomeTitle = page?.title?.trim();
+const defaultHomeTitle =
+  'Arkava | Acabados arquitectónicos y remodelación integral en Medellín';
+const homeTitle =
+  rawHomeTitle && rawHomeTitle.length > 0
+    ? rawHomeTitle.toLowerCase().includes('arkava')
+      ? rawHomeTitle
+      : `Arkava | ${rawHomeTitle}`
+    : defaultHomeTitle;
+
+const homeCanonical = Astro.site
+  ? new URL('/', Astro.site).href
+  : 'https://arkava.com.co/';
 ---
 
 <BaseLayout
-  title={page?.title ?? 'Arkava | Acabados Arquitectónicos y Remodelación en Medellín'}
+  title={homeTitle}
   description={page?.description ?? 'Empresa especializada en acabados arquitectónicos de alto nivel y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.'}
+  canonicalURL={homeCanonical}
 >
   <main class="mb-6">
     {

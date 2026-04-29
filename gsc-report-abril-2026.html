@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSC Report — Arkava · Abril 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #0a0a0a; color: #e5e5e5; line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* Header */
+  .header { border-bottom: 1px solid #222; padding-bottom: 2rem; margin-bottom: 2.5rem; }
+  .header h1 { font-size: 1.75rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .header .meta { color: #666; font-size: 0.85rem; margin-top: 0.4rem; }
+  .badge { display: inline-block; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 0.2rem 0.6rem; font-size: 0.75rem; color: #888; margin-left: 0.5rem; }
+
+  /* KPI Grid */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .kpi { background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.25rem 1.5rem; }
+  .kpi .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .kpi .value { font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; }
+  .kpi .delta { font-size: 0.8rem; margin-top: 0.5rem; }
+  .delta.up { color: #22c55e; }
+  .delta.down { color: #ef4444; }
+  .delta.neutral { color: #666; }
+  .kpi.highlight { border-color: #f59e0b44; background: #111; }
+  .kpi.highlight .value { color: #f59e0b; }
+
+  /* Section */
+  .section { margin-bottom: 3rem; }
+  .section-title { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid #1e1e1e; display: flex; align-items: center; gap: 0.5rem; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot.red { background: #ef4444; }
+  .dot.yellow { background: #f59e0b; }
+  .dot.green { background: #22c55e; }
+  .dot.blue { background: #3b82f6; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; padding: 0.6rem 1rem; color: #555; font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #1e1e1e; }
+  td { padding: 0.7rem 1rem; border-bottom: 1px solid #161616; color: #ccc; vertical-align: middle; }
+  tr:hover td { background: #111; }
+  .url-cell { color: #888; font-size: 0.78rem; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pos-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+  .pos-1 { background: #14532d33; color: #22c55e; }
+  .pos-2 { background: #14532d22; color: #86efac; }
+  .pos-5 { background: #78350f22; color: #f59e0b; }
+  .pos-10 { background: #7f1d1d22; color: #f87171; }
+  .pos-high { background: #1e1e1e; color: #555; }
+
+  /* Pill tags */
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+  .tag-urgente { background: #7f1d1d33; color: #f87171; border: 1px solid #7f1d1d55; }
+  .tag-media { background: #78350f33; color: #fbbf24; border: 1px solid #78350f55; }
+  .tag-baja { background: #14532d33; color: #4ade80; border: 1px solid #14532d55; }
+  .tag-crisis { background: #4c1d9533; color: #a78bfa; border: 1px solid #4c1d9555; }
+
+  /* Alert boxes */
+  .alert { border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 0.875rem; }
+  .alert-red { background: #7f1d1d22; border: 1px solid #7f1d1d55; color: #fca5a5; }
+  .alert-yellow { background: #78350f22; border: 1px solid #78350f55; color: #fcd34d; }
+  .alert-green { background: #14532d22; border: 1px solid #14532d55; color: #86efac; }
+  .alert-blue { background: #1e3a5f22; border: 1px solid #1e3a5f55; color: #93c5fd; }
+  .alert strong { font-weight: 600; }
+
+  /* Specs list */
+  .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .spec-card { background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.25rem; }
+  .spec-card.priority-1 { border-color: #ef444455; }
+  .spec-card.priority-2 { border-color: #f59e0b55; }
+  .spec-card.priority-3 { border-color: #3b82f655; }
+  .spec-header { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .spec-number { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+  .n1 { background: #7f1d1d44; color: #f87171; }
+  .n2 { background: #78350f44; color: #fbbf24; }
+  .n3 { background: #1e3a5f44; color: #93c5fd; }
+  .spec-title { font-weight: 600; font-size: 0.9rem; color: #fff; line-height: 1.3; }
+  .spec-body { font-size: 0.8rem; color: #888; line-height: 1.6; }
+  .spec-body ul { padding-left: 1rem; }
+  .spec-body li { margin-bottom: 0.25rem; }
+  .spec-kw { display: inline-block; background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 3px; padding: 0.1rem 0.4rem; font-family: monospace; font-size: 0.75rem; color: #a3e635; margin: 0.1rem; }
+
+  /* Potential chart */
+  .potential-bar { background: #1a1a1a; border-radius: 6px; overflow: hidden; height: 8px; margin-top: 0.4rem; }
+  .potential-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  /* Footer */
+  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #1e1e1e; color: #444; font-size: 0.8rem; display: flex; justify-content: space-between; }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .specs-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Google Search Console — Reporte Mensual
+      <span class="badge">Arkava.com.co</span>
+      <span class="badge">Mar 27 → Abr 26, 2026</span>
+    </h1>
+    <div class="meta">Generado el 26 de abril 2026 · Comparado vs. período anterior (Feb 25 → Mar 26)</div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Clicks</div>
+      <div class="value">5</div>
+      <div class="delta up">↑ +150% vs. período ant. (2)</div>
+    </div>
+    <div class="kpi highlight">
+      <div class="label">Impresiones</div>
+      <div class="value">585</div>
+      <div class="delta up">↑ +5,750% vs. período ant. (10)</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR Promedio</div>
+      <div class="value">0.85%</div>
+      <div class="delta down">↓ vs. 20% ant. (volumen era mínimo)</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Posición Promedio</div>
+      <div class="value">5.5</div>
+      <div class="delta up">↑ Mejoró desde 14.7</div>
+    </div>
+  </div>
+
+  <!-- Diagnosis general -->
+  <div class="section">
+    <div class="section-title"><span class="dot red"></span> Diagnóstico General</div>
+
+    <div class="alert alert-blue" style="margin-bottom: 1rem;">
+      <strong>Contexto:</strong> El salto de 10 → 585 impresiones en un mes es señal de que el blog está empezando a indexar. El sitio está en fase de despegue — Google está descubriendo el contenido pero aún no hay suficiente autoridad para convertir impresiones en clics. Esto es normal y esperado en meses 1-3 de una estrategia de contenido SEO.
+    </div>
+
+    <div class="alert alert-red">
+      <strong>Problema crítico:</strong> Arkava tiene <strong>217 impresiones en /blog/tipos-cielo-raso-hogar</strong> con posición promedio 3.8 y <strong>0 clics</strong>. El artículo rankea en top 3-4 pero nadie hace clic. El snippet (title/meta description) no está convirtiendo. Esto es dinero dejado en la mesa — es la prioridad #1.
+    </div>
+
+    <div class="alert alert-yellow">
+      <strong>Oportunidad inmediata:</strong> /blog/cuanto-cuesta-enchape-medellin tiene 162 impresiones, posición 6.8, 0 clics. Keyword de alta intención comercial. Con un snippet optimizado podría traer 10-15 clics/mes de leads cualificados.
+    </div>
+
+    <div class="alert alert-green">
+      <strong>Lo que está funcionando:</strong> /blog/guia-remodelacion-apartamentos-medellin es la página más activa con 2 clics y CTR de 1.44% en posición 6.4. Hay tracción. Optimizar su snippet puede duplicar o triplicar los clics sin tocar el contenido.
+    </div>
+  </div>
+
+  <!-- Top páginas -->
+  <div class="section">
+    <div class="section-title"><span class="dot blue"></span> Top Páginas por Impresiones (últimos 30 días)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th class="num">Impr.</th>
+          <th class="num">Clics</th>
+          <th class="num">CTR</th>
+          <th class="num">Posición</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num">217</td>
+          <td class="num">0</td>
+          <td class="num">0%</td>
+          <td class="num"><span class="pos-badge pos-2">3.8</span></td>
+          <td><span class="tag tag-urgente">Snippet crisis</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/blog/cuanto-cuesta-enchape-medellin</td>
+          <td class="num">162</td>
+          <td class="num">0</td>
+          <td class="num">0%</td>
+          <td class="num"><span class="pos-badge pos-5">6.8</span></td>
+          <td><span class="tag tag-urgente">Optimizar snippet</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/blog/guia-remodelacion-apartamentos-medellin</td>
+          <td class="num">139</td>
+          <td class="num">2</td>
+          <td class="num">1.44%</td>
+          <td class="num"><span class="pos-badge pos-5">6.4</span></td>
+          <td><span class="tag tag-media">Mejorar CTR</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/blog/microcemento-vs-pintura-paredes</td>
+          <td class="num">26</td>
+          <td class="num">1</td>
+          <td class="num">3.85%</td>
+          <td class="num"><span class="pos-badge pos-5">5.3</span></td>
+          <td><span class="tag tag-media">Crecer</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/proyectos</td>
+          <td class="num">17</td>
+          <td class="num">0</td>
+          <td class="num">0%</td>
+          <td class="num"><span class="pos-badge pos-2">2.9</span></td>
+          <td><span class="tag tag-urgente">Snippet flojo</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/ (Home)</td>
+          <td class="num">16</td>
+          <td class="num">0</td>
+          <td class="num">0%</td>
+          <td class="num"><span class="pos-badge pos-5">5.6</span></td>
+          <td><span class="tag tag-media">Revisar title</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/servicios</td>
+          <td class="num">13</td>
+          <td class="num">1</td>
+          <td class="num">7.69%</td>
+          <td class="num"><span class="pos-badge pos-10">9.8</span></td>
+          <td><span class="tag tag-baja">OK</span></td>
+        </tr>
+        <tr>
+          <td class="url-cell">/blog/carpinteria-cocinas-medellin</td>
+          <td class="num">6</td>
+          <td class="num">1</td>
+          <td class="num">16.67%</td>
+          <td class="num"><span class="pos-badge pos-10">14.7</span></td>
+          <td><span class="tag tag-baja">Escalar</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Keywords crisis: top posición, 0 clics -->
+  <div class="section">
+    <div class="section-title"><span class="dot red"></span> Crisis de Snippet — Top 5 con 0 Clics</div>
+    <div class="alert alert-red" style="margin-bottom: 1rem;">
+      Estas keywords rankearon en posición 1-5 pero no generaron ningún clic. El contenido es bueno — Google lo muestra arriba. El problema es el title/meta description que no comunica valor o no responde a la intención.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>URL</th>
+          <th class="num">Pos.</th>
+          <th class="num">Impr.</th>
+          <th>Diagnóstico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>tipos de cielo raso</strong></td>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num"><span class="pos-badge pos-2">2.6</span></td>
+          <td class="num">82</td>
+          <td>Title genérico, falta diferenciador</td>
+        </tr>
+        <tr>
+          <td><strong>clases de cielo raso</strong></td>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num"><span class="pos-badge pos-1">#1</span></td>
+          <td class="num">15</td>
+          <td>Posición #1, CTR 0% → snippet no atrae</td>
+        </tr>
+        <tr>
+          <td><strong>tipo de cielo raso</strong></td>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num"><span class="pos-badge pos-5">4.5</span></td>
+          <td class="num">10</td>
+          <td>Variante sin cobertura en H2</td>
+        </tr>
+        <tr>
+          <td><strong>tipos de cielo razo</strong></td>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num"><span class="pos-badge pos-1">#1</span></td>
+          <td class="num">9</td>
+          <td>Typo frecuente — no capturado en el título</td>
+        </tr>
+        <tr>
+          <td><strong>arkava</strong></td>
+          <td class="url-cell">/proyectos</td>
+          <td class="num"><span class="pos-badge pos-2">3.3</span></td>
+          <td class="num">7</td>
+          <td>Brand query → Homepage debería rankar aquí, no /proyectos</td>
+        </tr>
+        <tr>
+          <td><strong>diferentes tipos de cielo raso</strong></td>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num"><span class="pos-badge pos-1">#1</span></td>
+          <td class="num">3</td>
+          <td>Posición #1, 0 clics</td>
+        </tr>
+        <tr>
+          <td><strong>microcemento vs pintura</strong></td>
+          <td class="url-cell">/blog/microcemento-vs-pintura-paredes</td>
+          <td class="num"><span class="pos-badge pos-5">4.3</span></td>
+          <td class="num">3</td>
+          <td>Snippet no comunica comparativa clara</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Oportunidades -->
+  <div class="section">
+    <div class="section-title"><span class="dot yellow"></span> Oportunidades de CTR (posición 4-20)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>URL</th>
+          <th class="num">Pos.</th>
+          <th class="num">Impr.</th>
+          <th class="num">CTR Gap</th>
+          <th>Prioridad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>tipo de cielo raso</strong></td>
+          <td class="url-cell">/blog/tipos-cielo-raso-hogar</td>
+          <td class="num"><span class="pos-badge pos-5">4.5</span></td>
+          <td class="num">10</td>
+          <td class="num">+8.0%</td>
+          <td><span class="tag tag-urgente">URGENTE</span></td>
+        </tr>
+        <tr>
+          <td><strong>arkava</strong></td>
+          <td class="url-cell">/</td>
+          <td class="num"><span class="pos-badge pos-5">6.3</span></td>
+          <td class="num">10</td>
+          <td class="num">+5.0%</td>
+          <td><span class="tag tag-urgente">URGENTE</span></td>
+        </tr>
+        <tr>
+          <td><strong>remodelación de apartamentos medellín</strong></td>
+          <td class="url-cell">/blog/guia-remodelacion-apartamentos-medellin</td>
+          <td class="num"><span class="pos-badge pos-10">10</span></td>
+          <td class="num">7</td>
+          <td class="num">+2.2%</td>
+          <td><span class="tag tag-urgente">URGENTE</span></td>
+        </tr>
+        <tr>
+          <td><strong>cuanto cuesta enchapar un baño en colombia</strong></td>
+          <td class="url-cell">/blog/cuanto-cuesta-enchape-medellin</td>
+          <td class="num"><span class="pos-badge pos-high">16</span></td>
+          <td class="num">3</td>
+          <td class="num">+0.8%</td>
+          <td><span class="tag tag-baja">BAJA</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Potencial de crecimiento -->
+  <div class="section">
+    <div class="section-title"><span class="dot green"></span> Potencial de Crecimiento — Evaluación</div>
+
+    <div class="alert alert-green" style="margin-bottom: 1.5rem;">
+      <strong>Veredicto:</strong> Arkava tiene potencial de crecimiento <strong>muy alto</strong> en SEO. El sitio está indexando bien, posiciona en top 5 para múltiples keywords relevantes, y el blog apenas lleva semanas activo. Las barreras actuales son de snippet/CTR, no de autoridad de dominio — son las más fáciles de resolver.
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+      <div class="kpi">
+        <div class="label">Autoridad de dominio</div>
+        <div class="value" style="font-size: 1.5rem; color: #f59e0b;">Baja</div>
+        <div class="potential-bar"><div class="potential-fill" style="width: 20%;"></div></div>
+        <div class="delta neutral" style="margin-top: 0.5rem; font-size: 0.75rem;">Sitio nuevo — crece con contenido y tiempo</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Calidad de indexación</div>
+        <div class="value" style="font-size: 1.5rem; color: #22c55e;">Alta</div>
+        <div class="potential-bar"><div class="potential-fill" style="width: 75%; background: linear-gradient(90deg, #22c55e, #16a34a);"></div></div>
+        <div class="delta up" style="margin-top: 0.5rem; font-size: 0.75rem;">Google está indexando todas las páginas</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Oportunidad de CTR</div>
+        <div class="value" style="font-size: 1.5rem; color: #ef4444;">Crítica</div>
+        <div class="potential-bar"><div class="potential-fill" style="width: 90%;"></div></div>
+        <div class="delta down" style="margin-top: 0.5rem; font-size: 0.75rem;">217 impr + 0 clics en cielo raso = urgente</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <div class="alert alert-blue">
+        <strong>Proyección realista a 90 días:</strong> Si se ejecutan las specs de abajo (snippets + 2-3 artículos nuevos + backlinks básicos), el sitio podría pasar de 5 → 50-80 clics/mes. Con 6 meses de ejecución consistente: 150-300 clics/mes y leads orgánicos recurrentes.
+      </div>
+    </div>
+  </div>
+
+  <!-- Specs / Roadmap -->
+  <div class="section">
+    <div class="section-title"><span class="dot blue"></span> Specs de Acción — Roadmap de Crecimiento</div>
+    <div class="specs-grid">
+
+      <div class="spec-card priority-1">
+        <div class="spec-header">
+          <div class="spec-number n1">1</div>
+          <div class="spec-title">Reescribir snippet de /blog/tipos-cielo-raso-hogar</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #ef4444; font-size: 0.8rem; font-weight: 600;">IMPACTO ALTO · Hacer esta semana</p>
+          <ul>
+            <li>Title actual: probablemente "Tipos de cielo raso para tu hogar" — genérico</li>
+            <li>Nuevo title: <em>"Tipos de cielo raso: cuál elegir según el espacio | Guía 2026"</em></li>
+            <li>Meta description: incluir número de tipos, contexto Colombia, CTA implícito</li>
+            <li>Objetivo: pasar CTR de 0% → 3-5% = 6-10 clics/mes solo de esta página</li>
+          </ul>
+          <div style="margin-top: 0.75rem;">
+            <span class="spec-kw">tipos de cielo raso</span>
+            <span class="spec-kw">clases de cielo raso</span>
+            <span class="spec-kw">tipos cielo razo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card priority-1">
+        <div class="spec-header">
+          <div class="spec-number n1">2</div>
+          <div class="spec-title">Optimizar snippet de /blog/cuanto-cuesta-enchape-medellin</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #ef4444; font-size: 0.8rem; font-weight: 600;">IMPACTO ALTO · Hacer esta semana</p>
+          <ul>
+            <li>162 impresiones, posición 6.8, 0 clics — keyword transaccional de alto valor</li>
+            <li>Nuevo title: incluir precio referencia — ej. <em>"¿Cuánto cuesta enchapar en Medellín? Precios 2026"</em></li>
+            <li>Meta description: mencionar precio por m², baño, cocina, cotización gratis</li>
+            <li>Agregar FAQ schema con preguntas reales detectadas en GSC</li>
+          </ul>
+          <div style="margin-top: 0.75rem;">
+            <span class="spec-kw">enchapar baño colombia</span>
+            <span class="spec-kw">cuanto cobran enchapar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card priority-1">
+        <div class="spec-header">
+          <div class="spec-number n1">3</div>
+          <div class="spec-title">Corregir canibalización brand query "arkava"</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #ef4444; font-size: 0.8rem; font-weight: 600;">PROBLEMA TÉCNICO · Corregir ya</p>
+          <ul>
+            <li>Query "arkava" está rankeando /proyectos (pos 3.3) y /servicios (pos 2.5), no la Homepage</li>
+            <li>Canibalización interna — Google no sabe cuál URL priorizar para la brand query</li>
+            <li>Acción: asegurar que Homepage tiene canonical correcto, título con "Arkava", y más señales de marca</li>
+            <li>Homepage debe ser el destino #1 para búsquedas branded</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="spec-card priority-2">
+        <div class="spec-header">
+          <div class="spec-number n2">4</div>
+          <div class="spec-title">Nuevo artículo: remodelación de apartamentos Medellín</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #f59e0b; font-size: 0.8rem; font-weight: 600;">PRIORIDAD MEDIA · Este mes</p>
+          <ul>
+            <li>Actual /blog/guia-remodelacion-apartamentos-medellin rankea pos 10 con 7 impr para esta keyword</li>
+            <li>Mejorar el artículo existente: agregar H2s con variantes, incluir precios, proceso paso a paso</li>
+            <li>Longitud objetivo: 1,500-2,000 palabras con imágenes de proyectos reales</li>
+            <li>CTA: formulario de cotización al final + WhatsApp</li>
+          </ul>
+          <div style="margin-top: 0.75rem;">
+            <span class="spec-kw">remodelación apartamentos medellín</span>
+            <span class="spec-kw">remodelaciones medellín</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card priority-2">
+        <div class="spec-header">
+          <div class="spec-number n2">5</div>
+          <div class="spec-title">Nuevo artículo: costos remodelación integral Medellín 2026</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #f59e0b; font-size: 0.8rem; font-weight: 600;">PRIORIDAD MEDIA · Este mes</p>
+          <ul>
+            <li>Gap detectado: no hay contenido de precios generales de remodelación en el blog</li>
+            <li>Keywords objetivo: "cuánto cuesta remodelar apartamento medellín", "precios remodelación"</li>
+            <li>Incluir tabla de precios por servicio (enchape, pintura, drywall, carpintería)</li>
+            <li>Alta intención comercial — leads directos al cotizador</li>
+          </ul>
+          <div style="margin-top: 0.75rem;">
+            <span class="spec-kw">cuanto cuesta remodelar apartamento</span>
+            <span class="spec-kw">precios remodelación medellín</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card priority-2">
+        <div class="spec-header">
+          <div class="spec-number n2">6</div>
+          <div class="spec-title">Nuevo artículo: instalación cielo raso drywall Medellín precios</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #f59e0b; font-size: 0.8rem; font-weight: 600;">PRIORIDAD MEDIA · Este mes</p>
+          <ul>
+            <li>El artículo de tipos de cielo raso está rompiendo — capitalizar con contenido transaccional</li>
+            <li>Keywords: "cielo raso drywall medellín", "instalación cielo raso precio", "cielo raso m²"</li>
+            <li>Incluir precios por m², fotos de proyectos, proceso de instalación</li>
+            <li>Enlazar desde el artículo informativo existente → flujo informacional → transaccional</li>
+          </ul>
+          <div style="margin-top: 0.75rem;">
+            <span class="spec-kw">cielo raso drywall medellín</span>
+            <span class="spec-kw">instalación cielo raso precio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-card priority-3">
+        <div class="spec-header">
+          <div class="spec-number n3">7</div>
+          <div class="spec-title">Schema FAQ en artículos de precios</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #93c5fd; font-size: 0.8rem; font-weight: 600;">TÉCNICO · Siguiente sprint</p>
+          <ul>
+            <li>Agregar JSON-LD FAQ schema en artículos de enchape y remodelación</li>
+            <li>Preguntas reales detectadas en GSC: "cuanto cobran por enchapar un baño", "cuanto cuesta enchapar en colombia"</li>
+            <li>Genera rich snippets en SERP → aumenta CTR sin cambiar posición</li>
+            <li>Usar el artículo /cuanto-cuesta-enchape-medellin como piloto</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="spec-card priority-3">
+        <div class="spec-header">
+          <div class="spec-number n3">8</div>
+          <div class="spec-title">Internal linking: cluster cielo raso</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #93c5fd; font-size: 0.8rem; font-weight: 600;">TÉCNICO · Siguiente sprint</p>
+          <ul>
+            <li>Crear cluster temático: tipos cielo raso → instalación → precios → proyectos</li>
+            <li>El artículo de tipos está rankeando — pasarle autoridad interna a páginas de servicio</li>
+            <li>Agregar CTA y enlace interno hacia /servicios/cielo-rasos (si existe) o al formulario</li>
+            <li>Google ve estos enlaces y aumenta la autoridad de las páginas destino</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="spec-card priority-3" style="grid-column: span 2;">
+        <div class="spec-header">
+          <div class="spec-number n3">9</div>
+          <div class="spec-title">Estrategia backlinks básica — señales de autoridad</div>
+        </div>
+        <div class="spec-body">
+          <p style="margin-bottom: 0.5rem; color: #93c5fd; font-size: 0.8rem; font-weight: 600;">ESTRATÉGICO · Próximo mes</p>
+          <ul>
+            <li>El sitio tiene cero backlinks externos visibles — esto limita el crecimiento de autoridad de dominio</li>
+            <li>Acciones: perfil de Google Business Pro con URL del sitio, directorios locales de construcción en Colombia, menciones en redes sociales enlazando al blog</li>
+            <li>Contactar aliados del sector (proveedores de materiales, arquitectos) para intercambio de menciones</li>
+            <li>Meta mínima: 5-10 backlinks de dominios .co o de construcción en 60 días</li>
+            <li>Sin backlinks, el crecimiento de posiciones tiene un techo natural aunque el contenido sea excelente</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Resumen ejecutivo -->
+  <div class="section">
+    <div class="section-title"><span class="dot green"></span> Resumen Ejecutivo</div>
+    <table>
+      <thead>
+        <tr><th>Categoría</th><th>Estado</th><th>Acción</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Indexación del blog</td><td><span class="tag tag-baja">✓ Funcionando</span></td><td>Continuar publicando 2-3 artículos/mes</td></tr>
+        <tr><td>CTR del blog</td><td><span class="tag tag-urgente">⚠ Crítico</span></td><td>Reescribir title + meta description esta semana</td></tr>
+        <tr><td>Brand query (arkava)</td><td><span class="tag tag-urgente">⚠ Canibalización</span></td><td>Corregir canonical + señales de marca en Homepage</td></tr>
+        <tr><td>Contenido informacional</td><td><span class="tag tag-media">~ En proceso</span></td><td>2 artículos nuevos este mes (precios + cielo raso transac.)</td></tr>
+        <tr><td>Contenido transaccional</td><td><span class="tag tag-urgente">⚠ Faltan páginas</span></td><td>Landing pages de servicios con precios</td></tr>
+        <tr><td>Schema / Rich snippets</td><td><span class="tag tag-urgente">⚠ Ausente</span></td><td>FAQ schema en artículos de precios</td></tr>
+        <tr><td>Backlinks</td><td><span class="tag tag-urgente">⚠ Sin autoridad</span></td><td>Iniciar estrategia básica de link building</td></tr>
+        <tr><td>Velocidad / Core Web Vitals</td><td><span class="tag tag-baja">? Sin datos</span></td><td>Correr Lighthouse audit</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>Arkava.com.co · GSC Report Abril 2026</span>
+    <span>Generado con Google Search Console API · Período: 27 Mar → 26 Abr 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

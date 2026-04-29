@@ -1,13 +1,13 @@
 ---
-title: "Tipos de cielo raso en Medellín: precios reales 2026 y cuál dura más"
-description: "Drywall desde $70.000/m², PVC, fibra mineral y madera: precios reales, errores frecuentes y qué material dura más según el espacio. Cotización gratuita en Medellín."
+title: "Tipos de cielo raso: cuál elegir según el espacio | Guía 2026"
+description: "Drywall, PVC, fibra mineral y madera: 4 opciones comparadas con precios por m² en Medellín (2026), qué material conviene por habitación y errores que encarecen la obra. Cotización sin costo — Arkava."
 pubDate: 2026-03-05
 author: "Equipo Arkava"
 category: "Acabados"
 tags: ["cielo raso", "drywall", "cielo raso PVC", "acabados", "cielo raso Medellín", "interiores", "remodelación", "tipos de cielo raso", "clases de cielo raso", "cielos falsos"]
-image: "https://res.cloudinary.com/dx9vtev71/image/upload/v1774909468/cielo-raso_1_fky6ng.webp"
+image: "https://res.cloudinary.com/dx9vtev71/image/upload/v1773883609/guia_ktqffv.webp"
 imageAlt: "Cielo raso en drywall instalado por Arkava en proyecto residencial Medellín"
-featured: true
+featured: false
 readTime: 9
 faq:
   - q: "¿Cuál es el mejor cielo raso para una habitación?"
@@ -169,6 +169,9 @@ Antes de definir el material, lo más importante es evaluar bien el espacio: hum
 
 ## También te puede interesar
 
-- [Remodelación de apartamentos en Medellín: guía de costos 2026](/blog/guia-remodelacion-apartamentos-medellin) — Si el proyecto incluye más que el techo, aquí están los costos reales de una remodelación completa.
-- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — Guía de precios por ítem: enchape, sanitarios, grifería y mano de obra.
-- [Microcemento vs pintura vs estuco para tus paredes](/blog/microcemento-vs-pintura-paredes) — Para los muros del mismo proyecto: comparativa real de precios y durabilidad.
+- [Instalación de cielo raso en drywall: precios en Medellín](/blog/instalacion-cielo-raso-drywall-medellin-precios) — Presupuesto por m² y alcance cuando ya definiste drywall.
+- [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin) — Si el mismo proyecto incluye baños o cocinas revestidas.
+- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026) — Cómo se combinan partidas en una reforma completa.
+- [Remodelación de apartamentos en Medellín: guía de costos 2026](/blog/guia-remodelacion-apartamentos-medellin) — Si el proyecto incluye más que el techo, aquí están etapas y costos reales.
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — Precios por ítem: enchape, sanitarios, grifería y mano de obra.
+- [Microcemento vs pintura vs estuco para tus paredes](/blog/microcemento-vs-pintura-paredes) — Comparativa de muros con precios orientativos.

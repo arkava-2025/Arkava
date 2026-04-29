@@ -1,13 +1,13 @@
 ---
 title: "Remodelación de apartamentos en Medellín: costos reales 2026, etapas y consejos"
-description: "¿Cuánto cuesta remodelar un apartamento en Medellín? Desde $850.000/m² integral hasta enchapes por $120.000/m². Costos reales 2026, etapas y cómo elegir empresa confiable."
+description: "Remodelación apartamentos Medellín 2026: costos por m², etapas, zonas frecuentes y cómo elegir empresa. Enlace a servicios Arkava (enchape, pintura, cielo raso). Visita técnica y presupuesto transparente."
 pubDate: 2026-03-18
 author: "Equipo Arkava"
 category: "Guías"
 tags: ["remodelación", "apartamentos", "Medellín", "costos", "acabados"]
 image: "https://res.cloudinary.com/dx9vtev71/image/upload/q_auto/f_auto/v1776042340/FB_IMG_1773686765734_seg0za.webp"
 imageAlt: "Remodelación de apartamento en Medellín — Arkava"
-featured: true
+featured: false
 readTime: 9
 faq:
   - q: "¿Cuánto cuesta remodelar un apartamento en Medellín?"
@@ -25,6 +25,20 @@ La **remodelación de apartamentos en Medellín** es una de las decisiones más 
 En esta guía encontrarás **costos reales actualizados a 2026**, las etapas de un proceso profesional, qué acabados tienen mejor retorno y cómo evitar los errores más comunes al contratar en Medellín.
 
 > **¿Listo para cotizar tu proyecto?** [Agenda visita técnica →](/contacto)
+
+---
+
+## Remodelación apartamentos Medellín: servicios que suelen combinarse
+
+Una reforma integral casi nunca es una sola partida. En la práctica se coordinan varios oficios; en Arkava los alineamos bajo un solo plan de obra:
+
+- **[Enchape y cerámica](/servicios/enchape)** en baños, cocinas y zonas húmedas
+- **[Pintura profesional](/servicios/pintura)** con preparación adecuada de muros
+- **[Cielo rasos](/servicios/cielo-raso)** en drywall o PVC
+- **[Muros en drywall](/servicios/muros-drywall)** cuando hay redistribución de espacios
+- **[Carpintería a medida](/servicios/carpinteria)** en cocinas, closets y detalles de acabado
+
+Si buscas primero el **mapa de costos de una obra completa**, entra a **[costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026)**.
 
 ---
 
@@ -155,7 +169,7 @@ En Arkava el costo de la visita en la ciudad de Medellín es de **$70.000**
 ## Preguntas frecuentes sobre remodelación en Medellín
 
 **¿Cuánto tarda una remodelación integral de apartamento?**
-Depende del alcance. Un apartamento de 60-80 m² con remodelación media u obra nueva tarda entre 6 y 10 semanas. Los plazos se acuerdan en el contrato de acuerdo al analisis técnico de la visita.
+Depende del alcance. Un apartamento de 60-80 m² con remodelación media u obra nueva tarda entre 6 y 10 semanas. Los plazos se acuerdan en el contrato de acuerdo al análisis técnico de la visita.
 
 **¿Necesito vivir en otro lugar mientras remodelan?**
 No necesariamente. Si la remodelación es parcial (un baño, la cocina, un cuarto), puedes quedarte. Si es integral o incluye demoliciones extensas, se debe desalojar por seguridad.
@@ -183,7 +197,9 @@ En **Arkava** llevamos más de doce años ejecutando proyectos de remodelación 
 
 ## También te puede interesar
 
+- [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin) — Tabla por m² y qué encarece baños y cocinas.
+- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026) — Vista por partidas cuando la obra es completa.
 - [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — Precios reales por ítem: enchape, sanitarios, grifería y mano de obra.
 - [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales) — La cocina y el baño son el combo con mayor retorno. Aquí los precios completos.
-- [Tipos de cielo raso en Medellín: precios 2026](/blog/tipos-cielo-raso-hogar) — Drywall, PVC, fibra mineral: cuál elegir según el espacio y cuánto cuesta instalar.
+- [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar) — Drywall, PVC, fibra mineral y madera: comparativa con precios 2026.
 - [Microcemento vs pintura vs estuco: cuál elegir para tus paredes](/blog/microcemento-vs-pintura-paredes) — Comparativa de acabados con precios reales para ayudarte a decidir.

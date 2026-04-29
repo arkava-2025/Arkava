@@ -5,7 +5,7 @@ pubDate: 2026-04-12
 author: "Equipo Arkava"
 category: "Guías"
 tags: ["remodelación cocina", "cocina Medellín", "costos cocina", "enchape cocina", "carpintería cocina", "acabados premium"]
-image: "https://res.cloudinary.com/dx9vtev71/image/upload/v1773883609/guia_ktqffv.webp"
+image: "https://res.cloudinary.com/dx9vtev71/image/upload/v1777429389/WhatsApp_Image_2025-10-21_at_3.31.20_PM_isljou.jpg"
 imageAlt: "Cocina remodelada con enchapes y muebles a medida — proyecto Arkava Medellín"
 featured: true
 readTime: 11

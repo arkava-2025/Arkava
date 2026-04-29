@@ -9,6 +9,7 @@ const query = graphql(`
       id
       title
       slug
+      description
       sections {
         id
         internalName
