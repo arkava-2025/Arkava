@@ -1,6 +1,6 @@
 ---
 title: "Remodelación de apartamentos en Medellín: costos reales 2026, etapas y consejos"
-description: "Remodelación apartamentos Medellín 2026: costos por m², etapas, zonas frecuentes y cómo elegir empresa. Enlace a servicios Arkava (enchape, pintura, cielo raso). Visita técnica y presupuesto transparente."
+description: "Remodelación de apartamentos en Medellín 2026: costos reales por m², etapas de obra, zonas más remodeladas y señales de alerta para elegir empresa. Guía práctica sin relleno."
 pubDate: 2026-03-18
 author: "Equipo Arkava"
 category: "Guías"

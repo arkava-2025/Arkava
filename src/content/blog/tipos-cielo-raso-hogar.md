@@ -1,6 +1,6 @@
 ---
-title: "Tipos de cielo raso: cuál elegir según el espacio | Guía 2026"
-description: "Drywall, PVC, fibra mineral y madera: 4 opciones comparadas con precios por m² en Medellín (2026), qué material conviene por habitación y errores que encarecen la obra. Cotización sin costo — Arkava."
+title: "Tipos de cielo raso en Medellín: cuál elegir y cuánto cuesta (2026)"
+description: "¿Cuál tipo de cielo raso conviene en tu espacio? Drywall, PVC, fibra mineral y madera: comparativa real con precios 2026, vida útil por habitación y los errores que encarecen la instalación."
 pubDate: 2026-03-05
 author: "Equipo Arkava"
 category: "Acabados"

@@ -1,6 +1,6 @@
 ---
 title: "¿Cuánto cuesta enchapar en Medellín? Precios por m², baño y cocina 2026"
-description: "Enchape en Medellín: desde ~$80.000/m² en cerámica hasta $350.000/m² en porcelanato premium. Precios por baño y cocina, mano de obra en Colombia y errores que disparan el presupuesto. Cotización gratis con Arkava."
+description: "Enchape en Medellín: desde $80.000/m² en cerámica hasta $350.000/m² en porcelanato premium. Precios reales por baño y cocina, mano de obra y los errores que disparan el presupuesto. Guía sin relleno."
 pubDate: 2026-04-28
 author: "Equipo Arkava"
 category: "Guías"
