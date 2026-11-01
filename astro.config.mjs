@@ -3,10 +3,23 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import { readdirSync, readFileSync } from 'node:fs';
+
+const blogDir = new URL('./src/content/blog/', import.meta.url);
+const blogLastmod = Object.fromEntries(
+  readdirSync(blogDir)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => {
+      const src = readFileSync(new URL(f, blogDir), 'utf8');
+      const date =
+        src.match(/^updatedDate:\s*(\S+)/m)?.[1] ?? src.match(/^pubDate:\s*(\S+)/m)?.[1];
+      return [f.replace(/\.md$/, ''), date ? new Date(date).toISOString() : undefined];
+    }),
+);
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://arkava.com.co',
+  site: 'https://www.arkava.com.co',
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -25,7 +38,12 @@ export default defineConfig({
       filter: (page) => !page.includes('/404') && !page.includes('/draft'),
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
+      // lastmod real solo en artículos del blog; el resto se omite en vez de usar la fecha de build
+      serialize(item) {
+        const slug = item.url.match(/\/blog\/([^/]+)\/?$/)?.[1];
+        if (slug && blogLastmod[slug]) item.lastmod = blogLastmod[slug];
+        return item;
+      },
       i18n: {
         defaultLocale: 'es',
         locales: {

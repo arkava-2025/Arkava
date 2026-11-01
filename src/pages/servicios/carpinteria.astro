@@ -14,13 +14,14 @@ if (isStandalone) {
   iconService = service?.iconService;
 }
 
-const SEO_DESCRIPTION = 'Carpintería arquitectónica a medida en Medellín: closets empotrados, muebles de cocina, decks y revestimientos en madera. Diseño personalizado, materiales premium y entrega garantizada. Arkava.';
+const SEO_TITLE = 'Carpintería a medida en Medellín | Arkava';
+const SEO_DESCRIPTION = 'Carpintería arquitectónica a medida en Medellín: closets, muebles de cocina, decks y revestimientos en madera con diseño propio y materiales premium.';
 const serviceSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: title,
   description: SEO_DESCRIPTION,
-  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://www.arkava.com.co' },
   areaServed: 'Medellín, Colombia',
   serviceType: 'Carpintería arquitectónica',
 });
@@ -36,7 +37,7 @@ const imageUrl2 = imageService?.[2]?.url;
 
 <ConditionalLayout
   enabled={isStandalone}
-  title={`${title} en Medellín | Acabados Arkava`}
+  title={SEO_TITLE}
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
@@ -50,7 +51,7 @@ const imageUrl2 = imageService?.[2]?.url;
     >
       <div class="md:h-[28%]">
         {isStandalone ? (
-          <h1 class="text-4xl md:text-6xl font-bold tracking-[0.20em] mb-3 text-white uppercase font-pp-sans">{title}</h1>
+          <h1 class="text-4xl md:text-6xl font-bold tracking-[0.20em] mb-3 text-white uppercase font-pp-sans">{title}<span class="block mt-3 text-base md:text-xl font-normal normal-case tracking-normal" style="letter-spacing: normal;">Closets, cocinas y revestimientos en madera en Medellín</span></h1>
         ) : (
           <h2 class="text-4xl md:text-6xl font-bold tracking-[0.20em] mb-3 text-white uppercase font-pp-sans">{title}</h2>
         )}

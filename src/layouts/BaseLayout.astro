@@ -7,6 +7,7 @@ import WhatsappHome from '@/components/atoms/WhatsappHome.astro';
 import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
 import '@styles/global.css';
 import '@styles/fonts.css';
+import { normalizeWhatsapp } from '@/lib/utils/whatsapp';
 
 const generalInfoArkava = await getGeneralPage();
 
@@ -31,9 +32,7 @@ const {
   schema,
 } = Astro.props;
 
-const phone = generalInfoArkava?.whatsapp
-  ? `+57${String(generalInfoArkava.whatsapp).replace(/\D/g, '')}`
-  : undefined;
+const phone = `+${normalizeWhatsapp(generalInfoArkava?.whatsapp)}`;
 
 const localBusinessSchema = JSON.stringify({
   '@context': 'https://schema.org',
@@ -41,8 +40,8 @@ const localBusinessSchema = JSON.stringify({
   name: 'Arkava',
   description:
     'Empresa especializada en acabados arquitectónicos y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.',
-  url: 'https://arkava.com.co',
-  ...(phone && { telephone: phone }),
+  url: 'https://www.arkava.com.co',
+  telephone: phone,
   ...(generalInfoArkava?.email && { email: generalInfoArkava.email }),
   address: {
     '@type': 'PostalAddress',
@@ -161,16 +160,16 @@ const headerInfo = {
     <!-- Preload fuentes críticas (evita FOIT/CLS) -->
     <link
       rel="preload"
-      href="/fonts/PP-Supply/PPSupplySans-Regular.otf"
+      href="/fonts/PP-Supply/PPSupplySans-Regular.woff2"
       as="font"
-      type="font/otf"
+      type="font/woff2"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/Helvetica/Helvetica.ttf"
+      href="/fonts/Helvetica/Helvetica.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
       crossorigin="anonymous"
     />
 

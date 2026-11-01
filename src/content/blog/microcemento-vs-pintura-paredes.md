@@ -1,6 +1,7 @@
 ---
 title: "Microcemento vs pintura vs estuco: precios 2026 y cuál elegir en Medellín"
-description: "Microcemento desde $95.000/m², pintura desde $18.000/m², estuco desde $25.000/m²: comparativa real de precios, durabilidad y cuándo cada acabado vale la pena en Medellín."
+seoTitle: "Microcemento vs pintura vs estuco: precios 2026 | Arkava"
+description: "Microcemento desde $95.000/m², pintura desde $18.000/m² y estuco desde $25.000/m². Comparamos precio, durabilidad y cuándo conviene cada uno en Medellín."
 pubDate: 2026-02-20
 author: "Equipo Arkava"
 category: "Acabados"
@@ -13,7 +14,7 @@ readTime: 8
 
 Al renovar un espacio, la duda más común es: ¿Pinto de nuevo o invierto en un acabado definitivo? Mientras que la pintura es la solución rápida, el microcemento se ha consolidado en Medellín como la opción preferida para quienes buscan un estilo industrial, minimalista y, sobre todo, alta resistencia. Y hay una tercera opción que muchos olvidan: el estuco, que puede ser la respuesta perfecta para zonas secas con presupuesto ajustado.
 
-> **¿No sabes cuál acabado le conviene a tu proyecto?** [Agenda visita técnica gratuita en Medellín →](/contacto)
+> **¿No sabes cuál acabado le conviene a tu proyecto?** [Agenda una visita técnica en Medellín →](/contacto/)
 
 ---
 
@@ -122,11 +123,11 @@ Microcemento en baño y cocina + estuco con pintura premium en el resto. Esta ec
 
 ## Otras alternativas: argamasa, enchape y muros decorativos
 
-**[Enchape](/servicios/enchape):** cerámica, porcelanato o piedra. Más resistente en pisos y paredes mojadas, mayor variedad de diseños, pero con juntas visibles y costo de instalación similar al microcemento.
+**[Enchape](/servicios/enchape/):** cerámica, porcelanato o piedra. Más resistente en pisos y paredes mojadas, mayor variedad de diseños, pero con juntas visibles y costo de instalación similar al microcemento.
 
-**[Argamasa](/servicios/argamasa):** base de nivelación, no acabado final. Es la preparación correcta antes de aplicar microcemento o enchape sobre superficies irregulares.
+**[Argamasa](/servicios/argamasa/):** base de nivelación, no acabado final. Es la preparación correcta antes de aplicar microcemento o enchape sobre superficies irregulares.
 
-**[Muros decorativos artesanales](/servicios/muros-decorativos):** texturas en relieve aplicadas manualmente. Un muro de acento bien ejecutado transforma una sala completa a una fracción del costo de revestir todo el espacio.
+**[Muros decorativos artesanales](/servicios/muros-decorativos/):** texturas en relieve aplicadas manualmente. Un muro de acento bien ejecutado transforma una sala completa a una fracción del costo de revestir todo el espacio.
 
 ---
 
@@ -138,7 +139,7 @@ En el Hotel Hunters aplicamos microcemento en todos los baños de las habitacion
 
 En proyectos residenciales con presupuesto más ajustado, recomendamos con frecuencia la combinación: microcemento en baño y cocina, pintura acrílica premium en el resto. Es la ecuación que mejor equilibra costo y durabilidad.
 
-Si quieres ver resultados concretos, revisa nuestro [portafolio de proyectos](/proyectos).
+Si quieres ver resultados concretos, revisa nuestro [portafolio de proyectos](/proyectos/).
 
 ---
 
@@ -176,12 +177,12 @@ Durante la primera semana después de aplicado, evitar golpes y humedad. Despué
 
 ---
 
-¿Tienes un proyecto en mente y no sabes qué acabado elegir? En Arkava hacemos la visita técnica gratis, evaluamos las condiciones reales del espacio y te damos una recomendación honesta antes de presupuestar. Puedes ver todos nuestros [servicios de acabados](/servicios) o escribirnos directamente por el botón de abajo.
+¿Tienes un proyecto en mente y no sabes qué acabado elegir? En Arkava hacemos una visita técnica, evaluamos las condiciones reales del espacio y te damos una recomendación honesta antes de presupuestar. Puedes ver todos nuestros [servicios de acabados](/servicios/) o escribirnos directamente por el botón de abajo.
 
 ---
 
 ## También te puede interesar
 
-- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — El baño es donde el microcemento más impacta. Aquí los precios reales de enchape y todo lo demás.
-- [Tipos de cielo raso en Medellín: precios 2026](/blog/tipos-cielo-raso-hogar) — Mientras decides los muros, conoce también las opciones para el techo.
-- [Remodelación de apartamentos en Medellín: guía completa](/blog/guia-remodelacion-apartamentos-medellin) — Si el proyecto es más amplio, aquí están los costos y etapas de una remodelación integral.
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — El baño es donde el microcemento más impacta. Aquí los precios reales de enchape y todo lo demás.
+- [Tipos de cielo raso en Medellín: precios 2026](/blog/tipos-cielo-raso-hogar/) — Mientras decides los muros, conoce también las opciones para el techo.
+- [Remodelación de apartamentos en Medellín: guía completa](/blog/guia-remodelacion-apartamentos-medellin/) — Si el proyecto es más amplio, aquí están los costos y etapas de una remodelación integral.

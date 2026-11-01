@@ -1,10 +1,11 @@
 ---
 import WhatsappColor from '@/icons/whatsappColor.astro';
+import { whatsappLink } from '@/lib/utils/whatsapp';
 const { wtNumber } = Astro.props;
 ---
 
 <a
-  href={`https://wa.me/57${wtNumber}?text=Bienvenido%20a%20Arkava%20Quiero%20iniciar%20un%20proyecto`}
+  href={whatsappLink(wtNumber, 'Bienvenido a Arkava Quiero iniciar un proyecto')}
   target="_blank"
   aria-label="Escribenos a nuestro Whatsapp"
   class="whatsapp-button fixed bottom-5 right-5 w-14 h-14 z-50 shadow-xl rounded-full transition-all hover:scale-110 duration-300 group"

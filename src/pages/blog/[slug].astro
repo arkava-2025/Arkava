@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { whatsappLink, ARKAVA_WHATSAPP } from '@/lib/utils/whatsapp';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -32,21 +33,22 @@ const articleSchemaObj = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
   author: {
     '@type': 'Organization',
     name: 'Arkava',
-    url: 'https://arkava.com.co',
+    url: 'https://www.arkava.com.co',
   },
   publisher: {
     '@type': 'Organization',
     name: 'Arkava',
-    url: 'https://arkava.com.co',
-    logo: { '@type': 'ImageObject', url: 'https://arkava.com.co/favicon.png' },
+    url: 'https://www.arkava.com.co',
+    logo: { '@type': 'ImageObject', url: 'https://www.arkava.com.co/favicon.png' },
   },
-  image: post.data.image ?? 'https://arkava.com.co/og-image.jpg',
+  image: post.data.image ?? 'https://jbmqxuofkzwe1rde.public.blob.vercel-storage.com/contacto.webp',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': `https://arkava.com.co/blog/${post.slug}`,
+    '@id': `https://www.arkava.com.co/blog/${post.slug}/`,
   },
 };
 
@@ -68,7 +70,7 @@ const articleSchema = JSON.stringify(schemaItems.length === 1 ? schemaItems[0] :
 ---
 
 <BaseLayout
-  title={`${post.data.title} | Blog Arkava`}
+  title={post.data.seoTitle ?? `${post.data.title} | Arkava`}
   description={post.data.description}
   ogImage={post.data.image}
   schema={articleSchema}
@@ -82,7 +84,7 @@ const articleSchema = JSON.stringify(schemaItems.length === 1 ? schemaItems[0] :
         </li>
         <li class="text-gray-300">/</li>
         <li>
-          <a href="/blog" class="hover:text-primary transition-colors">Blog</a>
+          <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
         </li>
         <li class="text-gray-300">/</li>
         <li class="text-primary font-semibold truncate max-w-[200px]">
@@ -190,11 +192,11 @@ const articleSchema = JSON.stringify(schemaItems.length === 1 ? schemaItems[0] :
         ¿Listo para transformar tu espacio?
       </h3>
       <p class="text-white/70 font-helvetica mb-7 max-w-lg mx-auto">
-        Agenda una visita técnica gratuita y recibe un presupuesto transparente
-        sin compromiso.
+        Agenda una visita técnica y recibe un presupuesto transparente, por
+        etapas y sin costos ocultos.
       </p>
       <a
-        href="https://wa.me/573178121212?text=Hola, quiero agendar una visita técnica"
+        href={whatsappLink(ARKAVA_WHATSAPP, 'Hola, quiero agendar una visita técnica')}
         target="_blank"
         class="inline-flex items-center gap-2 bg-secondary text-primary font-semibold px-8 py-3.5 rounded-full hover:bg-white transition-all duration-300 hover:shadow-lg"
       >
@@ -226,7 +228,7 @@ const articleSchema = JSON.stringify(schemaItems.length === 1 ? schemaItems[0] :
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {related.map((p) => (
-              <a href={`/blog/${p.slug}`} class="group block">
+              <a href={`/blog/${p.slug}/`} class="group block">
                 <article class="h-full rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-400">
                   {p.data.image && (
                     <div class="h-44 overflow-hidden">
@@ -261,7 +263,7 @@ const articleSchema = JSON.stringify(schemaItems.length === 1 ? schemaItems[0] :
   <!-- Volver al blog -->
   <div class="max-w-4xl mx-auto px-4 md:px-8 py-10">
     <a
-      href="/blog"
+      href="/blog/"
       class="inline-flex items-center gap-2 text-primary font-semibold font-helvetica hover:text-tertiary transition-colors duration-200"
     >
       <svg

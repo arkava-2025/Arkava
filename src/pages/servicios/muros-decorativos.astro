@@ -14,13 +14,14 @@ if (isStandalone) {
   iconService = service?.iconService;
 }
 
-const SEO_DESCRIPTION = 'Muros decorativos en Medellín: microcemento desde $95.000/m², venecianos, porcelanato líquido y texturas artesanales. Acabados únicos para residencias premium y hoteles. Arkava.';
+const SEO_TITLE = 'Muros decorativos y microcemento en Medellín | Arkava';
+const SEO_DESCRIPTION = 'Muros decorativos en Medellín: microcemento desde $95.000/m², estuco veneciano, porcelanato líquido y texturas artesanales para residencias y hoteles.';
 const serviceSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: title,
   description: SEO_DESCRIPTION,
-  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://www.arkava.com.co' },
   areaServed: 'Medellín, Colombia',
   serviceType: 'Muros decorativos y microcemento',
 });
@@ -32,7 +33,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
 
 <ConditionalLayout
   enabled={isStandalone}
-  title={`${title} en Medellín | Acabados Arkava`}
+  title={SEO_TITLE}
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
@@ -43,7 +44,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
     <!-- ---- TEXTO ---- -->
     <div class="md:col-span-4 flex flex-col justify-start">
       {isStandalone ? (
-        <h1 class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans">{title}</h1>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans">{title}<span class="block mt-3 text-base md:text-xl font-normal normal-case tracking-normal" style="letter-spacing: normal;">Microcemento, venecianos y texturas en Medellín</span></h1>
       ) : (
         <h2 class="text-4xl md:text-6xl font-bold tracking-[0.25em] mb-1 text-white uppercase font-pp-sans">{title}</h2>
       )}

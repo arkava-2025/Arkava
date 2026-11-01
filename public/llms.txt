@@ -1,0 +1,60 @@
+# Arkava
+
+> Arkava es una empresa de acabados arquitectónicos y remodelación integral con sede en Medellín, Colombia. Trabaja en viviendas, locales comerciales y hoteles de Medellín y el área metropolitana (Envigado, Sabaneta, Itagüí, Bello) y se encarga de la obra completa: evalúa, presupuesta, ejecuta y entrega.
+
+Sobre la empresa:
+
+- Ubicación: Medellín, Antioquia, Colombia.
+- Clientes: propietarios de casas y apartamentos, locales comerciales y hoteles. Ha trabajado en Hunters Hotel, Hotel Heiss, Hotel Nakua, Calle Flora Hotel y Hotel Hashtag 98.
+- Forma de trabajo: presupuesto detallado sin costos ocultos, contrato firmado, pagos por etapas de avance y póliza de cumplimiento.
+- Metodología en 5 etapas: evaluación técnica, planeación y presupuesto, ejecución, supervisión y control, entrega final.
+- Ofrece asesoría de diseño de interiores antes de empezar la obra.
+- Contacto: WhatsApp +57 320 767 2761 · https://www.arkava.com.co/contacto/
+
+Los precios citados abajo son rangos de referencia por m² en Medellín, publicados por Arkava en 2026. Cada proyecto se cotiza tras una visita técnica.
+
+## Servicios
+
+- [Enchape](https://www.arkava.com.co/servicios/enchape/): cerámica y porcelanato para baños, cocinas, pisos y fachadas. Instalado desde $80.000/m² (cerámica) hasta $350.000/m² o más (porcelanato importado).
+- [Pintura](https://www.arkava.com.co/servicios/pintura/): interiores, exteriores, cielos y fachadas. Desde $18.000/m².
+- [Estuco](https://www.arkava.com.co/servicios/estuco/): liso, labrado y texturizado. Desde $25.000/m².
+- [Muros decorativos](https://www.arkava.com.co/servicios/muros-decorativos/): microcemento ($95.000–$140.000/m²), estuco veneciano, porcelanato líquido y texturas artesanales.
+- [Cielo raso](https://www.arkava.com.co/servicios/cielo-raso/): drywall ($70.000–$95.000/m²), PVC ($65.000–$90.000/m²), fibra mineral ($90.000–$120.000/m²) y madera o MDF ($160.000–$240.000/m²).
+- [Muros en drywall y superboard](https://www.arkava.com.co/servicios/muros-drywall/): divisiones interiores, cielos y fachadas en sistemas livianos.
+- [Carpintería a medida](https://www.arkava.com.co/servicios/carpinteria/): closets, muebles de cocina, decks y revestimientos en madera.
+- [Argamasa y revoque](https://www.arkava.com.co/servicios/argamasa/): nivelación e impermeabilización de muros y pisos como base para acabados.
+- [Todos los servicios](https://www.arkava.com.co/servicios/)
+
+## Guías con precios (Medellín, 2026)
+
+- [Cuánto cuesta remodelar un baño en Medellín](https://www.arkava.com.co/blog/cuanto-cuesta-remodelar-bano-medellin/): remodelación completa entre $6.000.000 y $12.000.000; premium entre $15.000.000 y $25.000.000 o más.
+- [Remodelación de cocina en Medellín: costos y materiales](https://www.arkava.com.co/blog/remodelacion-cocina-medellin-costos-materiales/): desde $6.800.000 (esencial) hasta $60.000.000 o más (diseño premium), con precios de mesones por material.
+- [Cuánto cuesta enchapar en Medellín](https://www.arkava.com.co/blog/cuanto-cuesta-enchape-medellin/): precio por m² según material, baño y cocina.
+- [Remodelación de apartamentos en Medellín](https://www.arkava.com.co/blog/guia-remodelacion-apartamentos-medellin/): costos por m², etapas de obra y zonas.
+- [Microcemento vs pintura vs estuco](https://www.arkava.com.co/blog/microcemento-vs-pintura-paredes/): comparación de precio, durabilidad y uso.
+- [Tipos de cielo raso](https://www.arkava.com.co/blog/tipos-cielo-raso-hogar/): qué material conviene en cada espacio y cuánto cuesta.
+- [Cómo contratar una empresa de remodelación en Medellín](https://www.arkava.com.co/blog/como-contratar-expertos-remodelacion-medellin/): qué exigir antes de firmar, anticipo razonable y señales de alerta.
+
+## Proyectos
+
+- [Hunters Hotel](https://www.arkava.com.co/proyectos/hunters-hotel/): estuco y pintura.
+- [Hotel Heiss](https://www.arkava.com.co/proyectos/hotel-heiss/): cielos rasos y muros en drywall y superboard.
+- [Hotel Nakua](https://www.arkava.com.co/proyectos/hotel-nakua/): estuco y pintura en todos los ambientes.
+- [Calle Flora Hotel](https://www.arkava.com.co/proyectos/calle-flora-hotel/): muros y cielos.
+- [Hashtag 98](https://www.arkava.com.co/proyectos/hashtag-98/): pintura en muros, cielos y fachada.
+- [Proyecto Vesubio](https://www.arkava.com.co/proyectos/remodelacion-apartamento-medellin-proyecto-vesubio/): remodelación integral de apartamento en Medellín.
+- [Apto Los Angeles](https://www.arkava.com.co/proyectos/apto-los-angeles/): apartamento adecuado para rentas cortas.
+- [Casa Noah](https://www.arkava.com.co/proyectos/casa-noah/): casa en Ciudad Bolívar, suroeste antioqueño.
+- [Todos los proyectos](https://www.arkava.com.co/proyectos/)
+
+## Empresa
+
+- [Sobre Arkava](https://www.arkava.com.co/sobre-nosotros/)
+- [Contacto](https://www.arkava.com.co/contacto/)
+
+## Optional
+
+- [Casa El Pomar](https://www.arkava.com.co/proyectos/casa-el-pomar/)
+- [Finca 13](https://www.arkava.com.co/proyectos/finca-13/)
+- [Loma del Bosque](https://www.arkava.com.co/proyectos/loma-del-bosque/)
+- [Blog](https://www.arkava.com.co/blog/)

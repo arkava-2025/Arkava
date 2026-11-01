@@ -23,10 +23,10 @@ const orderedSections = buildOrderedSections(
 );
 
 const rawHomeTitle = page?.title?.trim();
-const defaultHomeTitle =
-  'Arkava | Acabados arquitectónicos y remodelación integral en Medellín';
+const defaultHomeTitle = 'Remodelación y acabados de lujo en Medellín | Arkava';
+// Si el CMS solo trae la marca ("Arkava"), se usa el title con keyword
 const homeTitle =
-  rawHomeTitle && rawHomeTitle.length > 0
+  rawHomeTitle && rawHomeTitle.length > 25
     ? rawHomeTitle.toLowerCase().includes('arkava')
       ? rawHomeTitle
       : `Arkava | ${rawHomeTitle}`
@@ -34,7 +34,7 @@ const homeTitle =
 
 const homeCanonical = Astro.site
   ? new URL('/', Astro.site).href
-  : 'https://arkava.com.co/';
+  : 'https://www.arkava.com.co/';
 ---
 
 <BaseLayout

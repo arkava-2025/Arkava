@@ -1,5 +1,6 @@
 ---
 title: "¿Cuánto cuesta remodelar un baño en Medellín? Precios de enchape 2026"
+seoTitle: "Cuánto cuesta remodelar un baño en Medellín (2026)"
 description: "Precios reales 2026 para remodelar un baño en Medellín: enchape por m², sanitarios, grifería, mano de obra y lo que encarece la obra. Guía sin relleno."
 pubDate: 2026-04-28
 author: "Equipo Arkava"
@@ -142,12 +143,12 @@ Los tiempos asumen materiales disponibles al iniciar. Los retrasos en entrega de
 5. Impermeabilización certificada en zona de ducha y áreas húmedas
 6. Limpieza final y entrega con revisión de detalles
 
-**[Solicitar cotización →](/contacto)**
+**[Solicitar cotización →](/contacto/)**
 
 ---
 
 ## También te puede interesar
 
-- [Remodelación de cocina en Medellín: costos y materiales](/blog/remodelacion-cocina-medellin-costos-materiales) — Después del baño, la cocina es el espacio con mayor retorno. Guía completa de precios.
-- [Tipos de cielo raso para tu hogar: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar) — Si también renovarás el techo, aquí están las opciones y precios.
-- [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin) — Costos y etapas cuando el proyecto va más allá del baño.
+- [Remodelación de cocina en Medellín: costos y materiales](/blog/remodelacion-cocina-medellin-costos-materiales/) — Después del baño, la cocina es el espacio con mayor retorno. Guía completa de precios.
+- [Tipos de cielo raso para tu hogar: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Si también renovarás el techo, aquí están las opciones y precios.
+- [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin/) — Costos y etapas cuando el proyecto va más allá del baño.

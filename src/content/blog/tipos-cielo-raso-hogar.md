@@ -1,6 +1,7 @@
 ---
 title: "Tipos de cielo raso en Medellín: cuál elegir y cuánto cuesta (2026)"
-description: "¿Cuál tipo de cielo raso conviene en tu espacio? Drywall, PVC, fibra mineral y madera: comparativa real con precios 2026, vida útil por habitación y los errores que encarecen la instalación."
+seoTitle: "Tipos de cielo raso: cuál elegir y precios 2026 | Arkava"
+description: "Drywall, PVC, fibra mineral o madera: qué cielo raso conviene en cada espacio, precios por m² en 2026 y errores que encarecen la instalación."
 pubDate: 2026-03-05
 author: "Equipo Arkava"
 category: "Acabados"
@@ -26,7 +27,7 @@ faq:
 
 El *cielo raso* es el elemento clave para regular la temperatura, aislar el sonido y ocultar instalaciones. Sin embargo, elegir el material incorrecto puede reducir su vida útil de 25 años a solo 5. En esta guía encontrarás precios reales del mercado en Medellín (2026), la comparativa completa por material y los errores más costosos que debes evitar antes de contratar.
 
-> **¿Ya tienes claro qué material necesitas?** [Solicita cotización gratuita en Medellín →](/contacto)
+> **¿Ya tienes claro qué material necesitas?** [Solicita tu cotización en Medellín →](/contacto/)
 
 ---
 
@@ -103,7 +104,7 @@ El PVC y la fibra mineral sí permiten colocar luminarias empotradas (downlights
 
 ## El proceso de instalación en Arkava
 
-En [nuestro servicio de cielo rasos](/servicios/cielo-raso) seguimos la misma metodología de 5 etapas que aplicamos en todos los proyectos:
+En [nuestro servicio de cielo rasos](/servicios/cielo-raso/) seguimos la misma metodología de 5 etapas que aplicamos en todos los proyectos:
 
 1. **Evaluación técnica**: revisamos el estado de la losa o estructura superior, detectamos humedades, medimos el espacio y verificamos las instalaciones existentes.
 2. **Planeación y presupuesto**: definimos el material según el uso del espacio, diseñamos el foseado si aplica y entregamos un presupuesto detallado sin costos ocultos.
@@ -115,7 +116,7 @@ La instalación de un cielo raso residencial estándar toma entre 2 y 5 días de
 
 ---
 
-## Cielo raso y [drywall en muros](/servicios/muros-drywall): cómo se complementan
+## Cielo raso y [drywall en muros](/servicios/muros-drywall/): cómo se complementan
 
 En muchos proyectos el cielo raso en drywall va acompañado de muros en drywall. Ambos usan la misma estructura de perfiles metálicos y las mismas placas, lo que permite una coordinación eficiente entre los dos trabajos. Si el proyecto contempla redistribuir espacios y renovar el cielo raso, tiene sentido ejecutar ambos trabajos en simultáneo para reducir tiempos y costos de movilización.
 
@@ -125,7 +126,7 @@ En muchos proyectos el cielo raso en drywall va acompañado de muros en drywall.
 
 En el sector de hospitalidad, el cielo raso es uno de los acabados más exigidos porque combina estética, durabilidad y acceso a instalaciones. En los hoteles Hunters, Heiss y Nakua, Arkava ha instalado sistemas de drywall con foseados y LED en habitaciones y zonas comunes, y PVC de alto desempeño en baños privados. El resultado tiene que verse bien el primer día y el quinto año, sin mantenimiento visible entre medias.
 
-Para ver resultados específicos, visita nuestro [portafolio de proyectos](/proyectos).
+Para ver resultados específicos, visita nuestro [portafolio de proyectos](/proyectos/).
 
 ---
 
@@ -163,15 +164,15 @@ Poco. Un drywall bien instalado no necesita intervenciones durante años. Los cu
 
 ---
 
-Antes de definir el material, lo más importante es evaluar bien el espacio: humedad, altura, uso y presupuesto disponible. Con esa información, la decisión es directa. Si quieres una opinión técnica sin compromiso, en Arkava hacemos la visita de evaluación gratis. Revisa todos nuestros [servicios de acabados](/servicios) o [contáctanos](/contacto) directamente.
+Antes de definir el material, lo más importante es evaluar bien el espacio: humedad, altura, uso y presupuesto disponible. Con esa información, la decisión es directa. Si quieres una opinión técnica antes de decidir, en Arkava hacemos una visita de evaluación al espacio. Revisa todos nuestros [servicios de acabados](/servicios/) o [contáctanos](/contacto/) directamente.
 
 ---
 
 ## También te puede interesar
 
-- [Instalación de cielo raso en drywall: precios en Medellín](/blog/instalacion-cielo-raso-drywall-medellin-precios) — Presupuesto por m² y alcance cuando ya definiste drywall.
-- [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin) — Si el mismo proyecto incluye baños o cocinas revestidas.
-- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026) — Cómo se combinan partidas en una reforma completa.
-- [Remodelación de apartamentos en Medellín: guía de costos 2026](/blog/guia-remodelacion-apartamentos-medellin) — Si el proyecto incluye más que el techo, aquí están etapas y costos reales.
-- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — Precios por ítem: enchape, sanitarios, grifería y mano de obra.
-- [Microcemento vs pintura vs estuco para tus paredes](/blog/microcemento-vs-pintura-paredes) — Comparativa de muros con precios orientativos.
+- [Instalación de cielo raso en drywall: precios en Medellín](/blog/instalacion-cielo-raso-drywall-medellin-precios/) — Presupuesto por m² y alcance cuando ya definiste drywall.
+- [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin/) — Si el mismo proyecto incluye baños o cocinas revestidas.
+- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026/) — Cómo se combinan partidas en una reforma completa.
+- [Remodelación de apartamentos en Medellín: guía de costos 2026](/blog/guia-remodelacion-apartamentos-medellin/) — Si el proyecto incluye más que el techo, aquí están etapas y costos reales.
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — Precios por ítem: enchape, sanitarios, grifería y mano de obra.
+- [Microcemento vs pintura vs estuco para tus paredes](/blog/microcemento-vs-pintura-paredes/) — Comparativa de muros con precios orientativos.

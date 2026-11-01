@@ -1,6 +1,7 @@
 ---
 title: "Remodelación de apartamentos en Medellín: costos reales 2026, etapas y consejos"
-description: "Remodelación de apartamentos en Medellín 2026: costos reales por m², etapas de obra, zonas más remodeladas y señales de alerta para elegir empresa. Guía práctica sin relleno."
+seoTitle: "Remodelación de apartamentos en Medellín: costos 2026"
+description: "Cuánto cuesta remodelar un apartamento en Medellín en 2026: precios por m², etapas de obra, acabados que valorizan y cómo elegir empresa."
 pubDate: 2026-03-18
 author: "Equipo Arkava"
 category: "Guías"
@@ -24,7 +25,7 @@ La **remodelación de apartamentos en Medellín** es una de las decisiones más 
 
 En esta guía encontrarás **costos reales actualizados a 2026**, las etapas de un proceso profesional, qué acabados tienen mejor retorno y cómo evitar los errores más comunes al contratar en Medellín.
 
-> **¿Listo para cotizar tu proyecto?** [Agenda visita técnica →](/contacto)
+> **¿Listo para cotizar tu proyecto?** [Agenda visita técnica →](/contacto/)
 
 ---
 
@@ -32,13 +33,13 @@ En esta guía encontrarás **costos reales actualizados a 2026**, las etapas de 
 
 Una reforma integral casi nunca es una sola partida. En la práctica se coordinan varios oficios; en Arkava los alineamos bajo un solo plan de obra:
 
-- **[Enchape y cerámica](/servicios/enchape)** en baños, cocinas y zonas húmedas
-- **[Pintura profesional](/servicios/pintura)** con preparación adecuada de muros
-- **[Cielo rasos](/servicios/cielo-raso)** en drywall o PVC
-- **[Muros en drywall](/servicios/muros-drywall)** cuando hay redistribución de espacios
-- **[Carpintería a medida](/servicios/carpinteria)** en cocinas, closets y detalles de acabado
+- **[Enchape y cerámica](/servicios/enchape/)** en baños, cocinas y zonas húmedas
+- **[Pintura profesional](/servicios/pintura/)** con preparación adecuada de muros
+- **[Cielo rasos](/servicios/cielo-raso/)** en drywall o PVC
+- **[Muros en drywall](/servicios/muros-drywall/)** cuando hay redistribución de espacios
+- **[Carpintería a medida](/servicios/carpinteria/)** en cocinas, closets y detalles de acabado
 
-Si buscas primero el **mapa de costos de una obra completa**, entra a **[costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026)**.
+Si buscas primero el **mapa de costos de una obra completa**, entra a **[costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026/)**.
 
 ---
 
@@ -191,15 +192,15 @@ Remodelar un apartamento en Medellín es una inversión que, bien ejecutada, mej
 
 En **Arkava** llevamos más de doce años ejecutando proyectos de remodelación y acabados arquitectónicos en toda el área metropolitana de Medellín. Si tienes un proyecto en mente, con gusto te hacemos una visita técnica y te presentamos una propuesta transparente.
 
-**[Contáctanos y agenda tu visita técnica →](/contacto)**
+**[Contáctanos y agenda tu visita técnica →](/contacto/)**
 
 ---
 
 ## También te puede interesar
 
-- [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin) — Tabla por m² y qué encarece baños y cocinas.
-- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026) — Vista por partidas cuando la obra es completa.
-- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — Precios reales por ítem: enchape, sanitarios, grifería y mano de obra.
-- [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales) — La cocina y el baño son el combo con mayor retorno. Aquí los precios completos.
-- [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar) — Drywall, PVC, fibra mineral y madera: comparativa con precios 2026.
-- [Microcemento vs pintura vs estuco: cuál elegir para tus paredes](/blog/microcemento-vs-pintura-paredes) — Comparativa de acabados con precios reales para ayudarte a decidir.
+- [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin/) — Tabla por m² y qué encarece baños y cocinas.
+- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026/) — Vista por partidas cuando la obra es completa.
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — Precios reales por ítem: enchape, sanitarios, grifería y mano de obra.
+- [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales/) — La cocina y el baño son el combo con mayor retorno. Aquí los precios completos.
+- [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Drywall, PVC, fibra mineral y madera: comparativa con precios 2026.
+- [Microcemento vs pintura vs estuco: cuál elegir para tus paredes](/blog/microcemento-vs-pintura-paredes/) — Comparativa de acabados con precios reales para ayudarte a decidir.

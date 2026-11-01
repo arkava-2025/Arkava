@@ -1,6 +1,7 @@
 ---
 title: "Cómo contratar expertos en remodelación en Medellín (y a quién evitar)"
-description: "Guía práctica para contratar una empresa de remodelación confiable en Medellín: qué exigir, señales de alerta reales y preguntas que debes hacer antes de firmar."
+seoTitle: "Contratar empresa de remodelación en Medellín | Arkava"
+description: "Qué exigirle a una empresa de remodelación en Medellín antes de firmar: contrato, pagos por etapas, señales de alerta y preguntas clave."
 pubDate: 2026-04-28
 author: "Equipo Arkava"
 category: "Guías"
@@ -106,4 +107,4 @@ Hemos ejecutado proyectos residenciales y comerciales en Medellín, incluyendo h
 
 **¿Tiene un proyecto en mente?** Cuéntenos qué necesita y coordinamos una visita técnica. El presupuesto llega después de ver la obra, no antes.
 
-[Solicitar visita técnica →](/contacto)
+[Solicitar visita técnica →](/contacto/)

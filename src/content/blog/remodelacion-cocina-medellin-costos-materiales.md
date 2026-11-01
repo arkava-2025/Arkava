@@ -1,6 +1,7 @@
 ---
 title: "Remodelación de cocina en Medellín: costos, materiales y qué no hacer"
-description: "Todo sobre remodelación de cocinas en Medellín en 2026: precios reales, materiales recomendados, errores frecuentes y cómo elegir la empresa correcta para tu proyecto."
+seoTitle: "Remodelación de cocina en Medellín: costos 2026 | Arkava"
+description: "Precios 2026 para remodelar una cocina en Medellín: desglose por ítem, materiales recomendados, tiempos de obra y los errores más costosos."
 pubDate: 2026-04-12
 author: "Equipo Arkava"
 category: "Guías"
@@ -168,12 +169,12 @@ Remodelar la cocina es la inversión con mayor retorno en cualquier inmueble. La
 
 En **Arkava** acompañamos el proceso completo, desde la visita técnica hasta la entrega final, con presupuesto transparente, contrato legal y pólizas de cumplimiento. Si tienes una cocina que transformar en Medellín, estamos listos para hacerlo bien.
 
-**[Agenda tu visita técnica →](/contacto)**
+**[Agenda tu visita técnica →](/contacto/)**
 
 ---
 
 ## También te puede interesar
 
-- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin) — El baño y la cocina son el combo que más valoriza un apartamento. Aquí los precios reales por ítem.
-- [Microcemento vs pintura vs estuco: comparativa 2026](/blog/microcemento-vs-pintura-paredes) — Para los muros de tu cocina: cuál acabado aguanta más y qué conviene según el presupuesto.
-- [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin) — Si el proyecto incluye más espacios, esta guía tiene los costos y etapas del proceso completo.
+- [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — El baño y la cocina son el combo que más valoriza un apartamento. Aquí los precios reales por ítem.
+- [Microcemento vs pintura vs estuco: comparativa 2026](/blog/microcemento-vs-pintura-paredes/) — Para los muros de tu cocina: cuál acabado aguanta más y qué conviene según el presupuesto.
+- [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin/) — Si el proyecto incluye más espacios, esta guía tiene los costos y etapas del proceso completo.

@@ -14,13 +14,14 @@ if (isStandalone) {
   iconService = service?.iconService;
 }
 
-const SEO_DESCRIPTION = 'Pintura de interiores y exteriores en Medellín desde $18.000/m². Muros, cielos y fachadas con materiales de primera, presupuesto transparente sin costos ocultos y contrato garantizado. Arkava.';
+const SEO_TITLE = 'Pintura de interiores y fachadas en Medellín | Arkava';
+const SEO_DESCRIPTION = 'Pintura de interiores y exteriores en Medellín desde $18.000/m²: muros, cielos y fachadas con materiales de primera y presupuesto sin costos ocultos.';
 const serviceSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: title,
   description: SEO_DESCRIPTION,
-  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://www.arkava.com.co' },
   areaServed: 'Medellín, Colombia',
   serviceType: 'Pintura arquitectónica',
 });
@@ -32,7 +33,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
 
 <ConditionalLayout
   enabled={isStandalone}
-  title={`${title} en Medellín | Acabados Arkava`}
+  title={SEO_TITLE}
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
@@ -49,7 +50,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
         >
           <!-- Título grande con tracking amplio -->
           {isStandalone ? (
-            <h1 class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6">{title}</h1>
+            <h1 class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6">{title}<span class="block mt-3 text-base md:text-xl font-normal normal-case tracking-normal" style="letter-spacing: normal;">Interiores, exteriores y fachadas en Medellín</span></h1>
           ) : (
             <h2 class="text-5xl md:text-6xl font-bold uppercase font-pp-sans tracking-[0.6rem] leading-none mb-6">{title}</h2>
           )}

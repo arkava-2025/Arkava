@@ -14,13 +14,14 @@ if (isStandalone) {
   iconService = service?.iconService;
 }
 
-const SEO_DESCRIPTION = 'Enchape en Medellín: cerámica desde $80.000/m² y porcelanato premium para baños, cocinas y fachadas. Instalación profesional con contrato, póliza de cumplimiento y presupuesto sin costos ocultos. Arkava.';
+const SEO_TITLE = 'Enchape de baños y cocinas en Medellín | Arkava';
+const SEO_DESCRIPTION = 'Enchape en Medellín desde $80.000/m²: cerámica y porcelanato para baños, cocinas y fachadas, con contrato, póliza y presupuesto sin costos ocultos.';
 const serviceSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: title,
   description: SEO_DESCRIPTION,
-  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://www.arkava.com.co' },
   areaServed: 'Medellín, Colombia',
   serviceType: 'Enchapes y revestimientos',
 });
@@ -32,7 +33,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
 
 <ConditionalLayout
   enabled={isStandalone}
-  title={`${title} en Medellín | Acabados Arkava`}
+  title={SEO_TITLE}
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
@@ -45,7 +46,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <!-- TEXT -->
       <div class="h-[45%]">
         {isStandalone ? (
-          <h1 class="text-white text-5xl md:text-6xl font-bold tracking-widest mb-8 uppercase">{title}</h1>
+          <h1 class="text-white text-5xl md:text-6xl font-bold tracking-widest mb-8 uppercase">{title}<span class="block mt-3 text-base md:text-xl font-normal normal-case tracking-normal" style="letter-spacing: normal;">Baños, cocinas, pisos y fachadas en Medellín</span></h1>
         ) : (
           <h2 class="text-white text-5xl md:text-6xl font-bold tracking-widest mb-8 uppercase">{title}</h2>
         )}

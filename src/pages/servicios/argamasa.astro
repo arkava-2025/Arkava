@@ -14,13 +14,14 @@ if (isStandalone) {
   iconService = service?.iconService;
 }
 
-const SEO_DESCRIPTION = 'Argamasa y revoque en Medellín: nivelación, impermeabilización y bases de alta calidad para enchapes y acabados finales. Aplicación profesional en proyectos residenciales y comerciales. Arkava.';
+const SEO_TITLE = 'Argamasa y revoque en Medellín | Arkava';
+const SEO_DESCRIPTION = 'Argamasa y revoque en Medellín: nivelación e impermeabilización de muros y pisos como base para enchapes y acabados finales, residenciales y comerciales.';
 const serviceSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: title,
   description: SEO_DESCRIPTION,
-  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://www.arkava.com.co' },
   areaServed: 'Medellín, Colombia',
   serviceType: 'Argamasa y revoque',
 });
@@ -35,7 +36,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
 
 <ConditionalLayout
   enabled={isStandalone}
-  title={`${title} en Medellín | Acabados Arkava`}
+  title={SEO_TITLE}
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
@@ -45,7 +46,7 @@ const descriptionText = description?.raw?.children?.map((block: any) =>
       <!-- Columna izquierda: texto -->
       <section class="col-span-5">
         {isStandalone ? (
-          <h1 class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase" style="letter-spacing: .65rem;">{title}</h1>
+          <h1 class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase" style="letter-spacing: .65rem;">{title}<span class="block mt-3 text-base md:text-xl font-normal normal-case tracking-normal" style="letter-spacing: normal;">Nivelación y bases para acabados en Medellín</span></h1>
         ) : (
           <h2 class="font-display text-white text-5xl md:text-6xl tracking-widest leading-tight mb-6 uppercase" style="letter-spacing: .65rem;">{title}</h2>
         )}

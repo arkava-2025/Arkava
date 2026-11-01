@@ -7,6 +7,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/molecules/Container.astro';
 import ProjectGallery from '@/components/organisms/ProjectGallery';
 import getGeneralPage from '@/lib/hygraph/queries/getGeneralPage';
+import { whatsappLink } from '@/lib/utils/whatsapp';
 import ClientIcon from '@/icons/client.astro';
 import LocationIcon from '@/icons/location.astro';
 import ServicesIcon from '@/icons/services.astro';
@@ -64,6 +65,20 @@ const htmlDescription = markdownToHtml(description || '');
 const plainDescription = (description || '').replace(/\s+/g, ' ').trim();
 const isLongDescription = plainDescription.length > 900;
 
+// Meta description: sin markdown y cortada en límite de palabra
+const metaSource = (relatedProject.description || '')
+  .replace(/[*_#>`]/g, '')
+  .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+  .replace(/\s+/g, ' ')
+  .trim();
+const metaDescription =
+  metaSource.length > 155
+    ? `${metaSource.slice(0, 152).replace(/[\s,;:.]+\S*$/, '')}…`
+    : metaSource;
+const seoTitle = /medell[ií]n/i.test(title)
+  ? `${title} | Arkava`
+  : `${title} | Proyecto Arkava Medellín`;
+
 const galleryImageUrls =
   gallery?.map((image: { url: string }) => image.url).filter(Boolean) || [];
 const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
@@ -72,9 +87,9 @@ const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
 ---
 
 <BaseLayout
-  title={`${title} | Proyecto Arkava Medellín`}
-  description={relatedProject.description
-    ? relatedProject.description.slice(0, 155)
+  title={seoTitle}
+  description={metaDescription
+    ? metaDescription
     : `Proyecto de remodelación y acabados arquitectónicos en Medellín por Arkava. ${servicios ? `Servicios: ${servicios}.` : ''}`}
   ogImage={coverImage?.url}
 >
@@ -268,7 +283,7 @@ const combinedImageUrls = [coverImage?.url, ...galleryImageUrls].filter(
           comencemos a crear algo extraordinario.
         </p>
         <a
-          href={`https://wa.me/57${general?.whatsapp}?text=Bienvenido%20a%20Arkava%20Quiero%20iniciar%20un%20proyecto`}
+          href={whatsappLink(general?.whatsapp, 'Bienvenido a Arkava Quiero iniciar un proyecto')}
           class="inline-block bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
         >
           ¡Iniciemos tu proyecto!

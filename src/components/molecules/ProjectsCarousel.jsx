@@ -81,14 +81,14 @@ const ProjectsCarousel = ({ projects = [], settings = {} }) => {
     <Slider ref={sliderRef} {...defaultSettings} className="h-full w-full">
       {projects.map((project) => (
         <div key={project.slug} className="h-full w-full">
-          <a href={`/proyectos/${project.slug}`} className="group flex h-full w-full relative overflow-hidden">
+          <a href={`/proyectos/${project.slug}/`} className="group flex h-full w-full relative overflow-hidden">
 
           {/* Overlay */}
           <div className="absolute inset-0 overlay-dark overlay-fade group-hover:overlay-fade--reduced"></div>
 
-            <h4 className="absolute bottom-6 left-4 text-center text-white text-base font-pp-sans px-4 py-2 rounded-lg xl:text-lg" style={{textShadow: '2px 2px 6px rgba(0,0,0,0.5)'}}>
+            <h3 className="absolute bottom-6 left-4 text-center text-white text-base font-pp-sans px-4 py-2 rounded-lg xl:text-lg" style={{textShadow: '2px 2px 6px rgba(0,0,0,0.5)'}}>
               {project.title}
-            </h4>
+            </h3>
             <img
               src={project.coverImage?.url}
               alt={project.title}

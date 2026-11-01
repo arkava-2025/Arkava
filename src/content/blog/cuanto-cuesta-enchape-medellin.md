@@ -1,6 +1,7 @@
 ---
 title: "¿Cuánto cuesta enchapar en Medellín? Precios por m², baño y cocina 2026"
-description: "Enchape en Medellín: desde $80.000/m² en cerámica hasta $350.000/m² en porcelanato premium. Precios reales por baño y cocina, mano de obra y los errores que disparan el presupuesto. Guía sin relleno."
+seoTitle: "Cuánto cuesta enchapar en Medellín: precios 2026 | Arkava"
+description: "Enchape en Medellín desde $80.000/m² en cerámica hasta $350.000/m² en porcelanato. Precios por baño y cocina, mano de obra y errores que encarecen la obra."
 pubDate: 2026-04-28
 author: "Equipo Arkava"
 category: "Guías"
@@ -35,7 +36,7 @@ Enchapar **pisos o paredes en Medellín** es una de las partidas que más impact
 
 Esta guía resume **precios reales (2026)**, cómo se arma un presupuesto por **m²**, qué esperar en **baño y cocina** y los errores que suelen **encarecer** la obra.
 
-> **¿Necesitas cifras para tu espacio?** [Agenda visita técnica en Medellín →](/contacto)
+> **¿Necesitas cifras para tu espacio?** [Agenda visita técnica en Medellín →](/contacto/)
 
 ---
 
@@ -65,7 +66,7 @@ Un baño pequeño no son "3 m² de piso": casi siempre hay **paredes completas**
 3. **Preparación**: nivelación, impermeabilización y, en muchos casos, demolición del enchape anterior.
 4. **Acabados**: boquilla, sellos y transiciones con otros materiales.
 
-Si quieres una lectura profunda solo de baños, también tenemos la guía de **[¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin)** con desglose por ítems.
+Si quieres una lectura profunda solo de baños, también tenemos la guía de **[¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/)** con desglose por ítems.
 
 ---
 
@@ -73,7 +74,7 @@ Si quieres una lectura profunda solo de baños, también tenemos la guía de **[
 
 En cocinas el enchape convive con **muebles**, **enchufes**, **puntos de gas** y **extractor**. Eso implica más cortes y más horas de instalación. Además, detrás de la estufa y el lavaplatos conviene planear **materiales fáciles de limpiar** y juntas bien selladas.
 
-Para una visión completa de presupuesto cocina (muebles + instalaciones + acabados), revisa **[remodelación de cocina en Medellín: costos y materiales](/blog/remodelacion-cocina-medellin-costos-materiales)**.
+Para una visión completa de presupuesto cocina (muebles + instalaciones + acabados), revisa **[remodelación de cocina en Medellín: costos y materiales](/blog/remodelacion-cocina-medellin-costos-materiales/)**.
 
 ---
 
@@ -101,16 +102,16 @@ En Arkava trabajamos con **presupuesto por partidas** y avances de obra acordado
 2. **Propuesta detallada** con materiales, mano de obra y tiempos.
 3. **Ejecución** con supervisión y entrega limpia.
 
-También puedes conocer nuestro servicio especializado de **[enchape y cerámica en Medellín](/servicios/enchape)**.
+También puedes conocer nuestro servicio especializado de **[enchape y cerámica en Medellín](/servicios/enchape/)**.
 
 ---
 
 ## También te puede interesar
 
-- [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar) — Cuando el proyecto incluye techo además de paredes.
-- [Instalación de cielo raso en drywall: precios en Medellín](/blog/instalacion-cielo-raso-drywall-medellin-precios) — Presupuesto y alcance cuando el drywall es parte del mismo proyecto.
-- [Remodelación de apartamentos en Medellín: guía de costos](/blog/guia-remodelacion-apartamentos-medellin) — Cómo se combinan enchape, pintura, cocina y baño en una reforma integral.
+- [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Cuando el proyecto incluye techo además de paredes.
+- [Instalación de cielo raso en drywall: precios en Medellín](/blog/instalacion-cielo-raso-drywall-medellin-precios/) — Presupuesto y alcance cuando el drywall es parte del mismo proyecto.
+- [Remodelación de apartamentos en Medellín: guía de costos](/blog/guia-remodelacion-apartamentos-medellin/) — Cómo se combinan enchape, pintura, cocina y baño en una reforma integral.
 
 ---
 
-**[Solicitar cotización de enchape en Medellín →](/contacto)**
+**[Solicitar cotización de enchape en Medellín →](/contacto/)**

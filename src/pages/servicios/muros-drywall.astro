@@ -14,13 +14,14 @@ if (isStandalone) {
   iconService = service?.iconService;
 }
 
-const SEO_DESCRIPTION = 'Muros en Drywall y Superboard en Medellín: divisiones, cielos rasos y fachadas con sistemas livianos certificados. Instalación rápida, presupuesto sin costos ocultos y contrato garantizado. Arkava.';
+const SEO_TITLE = 'Muros en drywall y superboard en Medellín | Arkava';
+const SEO_DESCRIPTION = 'Muros en drywall y superboard en Medellín: divisiones, cielos y fachadas con sistemas livianos certificados, contrato y presupuesto sin costos ocultos.';
 const serviceSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: title,
   description: SEO_DESCRIPTION,
-  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://arkava.com.co' },
+  provider: { '@type': 'LocalBusiness', name: 'Arkava', url: 'https://www.arkava.com.co' },
   areaServed: 'Medellín, Colombia',
   serviceType: 'Construcción en seco Drywall',
 });
@@ -39,7 +40,7 @@ const getImageUrl = (index: number) => {
 
 <ConditionalLayout
   enabled={isStandalone}
-  title={`${title} en Medellín | Acabados Arkava`}
+  title={SEO_TITLE}
   description={SEO_DESCRIPTION}
   schema={serviceSchema}
 >
@@ -56,7 +57,7 @@ const getImageUrl = (index: number) => {
       <!-- Texto -->
       <aside class="md:col-span-4 flex flex-col justify-start">
         {isStandalone ? (
-          <h1 class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase">{title}</h1>
+          <h1 class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase">{title}<span class="block mt-3 text-base md:text-xl font-normal normal-case tracking-normal" style="letter-spacing: normal;">Divisiones y fachadas livianas en Medellín</span></h1>
         ) : (
           <h2 class="tracking-widest text-5xl md:text-6xl leading-tight mb-2 text-white font-pp-sans font-bold uppercase">{title}</h2>
         )}

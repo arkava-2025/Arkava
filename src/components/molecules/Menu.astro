@@ -6,16 +6,15 @@ import Instagram from '@/icons/instagram.astro';
 import LinkMenu from '@components/atoms/LinkMenu.astro';
 import DropdownMenu from '@/components/molecules/DropdownMenu.astro';
 import Email from '@/icons/email.astro';
-import ButtonLink from '@components/atoms/ButtonLink.astro';
 const currentPath = new URL(Astro.request.url).pathname;
 
 const links = [
-  // { name: 'Sobre Nosotros', href: '/sobre-nosotros' },
-  { name: 'Sobre Nosotros', href: '/sobre-nosotros' },
-  { name: 'Servicios', href: '/servicios' },
-  { name: 'Proyectos', href: '/proyectos' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Contacto', href: '/contacto' },
+  // { name: 'Sobre Nosotros', href: '/sobre-nosotros/' },
+  { name: 'Sobre Nosotros', href: '/sobre-nosotros/' },
+  { name: 'Servicios', href: '/servicios/' },
+  { name: 'Proyectos', href: '/proyectos/' },
+  { name: 'Blog', href: '/blog/' },
+  { name: 'Contacto', href: '/contacto/' },
 ];
 
 const { logo, logoDark, email, instagram } = Astro.props;
@@ -50,7 +49,8 @@ const isHomePage = Astro.url.pathname === '/';
 
       {
         links.map((link) => {
-          const isActive = pathname + hash === link.href;
+          const isActive =
+            pathname.replace(/\/$/, '') + hash === link.href.replace(/\/$/, '');
 
           if (isHomePage && link.href === '#Services') {
             return (
@@ -83,16 +83,6 @@ const isHomePage = Astro.url.pathname === '/';
           );
         })
       }
-
-      <!-- <div>
-        <ButtonLink
-          text="Creemos Juntos"
-          href={`https://wa.me/573143935605?text=Hola%2C%20me%20gustaría%20recibir%20más%20información%20sobre%20Creemos%20Juntos%20Mi%20Proyectos.`}
-          target="_blank"
-          aria-label="Creemos Juntos"
-          className="lg:py-3 lg:px-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg lg:text-[16px]"
-        />
-      </div> -->
     </ul>
 
     <!-- Menú lateral para móviles -->
@@ -129,7 +119,8 @@ const isHomePage = Astro.url.pathname === '/';
         }
         {
           links.map((link) => {
-            const isActive = pathname + hash === link.href;
+            const isActive =
+              pathname.replace(/\/$/, '') + hash === link.href.replace(/\/$/, '');
             if (
               isHomePage &&
               (link.href === '#Projects' || link.href === '#Services')
