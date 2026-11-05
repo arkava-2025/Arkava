@@ -36,7 +36,7 @@ export const SPOTS: Spot[] = [
     x: 61,
     y: 58,
     title: 'Remodelación integral de apartamentos y casas',
-    text: 'Un solo equipo y un solo contrato para toda la obra: demolición, obra gris, obra blanca y acabados. Pagas por etapas según el avance, con póliza de cumplimiento.',
+    text: 'Un solo equipo y un solo contrato para toda la obra: demolición, obra gris, obra blanca y acabados. Pagas por etapas según el avance y, si la necesitas, con póliza de cumplimiento.',
     fact: 'En Medellín, entre $850.000 y $1.800.000 por m² según el nivel de acabado',
     href: '/contacto/',
     cta: 'Cotizar remodelación integral',
