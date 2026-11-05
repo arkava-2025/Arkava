@@ -1,7 +1,41 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import edificio from '@/assets/servicios-hero/01-edificio.jpg';
-import { SPOTS } from '@/lib/servicios-hero/spots';
+import { SPOTS, type SpotId } from '@/lib/servicios-hero/spots';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/servicios-hero/*.jpg', {
+  eager: true,
+});
+const img = (name: string) => files[`/src/assets/servicios-hero/${name}.jpg`].default;
+
+// Cada escena: efecto y sus imágenes en orden (la primera es el "antes").
+const SCENES: { id: SpotId; effect: string; steps: string[] }[] = [
+  { id: 'integral', effect: 'stages', steps: ['04-integral-obra-gris', '03-integral-obra-blanca', '02-integral-terminado'] },
+  { id: 'diseno', effect: 'design', steps: ['07-diseno-plano', '06-diseno-volumen', '05-diseno-real'] },
+  { id: 'pintura', effect: 'floors', steps: ['09-fachada-argamasa', '08-fachada-pintada'] },
+  { id: 'argamasa', effect: 'wipeUp', steps: ['10-fachada-ladrillo', '09-fachada-argamasa'] },
+  { id: 'enchape', effect: 'tiles', steps: ['12-enchape-antes', '11b-enchape-sin-muebles', '11-enchape-despues'] },
+  { id: 'decorativos', effect: 'trowel', steps: ['14-decorativos-antes', '13-decorativos-despues'] },
+  { id: 'cielo', effect: 'ceiling', steps: ['17-cielo-losa', '16-cielo-apagado', '15-cielo-encendido'] },
+  { id: 'drywall', effect: 'boards', steps: ['19-drywall-antes', '18-drywall-despues'] },
+  { id: 'estuco', effect: 'trowel', steps: ['21-estuco-antes', '20-estuco-despues'] },
+  { id: 'carpinteria', effect: 'panels', steps: ['23-carpinteria-antes', '22-carpinteria-despues'] },
+];
+
+// Las escenas no van en el HTML inicial: viven en <template> y el script las
+// monta al primer hover o foco, así la carga solo descarga el edificio.
+const responsive = async (name: string) => {
+  const src = img(name);
+  const widths = [960, 1600, 2560].filter((w) => w <= src.width);
+  const [avif, webp] = await Promise.all(
+    (['avif', 'webp'] as const).map((format) => getImage({ src, format, widths, quality: 72 })),
+  );
+  return { avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, src: webp.src };
+};
+const sceneImages = await Promise.all(
+  SCENES.map(async (sc) => ({ ...sc, imgs: await Promise.all(sc.steps.map(responsive)) })),
+);
 
 // Escritorio: la foto a todo el ancho. Móvil: el escenario es más alto que
 // la foto en 16:9 y se recortan los lados, por eso pide una imagen más ancha.
@@ -124,6 +158,21 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
       }
     </div>
   </div>
+  {
+    sceneImages.map((sc) => (
+      <template data-svh-tpl={sc.id}>
+        <div class="svh-layer" data-effect={sc.effect} data-scene={sc.id} aria-hidden="true">
+          {sc.imgs.map((im, i) => (
+            <picture class="svh-pic" data-svh-step={i}>
+              <source type="image/avif" srcset={im.avif} sizes={SIZES} />
+              <source type="image/webp" srcset={im.webp} sizes={SIZES} />
+              <img class="svh-img" src={im.src} alt="" decoding="async" />
+            </picture>
+          ))}
+        </div>
+      </template>
+    ))
+  }
 </section>
 
 <style is:global>
@@ -188,6 +237,22 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
     position: absolute;
     inset: 0;
     display: block;
+  }
+  /* Las etapas siguientes al "antes" empiezan ocultas; cada efecto las revela */
+  .svh-layer [data-svh-step]:not([data-svh-step='0']) {
+    opacity: 0;
+  }
+  /* Barrido de arriba abajo con borde suave */
+  .svh-mask-down {
+    --svh-p: -12%;
+    -webkit-mask-image: linear-gradient(180deg, #000 var(--svh-p), transparent calc(var(--svh-p) + 12%));
+    mask-image: linear-gradient(180deg, #000 var(--svh-p), transparent calc(var(--svh-p) + 12%));
+  }
+  /* Luz que se extiende desde un punto */
+  .svh-mask-light {
+    --svh-r: 0%;
+    -webkit-mask-image: radial-gradient(circle at var(--svh-lx) var(--svh-ly), #000 calc(var(--svh-r) - 28%), transparent var(--svh-r));
+    mask-image: radial-gradient(circle at var(--svh-lx) var(--svh-ly), #000 calc(var(--svh-r) - 28%), transparent var(--svh-r));
   }
   .svh-img,
   .svh-canvas picture img {
