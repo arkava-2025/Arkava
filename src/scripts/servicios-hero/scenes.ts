@@ -46,8 +46,8 @@ export const SCENES: Record<string, SceneGeometry> = {
     ],
   },
   argamasa: { area: CULATA },
-  // La pintura baja piso por piso, por las juntas de cada placa
-  pintura: { area: CULATA, yEdges: [7.5, 30, 44, 59, 72, 84, 100] },
+  // Primer plano de la culata (08c, 09c): muro y franja de la esquina
+  pintura: { area: { x0: 6, y0: 0, x1: 93.3, y1: 100 } },
   // Juntas del muro de fondo del baño (medidas sobre la 11b)
   enchape: {
     xEdges: [18.75, 25.75, 37.85, 50, 62.15, 74.25, 80.85, 87.85],

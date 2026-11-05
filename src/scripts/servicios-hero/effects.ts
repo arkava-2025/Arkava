@@ -130,33 +130,17 @@ const wipeUp: Effect = {
   },
 };
 
-// Pintura de fachada: la pintura baja piso por piso, de arriba abajo, como
-// el andamio colgante. El borde fresco brilla un poco y se asienta.
-const floors: Effect = {
-  run(layer, motion) {
-    const geo = scene(layer);
-    const area = geo.area!;
-    const floorsEls = pieces(layer, 1, bands('y', geo.yEdges!, [area.x0, area.x1]));
-    const tl = gsap.timeline();
-    if (!motion) return tl.to(floorsEls, { opacity: 1, duration: 0.6 });
-    floorsEls.forEach((el, i) => {
-      el.classList.add('svh-mask-down');
-      gsap.set(el, { '--svh-p': '-10%', filter: 'brightness(1.08)' });
-      const at = i * 0.42;
-      tl.set(el, { opacity: 1 }, at);
-      tl.to(el, { '--svh-p': '112%', duration: 0.6, ease: 'power1.inOut' }, at);
-      tl.to(el, { filter: 'brightness(1)', duration: 0.7, ease: 'power1.out' }, at + 0.45);
-    });
-    return tl;
-  },
-  reset: clearPieces,
-};
-
-// Pintura con rodillo: el rodillo recorre el muro en franjas verticales,
-// bajando y subiendo, de derecha a izquierda (la tarjeta tapa la izquierda,
-// así esa parte se pinta al final). La pintura queda detrás del rodillo.
-const STRIPS = 6;
+// Pintura con rodillo: el rodillo recorre el muro en franjas verticales del
+// ancho de su felpa, bajando y subiendo, de derecha a izquierda (la tarjeta
+// tapa la izquierda, así esa parte se pinta al final). Cada franja queda un
+// momento más brillante, como pintura húmeda, y se asienta al secar.
+const STRIPS = 8;
 const EMPTY_CLIP = 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)';
+// Centro de la felpa dentro de la imagen del rodillo (10c-rodillo.png)
+const ROLLER_ANCHOR = { x: -49.4, y: -10.8 };
+// Borde de avance irregular, como deja la felpa (offsets en % de alto)
+const EDGE = [0, 0.7, -0.4, 0.9, -0.2, 0.5, 0];
+
 const roller: Effect = {
   run(layer, motion) {
     const paint = step(layer, 1);
@@ -169,43 +153,74 @@ const roller: Effect = {
     }
 
     const w = (wall.x1 - wall.x0) / STRIPS;
+    const strip = (i: number) => ({ x0: wall.x1 - (i + 1) * w, x1: wall.x1 - i * w });
+    const wet = pieces(layer, 1, Array.from({ length: STRIPS }, (_, i) => ({ ...strip(i), y0: wall.y0, y1: wall.y1 })));
+    wet.forEach((el) => {
+      el.style.filter = 'brightness(1.07) saturate(1.12) contrast(1.04)';
+    });
+
     const st = { i: 0, p: 0, shift: 0 };
+    const yAt = (down: boolean, p: number) => (down ? wall.y0 + p * (wall.y1 - wall.y0) : wall.y1 - p * (wall.y1 - wall.y0));
+    // Borde de avance de la franja i, de derecha a izquierda, irregular
+    const edge = (i: number, p: number): [number, number][] => {
+      const { x0, x1 } = strip(i);
+      const down = i % 2 === 0;
+      const y = yAt(down, p);
+      return EDGE.map((o, k) => [x1 - ((x1 - x0) * k) / (EDGE.length - 1), y + (down ? o : -o)]);
+    };
     const render = () => {
-      const down = st.i % 2 === 0;
-      const y = down ? wall.y0 + st.p * (wall.y1 - wall.y0) : wall.y1 - st.p * (wall.y1 - wall.y0);
-      const cr = wall.x1 - st.i * w;
-      const cl = cr - w;
-      // Franjas ya pintadas completas + la franja actual hasta donde va el rodillo
-      const pts: [number, number][] = down
-        ? [[cl, wall.y0], [wall.x1, wall.y0], [wall.x1, wall.y1], [cr, wall.y1], [cr, y], [cl, y]]
-        : [[cr, wall.y0], [wall.x1, wall.y0], [wall.x1, wall.y1], [cl, wall.y1], [cl, y], [cr, y]];
-      paint.style.clipPath = polygonClip(pts);
-      gsap.set(tool, { left: `${cr - w / 2 - st.shift * w}%`, top: `${y}%`, rotation: down ? 3 : -3 });
+      const { i, p } = st;
+      const { x0, x1 } = strip(i);
+      const down = i % 2 === 0;
+      const e = edge(i, p);
+      // Franjas ya pintadas completas + la franja actual hasta el rodillo
+      const done: [number, number][] = [[x1, wall.y0], [wall.x1, wall.y0], [wall.x1, wall.y1], [x1, wall.y1]];
+      paint.style.clipPath = polygonClip(
+        down ? [...done, ...e, [x0, wall.y0]] : [...done, [x0, wall.y1], ...e.slice().reverse()],
+      );
+      wet[i].style.clipPath = polygonClip(down ? [[x1, wall.y0], ...e, [x0, wall.y0]] : [[x1, wall.y1], ...e, [x0, wall.y1]]);
+      gsap.set(tool, {
+        left: `${x1 - w / 2 - st.shift * w}%`,
+        top: `${yAt(down, p)}%`,
+        rotation: (down ? 2 : -2) + Math.sin(p * Math.PI * 5) * 1.2,
+      });
     };
 
     gsap.set(paint, { opacity: 1 });
-    gsap.set(tool, { xPercent: -50, yPercent: -9 });
+    gsap.set(tool, { xPercent: ROLLER_ANCHOR.x, yPercent: ROLLER_ANCHOR.y });
     render();
-    tl.fromTo(tool, { autoAlpha: 0, y: 80 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+    tl.fromTo(tool, { autoAlpha: 0, y: 90 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0);
+    const PASS = 0.5;
+    const MOVE = 0.14;
+    let t = 0.5;
     for (let i = 0; i < STRIPS; i++) {
-      tl.call(() => {
-        st.i = i;
-        st.p = 0;
-        st.shift = 0;
-        render();
-      });
-      tl.to(st, { p: 1, duration: 0.55, ease: 'sine.inOut', onUpdate: render });
-      if (i < STRIPS - 1) tl.to(st, { shift: 1, duration: 0.16, ease: 'sine.inOut', onUpdate: render });
+      tl.call(
+        () => {
+          st.i = i;
+          st.p = 0;
+          st.shift = 0;
+          gsap.set(wet[i], { opacity: 1 });
+          render();
+        },
+        undefined,
+        t,
+      );
+      tl.to(st, { p: 1, duration: PASS, ease: 'sine.inOut', onUpdate: render }, t);
+      // La franja húmeda se asienta mientras el rodillo sigue con la siguiente
+      tl.to(wet[i], { opacity: 0, duration: 1.3, ease: 'power1.out' }, t + PASS);
+      if (i < STRIPS - 1) tl.to(st, { shift: 1, duration: MOVE, ease: 'sine.inOut', onUpdate: render }, t + PASS);
+      else tl.to(tool, { autoAlpha: 0, y: 120, duration: 0.5, ease: 'power2.in' }, t + PASS);
+      t += PASS + MOVE;
     }
     tl.call(() => {
       paint.style.clipPath = insetClip(wall);
     });
-    tl.to(tool, { autoAlpha: 0, y: 120, duration: 0.5, ease: 'power2.in' });
     return tl;
   },
   reset(layer) {
     const paint = step(layer, 1);
     const tool = layer.querySelector<HTMLElement>('[data-svh-roller]');
+    clearPieces(layer);
     paint.style.clipPath = EMPTY_CLIP;
     gsap.set(paint, { opacity: 0 });
     if (tool) gsap.set(tool, { autoAlpha: 0, clearProps: 'y' });
@@ -336,7 +351,6 @@ export const EFFECTS: Record<string, Effect> = {
   stages,
   design: stages,
   wipeUp,
-  floors,
   roller,
   tiles,
   trowel,
