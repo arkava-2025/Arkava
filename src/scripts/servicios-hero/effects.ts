@@ -16,16 +16,19 @@ const steps = (layer: HTMLElement) => [...layer.querySelectorAll<HTMLElement>('[
 const scene = (layer: HTMLElement) => SCENES[layer.dataset.scene ?? ''] ?? {};
 
 // Piezas: copias de una etapa recortadas a un rectángulo. Así una placa, una
-// pieza de enchape o un piso aparecen solos sobre el "antes".
+// pieza de enchape o un piso aparecen solos sobre el "antes". Van justo
+// después de su etapa, debajo de las siguientes (en enchape el baño con
+// muebles tiene que quedar encima de las piezas).
 function pieces(layer: HTMLElement, from: number, rects: Rect[]) {
   const src = step(layer, from);
+  const next = src.nextSibling;
   return rects.map((r) => {
     const el = src.cloneNode(true) as HTMLElement;
     el.removeAttribute('data-svh-step');
     el.classList.add('svh-piece');
     el.style.clipPath = insetClip(r);
     el.style.opacity = '0';
-    layer.appendChild(el);
+    layer.insertBefore(el, next);
     return el;
   });
 }
@@ -226,7 +229,7 @@ const tiles: Effect = {
       );
     }
     tl.to(step(layer, 1), { opacity: 1, duration: 0.6 }, motion ? '-=0.1' : '+=0.3');
-    tl.to(step(layer, 2), { opacity: 1, duration: 0.8 }, '+=0.3');
+    tl.to(step(layer, 2), { opacity: 1, duration: 1, ease: 'power1.inOut' }, '+=0.4');
     return tl;
   },
   reset(layer) {
