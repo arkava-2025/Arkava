@@ -149,6 +149,66 @@ const floors: Effect = {
   reset: clearPieces,
 };
 
+// Pintura con rodillo: el rodillo recorre el muro en franjas verticales,
+// bajando y subiendo, de derecha a izquierda (la tarjeta tapa la izquierda,
+// así esa parte se pinta al final). La pintura queda detrás del rodillo.
+const STRIPS = 6;
+const EMPTY_CLIP = 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%)';
+const roller: Effect = {
+  run(layer, motion) {
+    const paint = step(layer, 1);
+    const tool = layer.querySelector<HTMLElement>('[data-svh-roller]')!;
+    const wall = scene(layer).area!;
+    const tl = gsap.timeline();
+    if (!motion) {
+      paint.style.clipPath = insetClip(wall);
+      return tl.to(paint, { opacity: 1, duration: 0.6 });
+    }
+
+    const w = (wall.x1 - wall.x0) / STRIPS;
+    const st = { i: 0, p: 0, shift: 0 };
+    const render = () => {
+      const down = st.i % 2 === 0;
+      const y = down ? wall.y0 + st.p * (wall.y1 - wall.y0) : wall.y1 - st.p * (wall.y1 - wall.y0);
+      const cr = wall.x1 - st.i * w;
+      const cl = cr - w;
+      // Franjas ya pintadas completas + la franja actual hasta donde va el rodillo
+      const pts: [number, number][] = down
+        ? [[cl, wall.y0], [wall.x1, wall.y0], [wall.x1, wall.y1], [cr, wall.y1], [cr, y], [cl, y]]
+        : [[cr, wall.y0], [wall.x1, wall.y0], [wall.x1, wall.y1], [cl, wall.y1], [cl, y], [cr, y]];
+      paint.style.clipPath = polygonClip(pts);
+      gsap.set(tool, { left: `${cr - w / 2 - st.shift * w}%`, top: `${y}%`, rotation: down ? 3 : -3 });
+    };
+
+    gsap.set(paint, { opacity: 1 });
+    gsap.set(tool, { xPercent: -50, yPercent: -9 });
+    render();
+    tl.fromTo(tool, { autoAlpha: 0, y: 80 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+    for (let i = 0; i < STRIPS; i++) {
+      tl.call(() => {
+        st.i = i;
+        st.p = 0;
+        st.shift = 0;
+        render();
+      });
+      tl.to(st, { p: 1, duration: 0.55, ease: 'sine.inOut', onUpdate: render });
+      if (i < STRIPS - 1) tl.to(st, { shift: 1, duration: 0.16, ease: 'sine.inOut', onUpdate: render });
+    }
+    tl.call(() => {
+      paint.style.clipPath = insetClip(wall);
+    });
+    tl.to(tool, { autoAlpha: 0, y: 120, duration: 0.5, ease: 'power2.in' });
+    return tl;
+  },
+  reset(layer) {
+    const paint = step(layer, 1);
+    const tool = layer.querySelector<HTMLElement>('[data-svh-roller]');
+    paint.style.clipPath = EMPTY_CLIP;
+    gsap.set(paint, { opacity: 0 });
+    if (tool) gsap.set(tool, { autoAlpha: 0, clearProps: 'y' });
+  },
+};
+
 // Enchape: las piezas aparecen una a una siguiendo las juntas reales, luego
 // el resto del baño enchapado (piso y muro lateral) y al final los muebles.
 const tiles: Effect = {
@@ -274,6 +334,7 @@ export const EFFECTS: Record<string, Effect> = {
   design: stages,
   wipeUp,
   floors,
+  roller,
   tiles,
   trowel,
   boards,
