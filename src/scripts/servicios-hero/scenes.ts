@@ -55,11 +55,12 @@ export const SCENES: Record<string, SceneGeometry> = {
   },
   decorativos: { area: { x0: 25.5, y0: 3, x1: 95.5, y1: 86.5 } },
   estuco: { area: { x0: 16, y0: 8, x1: 100, y1: 94 } },
-  // Una franja por placa entre perfiles, más el refuerzo sobre el vano
+  // Tres placas (juntas medidas sobre la 18b) y el refuerzo sobre el vano.
+  // El muro a la derecha del vano no entra: está terminado en todas las fotos.
   drywall: {
-    area: { x0: 27, y0: 15, x1: 75.5, y1: 86.5 },
-    xEdges: range(27, 75.5, 8),
-    header: { x0: 75.5, y0: 14.5, x1: 92, y1: 21 },
+    area: { x0: 27.2, y0: 14.3, x1: 92.5, y1: 87.5 },
+    xEdges: [27.2, 43.75, 60.5, 75.2],
+    header: { x0: 75.2, y0: 14.3, x1: 92.5, y1: 21.5 },
   },
   // Grupos de tablillas a los dos lados de la puerta pivotante
   carpinteria: {

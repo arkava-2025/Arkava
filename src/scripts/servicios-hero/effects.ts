@@ -299,8 +299,9 @@ const trowel: Effect = {
   },
 };
 
-// Drywall: las placas se instalan una a una de izquierda a derecha, en
-// franjas del ancho de una placa, y al final el refuerzo sobre el vano.
+// Drywall: sobre la estructura (0) se instalan las placas una a una, con
+// cinta y masilla en las juntas (1); al final el muro se pinta (2), solo en
+// la zona del muro.
 const boards: Effect = {
   run(layer, motion) {
     const geo = scene(layer);
@@ -308,16 +309,25 @@ const boards: Effect = {
     const rects = bands('x', geo.xEdges!, [area.y0, area.y1]);
     if (geo.header) rects.push(geo.header);
     const els = pieces(layer, 1, rects);
+    const painted = step(layer, 2);
+    painted.style.clipPath = insetClip(area);
     const tl = gsap.timeline();
-    if (!motion) return tl.to(els, { opacity: 1, duration: 0.6 });
+    if (!motion) {
+      tl.to(els, { opacity: 1, duration: 0.6 });
+      return tl.to(painted, { opacity: 1, duration: 0.6 }, '+=0.5');
+    }
     tl.fromTo(
       els,
-      { opacity: 0, yPercent: 1.2 },
-      { opacity: 1, yPercent: 0, duration: 0.34, ease: 'power2.out', stagger: 0.17 },
+      { opacity: 0, yPercent: 1.5 },
+      { opacity: 1, yPercent: 0, duration: 0.5, ease: 'power2.out', stagger: 0.38 },
     );
+    tl.to(painted, { opacity: 1, duration: 1.1, ease: 'power1.inOut' }, '+=0.55');
     return tl;
   },
-  reset: clearPieces,
+  reset(layer) {
+    clearPieces(layer);
+    gsap.set(step(layer, 2), { opacity: 0 });
+  },
 };
 
 // Carpintería: las tablillas se instalan por grupos de izquierda a derecha y
