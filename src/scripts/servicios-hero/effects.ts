@@ -46,37 +46,42 @@ function fades(layer: HTMLElement) {
   return tl;
 }
 
-// Cielo raso: sobre la losa (0) el cielo instalado y apagado (1) baja de
-// arriba abajo solo en el techo; después la luz indirecta (2) se enciende
-// desde la cornisa y se extiende por todo el espacio.
+// Cielo raso: sobre la losa (0) las placas con cinta y masilla (1) bajan de
+// arriba abajo solo en el techo; luego el cielo se pinta (2) y al final la
+// luz indirecta (3) se enciende desde la cornisa y se extiende por el espacio.
 const ceiling: Effect = {
   run(layer, motion) {
-    const installed = step(layer, 1);
-    const lit = step(layer, 2);
+    const boardsEl = step(layer, 1);
+    const painted = step(layer, 2);
+    const lit = step(layer, 3);
     const tl = gsap.timeline();
     if (!motion) {
-      tl.set(installed, { '--svh-p': '112%' });
-      tl.to(installed, { opacity: 1, duration: 0.5 });
+      tl.set(boardsEl, { '--svh-p': '112%' });
+      tl.to(boardsEl, { opacity: 1, duration: 0.5 });
+      tl.to(painted, { opacity: 1, duration: 0.5 }, '+=0.4');
       return tl.to(lit, { opacity: 1, '--svh-r': '200%', duration: 0.6 }, '+=0.4');
     }
-    tl.set(installed, { opacity: 1 });
-    tl.to(installed, { '--svh-p': '112%', duration: 1.8, ease: 'power2.inOut' });
+    tl.set(boardsEl, { opacity: 1 });
+    tl.to(boardsEl, { '--svh-p': '112%', duration: 1.8, ease: 'power2.inOut' });
+    tl.to(painted, { opacity: 1, duration: 1, ease: 'power1.inOut' }, '+=0.45');
     tl.set(lit, { opacity: 1 }, '+=0.35');
     tl.to(lit, { '--svh-r': '190%', duration: 1.9, ease: 'power2.inOut' });
     return tl;
   },
   reset(layer) {
-    const installed = step(layer, 1);
-    const lit = step(layer, 2);
+    const boardsEl = step(layer, 1);
+    const painted = step(layer, 2);
+    const lit = step(layer, 3);
     const geo = scene(layer);
-    if (geo.poly) installed.style.clipPath = polygonClip(geo.poly);
+    if (geo.poly) boardsEl.style.clipPath = painted.style.clipPath = polygonClip(geo.poly);
     if (geo.light) {
       lit.style.setProperty('--svh-lx', `${geo.light[0]}%`);
       lit.style.setProperty('--svh-ly', `${geo.light[1]}%`);
     }
-    installed.classList.add('svh-mask-down');
+    boardsEl.classList.add('svh-mask-down');
     lit.classList.add('svh-mask-light');
-    gsap.set(installed, { opacity: 0, '--svh-p': '-12%' });
+    gsap.set(boardsEl, { opacity: 0, '--svh-p': '-12%' });
+    gsap.set(painted, { opacity: 0 });
     gsap.set(lit, { opacity: 0, '--svh-r': '0%' });
   },
 };
@@ -227,29 +232,40 @@ const roller: Effect = {
   },
 };
 
-// Enchape: las piezas aparecen una a una siguiendo las juntas reales, luego
-// el resto del baño enchapado (piso y muro lateral) y al final los muebles.
+// Enchape: sobre el mortero (0) se peina el pegante (1) de izquierda a
+// derecha; luego las piezas aparecen una a una siguiendo las juntas reales
+// (2), se completa el enchape del piso y el muro lateral, y al final aparece
+// el baño con muebles (3).
 const tiles: Effect = {
   run(layer, motion) {
     const geo = scene(layer);
-    const tilesEls = pieces(layer, 1, gridCells(geo.xEdges!, geo.yEdges!, 'cols'));
+    const glue = step(layer, 1);
+    const tilesEls = pieces(layer, 2, gridCells(geo.xEdges!, geo.yEdges!, 'cols'));
     const tl = gsap.timeline();
     if (!motion) {
-      tl.to(tilesEls, { opacity: 1, duration: 0.5 });
+      tl.set(glue, { '--svh-p': '130%' });
+      tl.to(glue, { opacity: 1, duration: 0.5 });
+      tl.to(tilesEls, { opacity: 1, duration: 0.5 }, '+=0.4');
     } else {
+      tl.set(glue, { opacity: 1 });
+      tl.to(glue, { '--svh-p': '130%', duration: 1.4, ease: 'power1.inOut' });
       tl.fromTo(
         tilesEls,
         { opacity: 0, scale: 0.94, transformOrigin: '50% 50%' },
         { opacity: 1, scale: 1, duration: 0.32, ease: 'power2.out', stagger: 0.075 },
+        '+=0.3',
       );
     }
-    tl.to(step(layer, 1), { opacity: 1, duration: 0.6 }, motion ? '-=0.1' : '+=0.3');
-    tl.to(step(layer, 2), { opacity: 1, duration: 1, ease: 'power1.inOut' }, '+=0.4');
+    tl.to(step(layer, 2), { opacity: 1, duration: 0.6 }, motion ? '-=0.1' : '+=0.3');
+    tl.to(step(layer, 3), { opacity: 1, duration: 1, ease: 'power1.inOut' }, '+=0.4');
     return tl;
   },
   reset(layer) {
     clearPieces(layer);
-    gsap.set([step(layer, 1), step(layer, 2)], { opacity: 0 });
+    const glue = step(layer, 1);
+    glue.classList.add('svh-mask-wipe');
+    gsap.set(glue, { opacity: 0, '--svh-p': '-20%' });
+    gsap.set([step(layer, 2), step(layer, 3)], { opacity: 0 });
   },
 };
 
