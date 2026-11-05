@@ -26,11 +26,14 @@ export type Spot = {
   fact: string;
   href: string;
   cta: string;
+  // Precio mínimo de referencia en COP (por m²), para el schema Offer
+  priceFrom?: number;
 };
 
 export const SPOTS: Spot[] = [
   {
     id: 'integral',
+    priceFrom: 850000,
     n: 1,
     label: 'Remodelación integral',
     x: 61,
@@ -55,6 +58,7 @@ export const SPOTS: Spot[] = [
   },
   {
     id: 'pintura',
+    priceFrom: 18000,
     n: 3,
     label: 'Pintura',
     x: 79,
@@ -67,6 +71,7 @@ export const SPOTS: Spot[] = [
   },
   {
     id: 'enchape',
+    priceFrom: 80000,
     n: 4,
     label: 'Enchape',
     x: 47.5,
@@ -79,6 +84,7 @@ export const SPOTS: Spot[] = [
   },
   {
     id: 'decorativos',
+    priceFrom: 95000,
     n: 5,
     label: 'Muros decorativos',
     x: 65,
@@ -91,6 +97,7 @@ export const SPOTS: Spot[] = [
   },
   {
     id: 'cielo',
+    priceFrom: 70000,
     n: 6,
     label: 'Cielo raso',
     x: 56.5,
@@ -115,6 +122,7 @@ export const SPOTS: Spot[] = [
   },
   {
     id: 'estuco',
+    priceFrom: 25000,
     n: 8,
     label: 'Estuco',
     x: 31.5,

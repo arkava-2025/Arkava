@@ -34,9 +34,24 @@ const {
 
 const phone = `+${normalizeWhatsapp(generalInfoArkava?.whatsapp)}`;
 
+// Entidad del negocio con @id fijo: las páginas enlazan sus servicios y
+// páginas a esta misma entidad (provider / about).
+const SITE = 'https://www.arkava.com.co';
+const BUSINESS_ID = `${SITE}/#business`;
 const localBusinessSchema = JSON.stringify({
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      url: `${SITE}/`,
+      name: 'Arkava',
+      inLanguage: 'es-CO',
+      publisher: { '@id': BUSINESS_ID },
+    },
+    {
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': BUSINESS_ID,
   name: 'Arkava',
   description:
     'Empresa especializada en acabados arquitectónicos y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.',
@@ -49,10 +64,26 @@ const localBusinessSchema = JSON.stringify({
     addressRegion: 'Antioquia',
     addressCountry: 'CO',
   },
+  ...(generalInfoArkava?.logo?.url && { logo: generalInfoArkava.logo.url, image: generalInfoArkava.logo.url }),
+  geo: { '@type': 'GeoCoordinates', latitude: 6.2705734, longitude: -75.5762646 },
   areaServed: [
     { '@type': 'City', name: 'Medellín' },
+    { '@type': 'City', name: 'Envigado' },
+    { '@type': 'City', name: 'Sabaneta' },
+    { '@type': 'City', name: 'Itagüí' },
+    { '@type': 'City', name: 'La Estrella' },
+    { '@type': 'City', name: 'Bello' },
+    { '@type': 'City', name: 'Rionegro' },
     { '@type': 'AdministrativeArea', name: 'Antioquia' },
   ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    telephone: phone,
+    areaServed: 'CO',
+    availableLanguage: 'es',
+  },
+  sameAs: ['https://www.instagram.com/arkava_remodelacion/'],
   priceRange: '$$',
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
@@ -104,6 +135,8 @@ const localBusinessSchema = JSON.stringify({
       },
     ],
   },
+    },
+  ],
 });
 
 const headerInfo = {
@@ -182,11 +215,19 @@ const headerInfo = {
     {schema && <script type="application/ld+json" set:html={schema} />}
   </head>
   <body class="min-h-dvh bg-white antialiased font-pp-sans">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-secondary focus:px-4 focus:py-2 focus:text-primary"
+    >
+      Saltar al contenido
+    </a>
     <Header headerInfo={headerInfo} />
     <WhatsappHome wtNumber={headerInfo.whatsapp} />
     <Analytics />
     <SpeedInsights />
-    <slot />
+    <main id="contenido">
+      <slot />
+    </main>
     <Footer headerInfo={headerInfo} />
   </body>
 </html>

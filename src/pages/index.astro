@@ -42,7 +42,7 @@ const homeCanonical = Astro.site
   description={page?.description ?? 'Empresa especializada en acabados arquitectónicos de alto nivel y remodelación integral en Medellín. Enchapes, pintura, estuco, cielo rasos, drywall y carpintería a medida.'}
   canonicalURL={homeCanonical}
 >
-  <main class="mb-6">
+  <div class="mb-6">
     {
       orderedSections.map((section: any) => (
         <ComponentRenderer
@@ -53,5 +53,5 @@ const homeCanonical = Astro.site
         />
       ))
     }
-  </main>
+  </div>
 </BaseLayout>

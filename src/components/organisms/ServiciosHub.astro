@@ -8,11 +8,17 @@ import {
   PROYECTOS,
   ZONAS,
   FAQ,
+  PRECIOS_ACTUALIZADOS,
 } from '@/lib/servicios/hub';
 import { whatsappLink } from '@/lib/utils/whatsapp';
 
 const waHref = whatsappLink(undefined, 'Hola Arkava, quiero cotizar una remodelación');
 const pad = (n: number) => String(n).padStart(2, '0');
+const fechaPrecios = new Date(`${PRECIOS_ACTUALIZADOS}T12:00:00`).toLocaleDateString('es-CO', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
 ---
 
 <div class="svc">
@@ -141,8 +147,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </table>
       </div>
       <p class="svc-note">
-        Valores de referencia en Medellín con mano de obra. Cada proyecto se cotiza después de la
-        evaluación técnica, según el estado del espacio y los materiales que elijas.
+        Valores de referencia en Medellín con mano de obra, revisados el
+        <time datetime={PRECIOS_ACTUALIZADOS}>{fechaPrecios}</time>. Cada proyecto se cotiza
+        después de la evaluación técnica, según el estado del espacio y los materiales que elijas.
       </p>
     </div>
   </section>

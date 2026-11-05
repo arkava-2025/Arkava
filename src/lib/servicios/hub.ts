@@ -120,6 +120,9 @@ export const ESPECIALIDADES: LinkCard[] = [
   },
 ];
 
+// Fecha de la última revisión de precios (se muestra en la tabla y va en el schema)
+export const PRECIOS_ACTUALIZADOS = '2026-11-04';
+
 export type PriceRow = { item: string; range: string; note?: string; href?: string };
 
 export const PRECIOS: PriceRow[] = [
@@ -150,14 +153,15 @@ export const GARANTIAS = [
   { title: 'Garantía por escrito', text: 'Cubre defectos de instalación o terminación según el servicio, con acompañamiento después de la entrega.' },
 ];
 
+// Lo ejecutado en cada proyecto (de public/llms.txt): prueba concreta de experiencia
 export const PROYECTOS = [
-  { name: 'Hotel Nakua', kind: 'Hotel', href: '/proyectos/hotel-nakua/' },
-  { name: 'Hunters Hotel', kind: 'Hotel', href: '/proyectos/hunters-hotel/' },
-  { name: 'Hotel Heiss', kind: 'Hotel', href: '/proyectos/hotel-heiss/' },
-  { name: 'Calle Flora Hotel', kind: 'Hotel', href: '/proyectos/calle-flora-hotel/' },
-  { name: 'Proyecto Vesubio', kind: 'Apartamento en Medellín', href: '/proyectos/remodelacion-apartamento-medellin-proyecto-vesubio/' },
-  { name: 'Casa El Pomar', kind: 'Casa', href: '/proyectos/casa-el-pomar/' },
-];
+  { name: 'Hotel Nakua', kind: 'Hotel · estuco y pintura', href: '/proyectos/hotel-nakua/' },
+  { name: 'Hunters Hotel', kind: 'Hotel · estuco y pintura', href: '/proyectos/hunters-hotel/' },
+  { name: 'Hotel Heiss', kind: 'Hotel · cielos y muros en drywall', href: '/proyectos/hotel-heiss/' },
+  { name: 'Calle Flora Hotel', kind: 'Hotel · muros y cielos', href: '/proyectos/calle-flora-hotel/' },
+  { name: 'Hashtag 98', kind: 'Hotel · pintura y fachada', href: '/proyectos/hashtag-98/' },
+  { name: 'Proyecto Vesubio', kind: 'Apartamento · remodelación integral', href: '/proyectos/remodelacion-apartamento-medellin-proyecto-vesubio/' },
+]
 
 export const ZONAS = {
   medellin: ['El Poblado', 'Laureles', 'Estadio', 'Belén'],
