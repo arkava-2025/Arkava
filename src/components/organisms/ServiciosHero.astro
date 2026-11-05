@@ -33,6 +33,7 @@ const responsive = async (name: string) => {
   );
   return { avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, src: webp.src };
 };
+const backdrop = await getImage({ src: edificio, format: 'webp', width: 480, quality: 50 });
 const sceneImages = await Promise.all(
   SCENES.map(async (sc) => ({ ...sc, imgs: await Promise.all(sc.steps.map(responsive)) })),
 );
@@ -55,6 +56,7 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
     </div>
 
     <div class="svh-stage" data-svh-stage>
+      <div class="svh-backdrop" style={`background-image: url('${backdrop.src}')`} aria-hidden="true"></div>
       <div class="svh-canvas" data-svh-canvas>
         <Picture
           src={edificio}
@@ -215,17 +217,45 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
   .svh-canvas,
   .svh-layer {
     --svh-fx: 0.5;
+    --svh-fy: 0.5;
     --svh-w: max(100cqw, calc(100cqh * var(--svh-ratio)));
     --svh-h: max(100cqh, calc(100cqw / var(--svh-ratio)));
     position: absolute;
     width: var(--svh-w);
     height: var(--svh-h);
     left: clamp(calc(100cqw - var(--svh-w)), calc(50cqw - var(--svh-w) * var(--svh-fx)), 0px);
-    top: calc((100cqh - var(--svh-h)) / 2);
+    top: clamp(calc(100cqh - var(--svh-h)), calc(50cqh - var(--svh-h) * var(--svh-fy)), 0px);
   }
   .svh-canvas {
     --svh-fx: 0.545;
     will-change: transform, filter;
+  }
+  /* Escritorio: el edificio se ve completo, de la acera al techo. Si la
+     pantalla es más ancha que la foto, los lados se completan con la misma
+     foto desenfocada. */
+  .svh-backdrop {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .svh-canvas {
+      --svh-w: min(100cqw, calc(100cqh * var(--svh-ratio)));
+      --svh-h: min(100cqh, calc(100cqw / var(--svh-ratio)));
+      left: calc((100cqw - var(--svh-w)) / 2);
+      top: calc((100cqh - var(--svh-h)) / 2);
+    }
+    .svh-canvas > picture {
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+    .svh-backdrop {
+      display: block;
+      position: absolute;
+      inset: -6%;
+      background-size: cover;
+      background-position: center;
+      filter: blur(28px) saturate(1.05);
+      transform: scale(1.08);
+    }
   }
   .svh-layer {
     z-index: 2;
@@ -247,6 +277,21 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
     --svh-p: -12%;
     -webkit-mask-image: linear-gradient(180deg, #000 var(--svh-p), transparent calc(var(--svh-p) + 12%));
     mask-image: linear-gradient(180deg, #000 var(--svh-p), transparent calc(var(--svh-p) + 12%));
+  }
+  /* Barrido diagonal con borde suave (etapas) */
+  .svh-mask-wipe {
+    --svh-p: -20%;
+    -webkit-mask-image: linear-gradient(110deg, #000 calc(var(--svh-p) - 20%), transparent var(--svh-p));
+    mask-image: linear-gradient(110deg, #000 calc(var(--svh-p) - 20%), transparent var(--svh-p));
+  }
+  /* Barrido de abajo arriba */
+  .svh-mask-up {
+    --svh-p: -18%;
+    -webkit-mask-image: linear-gradient(0deg, #000 var(--svh-p), transparent calc(var(--svh-p) + 14%));
+    mask-image: linear-gradient(0deg, #000 var(--svh-p), transparent calc(var(--svh-p) + 14%));
+  }
+  .svh-piece {
+    will-change: transform, opacity;
   }
   /* Luz que se extiende desde un punto */
   .svh-mask-light {

@@ -68,7 +68,9 @@ export function initServiciosHero(root: HTMLElement) {
   }
 
   function dismissHint() {
-    if (hint && !hint.hidden) gsap.to(hint, { autoAlpha: 0, duration: 0.3, onComplete: () => (hint.hidden = true) });
+    if (hint && !hint.hidden) gsap.to(hint, { autoAlpha: 0, duration: 0.3, onComplete: () => {
+        hint.hidden = true;
+      } });
   }
 
   async function open(id: string) {
@@ -133,9 +135,11 @@ export function initServiciosHero(root: HTMLElement) {
     const fx = m ? EFFECTS[m.layer.dataset.effect ?? ''] : undefined;
     if (fx && m) {
       effect = fx.run(m.layer, motion).pause();
-      // Arranca cuando la escena ya casi terminó de aparecer: el movimiento
-      // empalma con el acercamiento.
-      tl.call(() => effect?.play(), undefined, motion ? Math.max(0, ui - 0.2) : '+=0.1');
+      // Arranca un momento después de llegar a la escena, para que el
+      // "antes" se alcance a leer antes de que empiece la obra.
+      tl.call(() => {
+        effect?.play();
+      }, undefined, motion ? ui + 0.4 : '+=0.1');
     }
 
     await tl.then();
