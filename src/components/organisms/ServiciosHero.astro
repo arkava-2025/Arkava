@@ -63,7 +63,7 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
           formats={['avif', 'webp']}
           widths={[640, 960, 1280, 1600, 1920, 2560]}
           sizes={SIZES}
-          quality={75}
+          quality={62}
           loading="eager"
           fetchpriority="high"
           alt="Edificio residencial y comercial en Medellín con acabados de Arkava: fachada en ladrillo, lobby con muro decorativo, cielos con luz indirecta y penthouse con carpintería en roble"
@@ -531,7 +531,7 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
   }
 
   /* ---------- Tarjetas ---------- */
-  .svh-cards {
+  .svh-cards:has(.svh-card:not([hidden])) {
     padding: 1rem 1.25rem 2rem;
   }
   .svh-card {

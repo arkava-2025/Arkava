@@ -102,7 +102,8 @@ export function initServiciosHero(root: HTMLElement) {
 
     const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
     tl.to(spots, { autoAlpha: 0, duration: 0.3, ease: 'power1.out' }, 0);
-    tl.to(chrome, { autoAlpha: 0, duration: 0.45, ease: 'power1.out' }, 0);
+    // En móvil el título va fuera de la foto: solo se oculta en escritorio
+    if (desktop.matches) tl.to(chrome, { autoAlpha: 0, duration: 0.45, ease: 'power1.out' }, 0);
 
     if (motion) {
       tl.to(
