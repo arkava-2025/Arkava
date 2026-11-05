@@ -1,0 +1,551 @@
+---
+import { Picture } from 'astro:assets';
+import edificio from '@/assets/servicios-hero/01-edificio.jpg';
+import { SPOTS } from '@/lib/servicios-hero/spots';
+
+// Escritorio: la foto a todo el ancho. Móvil: el escenario es más alto que
+// la foto en 16:9 y se recortan los lados, por eso pide una imagen más ancha.
+const SIZES = '(max-width: 767px) 145vw, 100vw';
+---
+
+<section class="svh" aria-labelledby="svh-title" data-svh>
+  <div class="svh-wrap">
+    <div class="svh-intro" data-svh-intro>
+      <p class="svh-kicker">Servicios · Medellín</p>
+      <h1 id="svh-title" class="svh-title">
+        Servicios de remodelación y acabados en Medellín
+      </h1>
+      <p class="svh-hint" data-svh-hint>
+        Toca un punto del edificio o elige un servicio
+      </p>
+    </div>
+
+    <div class="svh-stage" data-svh-stage>
+      <div class="svh-canvas" data-svh-canvas>
+        <Picture
+          src={edificio}
+          formats={['avif', 'webp']}
+          widths={[640, 960, 1280, 1600, 1920, 2560]}
+          sizes={SIZES}
+          quality={75}
+          loading="eager"
+          fetchpriority="high"
+          alt="Edificio residencial y comercial en Medellín con acabados de Arkava: fachada en ladrillo, lobby con muro decorativo, cielos con luz indirecta y penthouse con carpintería en roble"
+          class="svh-img"
+        />
+        {
+          SPOTS.map((s) => (
+            <button
+              type="button"
+              class="svh-spot"
+              style={`left: ${s.x}%; top: ${s.y}%;`}
+              data-svh-spot={s.id}
+              data-x={s.x}
+              data-y={s.y}
+              aria-expanded="false"
+              aria-controls={`svh-card-${s.id}`}
+              aria-label={`${s.n}. ${s.label}: ver cómo lo hacemos`}
+            >
+              <span class="svh-spot__ring" aria-hidden="true" />
+              <span class="svh-spot__dot" aria-hidden="true">
+                {s.n}
+              </span>
+              <span class="svh-spot__label" aria-hidden="true">
+                {s.label}
+              </span>
+            </button>
+          ))
+        }
+      </div>
+      <div class="svh-veil" data-svh-veil aria-hidden="true"></div>
+      <button type="button" class="svh-back" data-svh-close>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path
+            d="M15 6l-6 6 6 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+        <span>Volver al edificio</span>
+      </button>
+    </div>
+
+    <nav class="svh-tabs" aria-label="Servicios">
+      {
+        SPOTS.map((s) => (
+          <a
+            href={s.href}
+            class="svh-tab"
+            data-svh-tab={s.id}
+            aria-controls={`svh-card-${s.id}`}
+          >
+            <span class="svh-tab__n" aria-hidden="true">
+              {String(s.n).padStart(2, '0')}
+            </span>
+            {s.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="svh-cards">
+      {
+        SPOTS.map((s) => (
+          <div
+            id={`svh-card-${s.id}`}
+            class="svh-card"
+            data-svh-card={s.id}
+            role="region"
+            aria-label={s.title}
+            hidden
+          >
+            <p class="svh-card__kicker">
+              {String(s.n).padStart(2, '0')} · Servicio
+            </p>
+            <p class="svh-card__title">{s.title}</p>
+            <p class="svh-card__text">{s.text}</p>
+            <a href={s.href} class="svh-card__cta">
+              {s.cta}
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .svh {
+    --svh-ratio: 1.7917;
+    --svh-header: 88px;
+    --svh-green: #2e483e;
+    --svh-cream: #f9f6e7;
+    --svh-orange: #e35205;
+    --svh-ink: #1e1a1b;
+    position: relative;
+    background: var(--svh-cream);
+  }
+  .svh-wrap {
+    position: relative;
+  }
+
+  /* ---------- Escenario ---------- */
+  .svh-stage {
+    position: relative;
+    overflow: hidden;
+    height: 80vw;
+    background: #d9cbb8;
+    isolation: isolate;
+    container-type: size;
+    scroll-margin-top: var(--svh-header);
+  }
+  @media (min-width: 768px) {
+    /* Foto completa a todo el ancho; en pantallas bajas se ajusta al alto
+       visible y recorta un poco arriba y abajo. */
+    .svh-stage {
+      height: max(480px, min(calc(100vw / var(--svh-ratio)), calc(100svh - var(--svh-header))));
+    }
+  }
+
+  /* La imagen cubre el escenario como object-fit: cover, pero en una caja
+     propia: puntos, zoom y escenas usan coordenadas de la imagen en cualquier
+     pantalla. --svh-fx es el punto horizontal que queda al centro cuando se
+     recortan los lados (el edificio no está centrado en la foto). */
+  .svh-canvas,
+  .svh-layer {
+    --svh-fx: 0.5;
+    --svh-w: max(100cqw, calc(100cqh * var(--svh-ratio)));
+    --svh-h: max(100cqh, calc(100cqw / var(--svh-ratio)));
+    position: absolute;
+    width: var(--svh-w);
+    height: var(--svh-h);
+    left: clamp(calc(100cqw - var(--svh-w)), calc(50cqw - var(--svh-w) * var(--svh-fx)), 0px);
+    top: calc((100cqh - var(--svh-h)) / 2);
+  }
+  .svh-canvas {
+    --svh-fx: 0.545;
+    will-change: transform, filter;
+  }
+  .svh-layer {
+    z-index: 2;
+    overflow: hidden;
+    visibility: hidden;
+    will-change: transform, opacity, filter;
+  }
+  .svh-pic {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .svh-img,
+  .svh-canvas picture img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- Título ---------- */
+  .svh-intro {
+    padding: 2rem 1.25rem 1.25rem;
+    color: var(--svh-green);
+  }
+  .svh-kicker {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--svh-orange);
+    margin-bottom: 0.75rem;
+  }
+  .svh-title {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 2.5vw, 2.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 18ch;
+  }
+  .svh-hint {
+    margin-top: 0.9rem;
+    font-family: var(--font-helvetica);
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  .svh-veil {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .svh-intro {
+      position: absolute;
+      z-index: 4;
+      top: clamp(1.5rem, 5vh, 3.25rem);
+      left: clamp(1.5rem, 3.5vw, 3.5rem);
+      max-width: min(460px, 32%);
+      padding: 0;
+      color: var(--svh-cream);
+      pointer-events: none;
+    }
+    .svh-kicker {
+      color: #f3b089;
+    }
+    .svh-veil {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(110% 95% at 0% 0%, rgb(30 42 36 / 0.82) 0%, rgb(30 42 36 / 0.55) 30%, transparent 58%),
+        linear-gradient(to top, rgb(20 26 22 / 0.45), transparent 26%);
+    }
+  }
+
+  /* ---------- Puntos ---------- */
+  .svh-spot {
+    position: absolute;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border-radius: 9999px;
+    cursor: pointer;
+  }
+  .svh-spot__dot {
+    position: absolute;
+    inset: 7px;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    background: var(--svh-cream);
+    color: var(--svh-green);
+    font-family: var(--font-pp-mono);
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.4);
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+  .svh-spot__ring {
+    position: absolute;
+    inset: 4px;
+    border-radius: 9999px;
+    border: 2px solid var(--svh-orange);
+    animation: svh-spot-pulse 2.4s ease-out infinite;
+  }
+  .svh-spot__label {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .svh-spot {
+      width: 44px;
+      height: 44px;
+      margin: -22px 0 0 -22px;
+    }
+    .svh-spot__dot {
+      inset: 11px;
+      font-size: 10px;
+    }
+    .svh-spot__ring {
+      inset: 6px;
+    }
+    .svh-spot__label {
+      display: block;
+      position: absolute;
+      left: calc(100% + 2px);
+      top: 50%;
+      transform: translate(-6px, -50%);
+      white-space: nowrap;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      background: rgb(46 72 62 / 0.92);
+      color: var(--svh-cream);
+      font-family: var(--font-pp-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+  }
+  .svh-spot:hover .svh-spot__dot,
+  .svh-spot:focus-visible .svh-spot__dot {
+    transform: scale(1.25);
+    background: var(--svh-orange);
+    color: var(--svh-cream);
+  }
+  .svh-spot:hover .svh-spot__label,
+  .svh-spot:focus-visible .svh-spot__label {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+  .svh-spot:focus-visible {
+    outline: 2px solid var(--svh-orange);
+    outline-offset: 2px;
+  }
+  @keyframes svh-spot-pulse {
+    0% {
+      transform: scale(0.75);
+      opacity: 0.95;
+    }
+    100% {
+      transform: scale(1.7);
+      opacity: 0;
+    }
+  }
+
+  /* ---------- Pestañas ---------- */
+  .svh-tabs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding: 0.9rem 1.25rem;
+    background: var(--svh-green);
+  }
+  .svh-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .svh-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    min-height: 40px;
+    padding: 0.45rem 0.9rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(249 246 231 / 0.22);
+    color: var(--svh-cream);
+    font-family: var(--font-pp-sans);
+    font-size: 14px;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .svh-tab__n {
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    color: #f3b089;
+  }
+  .svh-tab:hover {
+    border-color: rgb(249 246 231 / 0.55);
+  }
+  .svh-tab[aria-current='true'] {
+    background: var(--svh-cream);
+    border-color: var(--svh-cream);
+    color: var(--svh-green);
+  }
+  .svh-tab[aria-current='true'] .svh-tab__n {
+    color: var(--svh-orange);
+  }
+  .svh-tab:focus-visible {
+    outline: 2px solid var(--svh-orange);
+    outline-offset: 2px;
+  }
+  @media (min-width: 768px) {
+    .svh-tabs {
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      bottom: clamp(1rem, 3vh, 1.75rem);
+      transform: translateX(-50%);
+      max-width: calc(100% - 3rem);
+      padding: 0.4rem;
+      border-radius: 9999px;
+      background: rgb(30 42 36 / 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 34px -12px rgb(0 0 0 / 0.5);
+    }
+    .svh-tab {
+      min-height: 34px;
+      padding: 0.4rem 0.75rem;
+      border-color: transparent;
+      font-size: 12.5px;
+    }
+  }
+
+  /* ---------- Tarjetas ---------- */
+  .svh-cards {
+    padding: 1rem 1.25rem 2rem;
+  }
+  .svh-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: var(--svh-green);
+    color: var(--svh-cream);
+    box-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.45);
+  }
+  .svh-card__kicker {
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f3b089;
+    margin-bottom: 0.6rem;
+  }
+  .svh-card__title {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .svh-card__text {
+    font-family: var(--font-helvetica);
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgb(249 246 231 / 0.78);
+  }
+  .svh-card__cta {
+    margin-top: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    background: var(--svh-orange);
+    color: #fff;
+    font-family: var(--font-pp-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+  }
+  .svh-card__cta:hover {
+    background: #c94804;
+  }
+  .svh-card__cta:focus-visible {
+    outline: 2px solid var(--svh-cream);
+    outline-offset: 2px;
+  }
+  @media (min-width: 768px) {
+    .svh-cards {
+      position: absolute;
+      z-index: 4;
+      left: clamp(1.5rem, 3.5vw, 3.5rem);
+      bottom: clamp(5rem, 11vh, 6.5rem);
+      width: min(380px, calc(100% - 3rem));
+      padding: 0;
+    }
+    .svh-card {
+      background: rgb(46 72 62 / 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+  }
+
+  /* ---------- Volver ---------- */
+  .svh-back {
+    position: absolute;
+    z-index: 5;
+    top: 0.75rem;
+    left: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.45rem 1rem 0.45rem 0.5rem;
+    border-radius: 9999px;
+    background: rgb(249 246 231 / 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.45);
+    color: var(--svh-green);
+    font-family: var(--font-pp-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .svh-back svg {
+    width: 28px;
+    height: 28px;
+    padding: 5px;
+    border-radius: 9999px;
+    background: var(--svh-green);
+    color: var(--svh-cream);
+    transition: transform 0.25s ease;
+  }
+  .svh-back:hover svg {
+    transform: translateX(-2px);
+  }
+  .svh-back:focus-visible {
+    outline: 2px solid var(--svh-orange);
+    outline-offset: 2px;
+  }
+  @media (min-width: 768px) {
+    .svh-back {
+      top: clamp(1.5rem, 5vh, 3.25rem);
+      left: clamp(1.5rem, 3.5vw, 3.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svh-spot__ring {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { initServiciosHero } from '@/scripts/servicios-hero';
+
+  document.querySelectorAll<HTMLElement>('[data-svh]').forEach(initServiciosHero);
+</script>
