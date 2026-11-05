@@ -22,6 +22,13 @@ export default defineConfig({
   site: 'https://www.arkava.com.co',
   vite: {
     plugins: [tailwindcss()],
+    // Dependencias de las islas (carruseles, galería, hero de servicios): se
+    // optimizan al arrancar el dev server. Si Vite las descubre a mitad de
+    // sesión, las vuelve a optimizar y el navegador pide una versión vieja
+    // (504 "Outdated Optimize Dep" → "Failed to fetch dynamically imported module").
+    optimizeDeps: {
+      include: ['react-slick', 'framer-motion', '@radix-ui/react-dialog', 'lucide-react', 'gsap'],
+    },
     resolve: {
       alias: {
         '@': '/src',
