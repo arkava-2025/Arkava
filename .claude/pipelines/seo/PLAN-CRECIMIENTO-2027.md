@@ -101,6 +101,10 @@ Estructura propuesta (a validar):
 9. FAQ general de servicios + `FAQPage` schema
 10. CTA de cotización
 
+Hero interactivo (puntos + zoom por servicio, técnica tomada de Comfort Design): contexto completo en `CONTEXTO-HERO-SERVICIOS.md` y diseño aprobado en `docs/superpowers/specs/2026-11-04-hero-servicios-design.md`. Se adelanta: es lo primero que se construye del Pilar A (decisión 2026-11-04).
+
+> **Pendiente:** el hero tiene puntos de **remodelación integral** y **diseño arquitectónico / interiores**, que todavía no tienen página. Mientras tanto enlazan a `/contacto/`. Hay que crear sus landings (Pilar B, familia 1) y cambiar los enlaces del hero cuando existan.
+
 ### Preguntas para la sesión de profundización
 - ¿Separamos "tipo de proyecto" y "especialidad" en dos niveles de URL o todo bajo `/servicios/`?
 - ¿Qué servicios nuevos se crean primero (obra blanca, remodelación integral, baños, cocinas)?
