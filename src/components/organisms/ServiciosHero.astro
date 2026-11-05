@@ -140,10 +140,11 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
             hidden
           >
             <p class="svh-card__kicker">
-              {String(s.n).padStart(2, '0')} · Servicio
+              {String(s.n).padStart(2, '0')} · {s.label} · Medellín
             </p>
-            <p class="svh-card__title">{s.title}</p>
+            <h2 class="svh-card__title">{s.title}</h2>
             <p class="svh-card__text">{s.text}</p>
+            <p class="svh-card__fact">{s.fact}</p>
             <a href={s.href} class="svh-card__cta">
               {s.cta}
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
@@ -577,8 +578,8 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
   .svh-card__title {
     font-family: var(--font-pp-sans);
     font-weight: 700;
-    font-size: 1.4rem;
-    line-height: 1.15;
+    font-size: 1.3rem;
+    line-height: 1.18;
     margin-bottom: 0.5rem;
   }
   .svh-card__text {
@@ -586,6 +587,16 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
     font-size: 14px;
     line-height: 1.65;
     color: rgb(249 246 231 / 0.78);
+  }
+  .svh-card__fact {
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(249 246 231 / 0.16);
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #f3b089;
   }
   .svh-card__cta {
     margin-top: 1.25rem;
