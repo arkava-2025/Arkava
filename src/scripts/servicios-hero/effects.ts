@@ -358,31 +358,56 @@ const boards: Effect = {
   },
 };
 
-// Carpintería: las tablillas se instalan por grupos de izquierda a derecha y
-// al final la puerta pivotante gira desde su eje y queda en su lugar.
-const panels: Effect = {
+// Carpintería (cocina): sobre el muro vacío (0) los módulos se montan uno a
+// uno en orden de obra (1); luego las puertas cierran sobre cada módulo y
+// entra el mesón (2), y al final se enciende la luz bajo los muebles altos (3).
+const kitchen: Effect = {
   run(layer, motion) {
     const geo = scene(layer);
-    const area = geo.area!;
-    const els = pieces(layer, 1, bands('x', geo.xEdges!, [area.y0, area.y1]));
-    const [door] = pieces(layer, 1, [geo.door!]);
+    const mods = geo.modules!;
+    const boxes = pieces(layer, 1, mods);
+    const doors = pieces(layer, 2, mods);
+    const lit = step(layer, 3);
     const tl = gsap.timeline();
-    if (!motion) return tl.to([...els, door], { opacity: 1, duration: 0.6 });
+    if (!motion) {
+      tl.to(boxes, { opacity: 1, duration: 0.5 });
+      tl.to(step(layer, 2), { opacity: 1, duration: 0.5 }, '+=0.4');
+      return tl.to(lit, { opacity: 1, '--svh-r': '200%', duration: 0.6 }, '+=0.4');
+    }
+    // Módulos: los bajos suben al piso, los altos bajan al muro
     tl.fromTo(
-      els,
-      { opacity: 0, yPercent: -1 },
-      { opacity: 1, yPercent: 0, duration: 0.3, ease: 'power2.out', stagger: 0.075 },
+      boxes,
+      { opacity: 0, yPercent: (i) => (mods[i].kind === 'upper' ? -1.6 : 1.6) },
+      { opacity: 1, yPercent: 0, duration: 0.42, ease: 'power2.out', stagger: 0.12 },
     );
+    tl.to(step(layer, 1), { opacity: 1, duration: 0.35 }, '-=0.1');
+    // Puertas: cada una cierra desde su bisagra izquierda
     tl.fromTo(
-      door,
-      { opacity: 0, scaleX: 0.12, transformOrigin: `${geo.door!.x0}% 50%` },
-      { opacity: 1, scaleX: 1, duration: 0.8, ease: 'back.out(1.4)' },
-      '+=0.15',
+      doors,
+      { opacity: 0, scaleX: 0.25, transformOrigin: (i) => `${mods[i].x0}% 50%` },
+      { opacity: 1, scaleX: 1, duration: 0.45, ease: 'power3.out', stagger: 0.08 },
+      '+=0.35',
     );
+    // Mesón, grifería y horno: el resto de la etapa terminada
+    tl.to(step(layer, 2), { opacity: 1, duration: 0.6, ease: 'power1.inOut' }, '-=0.15');
+    tl.set(lit, { opacity: 1 }, '+=0.35');
+    tl.to(lit, { '--svh-r': '170%', duration: 1.6, ease: 'power2.inOut' });
     return tl;
   },
-  reset: clearPieces,
+  reset(layer) {
+    clearPieces(layer);
+    const lit = step(layer, 3);
+    const geo = scene(layer);
+    if (geo.light) {
+      lit.style.setProperty('--svh-lx', `${geo.light[0]}%`);
+      lit.style.setProperty('--svh-ly', `${geo.light[1]}%`);
+    }
+    lit.classList.add('svh-mask-light');
+    gsap.set([step(layer, 1), step(layer, 2)], { opacity: 0 });
+    gsap.set(lit, { opacity: 0, '--svh-r': '0%' });
+  },
 };
+
 
 export const EFFECTS: Record<string, Effect> = {
   ceiling,
@@ -393,7 +418,7 @@ export const EFFECTS: Record<string, Effect> = {
   tiles,
   trowel,
   boards,
-  panels,
+  kitchen,
 };
 
 export function resetLayer(layer: HTMLElement) {

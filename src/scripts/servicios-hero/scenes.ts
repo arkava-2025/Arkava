@@ -11,7 +11,11 @@ export type SceneGeometry = {
   door?: Rect;
   header?: Rect;
   light?: [number, number];
+  modules?: (Rect & { kind: 'base' | 'tower' | 'upper' })[];
 };
+
+const bandsOf = (xs: number[], y0: number, y1: number, kind: 'base' | 'tower' | 'upper') =>
+  xs.slice(0, -1).map((x0, i) => ({ x0, x1: xs[i + 1], y0, y1, kind }));
 
 const range = (from: number, to: number, n: number) =>
   Array.from({ length: n + 1 }, (_, i) => Math.round((from + ((to - from) * i) / n) * 100) / 100);
@@ -62,10 +66,14 @@ export const SCENES: Record<string, SceneGeometry> = {
     xEdges: [27.2, 43.75, 60.5, 75.2],
     header: { x0: 75.2, y0: 14.3, x1: 92.5, y1: 21.5 },
   },
-  // Grupos de tablillas a los dos lados de la puerta pivotante
+  // Cocina (24-27): módulos medidos sobre la 26, en orden de montaje:
+  // muebles bajos de izquierda a derecha, torre y muebles altos.
   carpinteria: {
-    area: { x0: 19, y0: 16.5, x1: 100, y1: 86.5 },
-    xEdges: [...range(19, 66.3, 12), ...range(82.7, 100, 4)],
-    door: { x0: 66.3, y0: 17.5, x1: 82.7, y1: 86.5 },
+    modules: [
+      ...bandsOf([21.8, 30.6, 44.1, 52.8, 61.3, 75, 83.8], 58.5, 83.5, 'base'),
+      ...bandsOf([83.8, 94, 100], 14, 83.5, 'tower'),
+      ...bandsOf([23.5, 30.8, 45.6, 60.1, 74.5, 81.8], 16.5, 43.5, 'upper'),
+    ],
+    light: [52, 44],
   },
 };
