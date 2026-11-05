@@ -114,25 +114,37 @@ const stages: Effect = {
   },
 };
 
-// Argamasa: el revoque sube sobre el ladrillo, de abajo arriba, solo en el muro
+// Argamasa: el revoque se aplica por pasadas horizontales de abajo arriba,
+// como con la regla; cada pasada avanza de izquierda a derecha con borde
+// irregular, entra más oscura (húmeda) y se aclara al fraguar.
+const PASSES = 6;
 const wipeUp: Effect = {
   run(layer, motion) {
-    if (!motion) return fades(layer);
-    const el = step(layer, 1);
-    return gsap
-      .timeline()
-      .set(el, { opacity: 1 })
-      .to(el, { '--svh-p': '118%', duration: 2.2, ease: 'power2.inOut' });
+    const wall = scene(layer).area!;
+    const h = (wall.y1 - wall.y0) / PASSES;
+    const rows = Array.from({ length: PASSES }, (_, i) => ({ x0: wall.x0, x1: wall.x1, y1: wall.y1 - i * h, y0: wall.y1 - (i + 1) * h }));
+    const els = pieces(layer, 1, rows);
+    const tl = gsap.timeline();
+    if (!motion) return tl.to(els, { opacity: 1, duration: 0.6 });
+    els.forEach((el, i) => {
+      const r = rows[i];
+      const st = { p: 0 };
+      // Borde de avance vertical e irregular, del alto de la pasada
+      const render = () => {
+        const x = r.x0 + st.p * (r.x1 - r.x0 + 4);
+        const jag = [0, 0.6, -0.5, 0.8, -0.3, 0];
+        const edge = jag.map((o, k): [number, number] => [Math.min(x + o, r.x1), r.y0 + ((r.y1 - r.y0) * k) / (jag.length - 1)]);
+        el.style.clipPath = polygonClip([[r.x0, r.y0], ...edge, [r.x0, r.y1]]);
+      };
+      render();
+      const at = i * 0.5;
+      tl.set(el, { opacity: 1, filter: 'brightness(0.86) saturate(0.9)' }, at);
+      tl.to(st, { p: 1, duration: 0.65, ease: 'power1.inOut', onUpdate: render }, at);
+      tl.to(el, { filter: 'brightness(1) saturate(1)', duration: 1.4, ease: 'power1.out' }, at + 0.55);
+    });
+    return tl;
   },
-  reset(layer) {
-    const el = step(layer, 1);
-    const geo = scene(layer);
-    if (geo.area) el.style.clipPath = insetClip(geo.area);
-    el.classList.add('svh-mask-up');
-    el.style.removeProperty('mask-image');
-    el.style.removeProperty('-webkit-mask-image');
-    gsap.set(el, { opacity: 0, '--svh-p': '-18%' });
-  },
+  reset: clearPieces,
 };
 
 // Pintura con rodillo: el rodillo recorre el muro en franjas verticales del
