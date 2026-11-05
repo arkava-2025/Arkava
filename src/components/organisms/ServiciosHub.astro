@@ -74,7 +74,24 @@ const pad = (n: number) => String(n).padStart(2, '0');
         {
           ESPECIALIDADES.map((c, i) => (
             <article class="svc-card svc-card--line">
-              <p class="svc-num">{pad(i + 1)}</p>
+              <div class="svc-esp__head">
+                {c.icon && (
+                  <span class="svc-icon" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="26"
+                      height="26"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      set:html={c.icon}
+                    />
+                  </span>
+                )}
+                <p class="svc-num">{pad(i + 1)}</p>
+              </div>
               <h3 class="svc-card__title">{c.title}</h3>
               <p class="svc-card__text">{c.text}</p>
               {c.price && <p class="svc-card__price">{c.price}</p>}
@@ -356,6 +373,33 @@ const pad = (n: number) => String(n).padStart(2, '0');
     font-size: 12px;
     letter-spacing: 0.04em;
     color: var(--o);
+  }
+  .svc-esp__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+  .svc-icon {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 0.9rem;
+    background: rgb(46 72 62 / 0.07);
+    color: var(--g);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+  .svc-card--line:hover .svc-icon {
+    background: var(--g);
+    color: var(--c);
+    transform: translateY(-2px);
+  }
+  .svc-card--line:hover .svc-icon svg {
+    color: #f3b089;
   }
   .svc-num {
     font-family: var(--font-pp-mono);
