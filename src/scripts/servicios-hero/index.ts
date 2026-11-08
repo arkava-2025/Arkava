@@ -7,9 +7,11 @@ import { EFFECTS, resetLayer } from './effects';
 const PUSH = { scale: 2.6, duration: 1.5, fadeAt: 0.55, fadeDuration: 0.95, fromScale: 0.42 };
 
 // Tiempo que se alcanza a ver el edificio antes de entrar por un enlace directo (ms)
-const DEEP_LINK_PAUSE = 650;
+const DEEP_LINK_PAUSE = 200;
 
-type Mounted = { layer: HTMLElement; ready: Promise<void> };
+// ready: la primera imagen de la escena, suficiente para mover la cámara.
+// todas: el resto de pasos, que el efecto necesita antes de empezar.
+type Mounted = { layer: HTMLElement; ready: Promise<void>; todas: Promise<void> };
 
 export function initServiciosHero(root: HTMLElement) {
   const stage = root.querySelector<HTMLElement>('[data-svh-stage]');
@@ -55,11 +57,29 @@ export function initServiciosHero(root: HTMLElement) {
     if (!source) return null;
 
     const layer = source.cloneNode(true) as HTMLElement;
+    const [primera, ...resto] = [...layer.querySelectorAll('img')];
+    // Si bajan a la vez se reparten la conexión y la primera tarda como todas:
+    // el resto no tiene dirección hasta que la primera termina.
+    const primerGrupo = primera.closest('picture') ?? primera;
+    const diferidos = [...layer.querySelectorAll('source, img')]
+      .filter((el) => !primerGrupo.contains(el))
+      .map((el) => {
+        const attrs = { srcset: el.getAttribute('srcset'), src: el.getAttribute('src') };
+        el.removeAttribute('srcset');
+        el.removeAttribute('src');
+        return { el, attrs };
+      });
     stage!.insertBefore(layer, back);
     resetLayer(layer);
-    const imgs = [...layer.querySelectorAll('img')];
-    const ready = Promise.all(imgs.map((img) => img.decode().catch(() => {}))).then(() => {});
-    const m = { layer, ready };
+    const ready = primera.decode().catch(() => {});
+    const todas = ready.then(async () => {
+      diferidos.forEach(({ el, attrs }) => {
+        if (attrs.srcset) el.setAttribute('srcset', attrs.srcset);
+        if (attrs.src) el.setAttribute('src', attrs.src);
+      });
+      await Promise.all(resto.map((img) => img.decode().catch(() => {})));
+    });
+    const m = { layer, ready, todas };
     mounted.set(id, m);
     return m;
   }
@@ -144,7 +164,9 @@ export function initServiciosHero(root: HTMLElement) {
       // Arranca un momento después de llegar a la escena, para que el
       // "antes" se alcance a leer antes de que empiece la obra.
       tl.call(() => {
-        effect?.play();
+        void m.todas.then(() => {
+          if (active === id) effect?.play();
+        });
       }, undefined, motion ? ui + 0.4 : '+=0.1');
     }
 
