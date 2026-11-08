@@ -1,0 +1,141 @@
+---
+import { Picture } from 'astro:assets';
+import listones from '@/assets/servicios/carpinteria-2.webp';
+import bano from '@/assets/servicios/carpinteria-3.webp';
+import barra from '@/assets/servicios/carpinteria-1.webp';
+
+const PIEZAS = [
+  { img: listones, t: 'Revestimientos en listón', d: 'Muros y cielos vestidos con listones sobre bastidor oculto, con la separación constante y los cables por detrás.', alt: 'Muro con revestimiento de listones de madera y mueble flotante blanco, obra de Arkava' },
+  { img: bano, t: 'Mobiliario fijo en zonas húmedas', d: 'Muebles de baño y paneles en tablero resistente a la humedad, con cantos sellados y herrajes para ese ambiente.', alt: 'Baño con mueble en madera clara y espejo iluminado, carpintería de Arkava' },
+  { img: barra, t: 'Barras y paneles de división', d: 'Piezas que separan ambientes sin cerrarlos. Se coordinan desde el plano con la iluminación y los puntos eléctricos.', alt: 'Zona social con panel de listones de madera suspendido sobre una barra, carpintería de Arkava' },
+];
+---
+
+<section class="pzs" aria-labelledby="pzs-t" data-pzs>
+  <div class="lnd-wrap pzs__grid">
+    <div class="pzs__fotos">
+      {
+        PIEZAS.map((p, i) => (
+          <figure data-pzs-foto data-on={i === 0 ? '' : undefined}>
+            <Picture fallbackFormat="webp" src={p.img} formats={['avif', 'webp']} widths={[480, 800].filter((w) => w <= p.img.width)} sizes="(max-width: 1023px) 100vw, 36rem" quality={68} alt={p.alt} />
+          </figure>
+        ))
+      }
+    </div>
+    <div>
+      <p class="lnd-kicker">Lo que fabricamos</p>
+      <h2 id="pzs-t" class="lnd-h2">Carpintería que nace con la obra</h2>
+      <ul class="pzs__list">
+        {
+          PIEZAS.map((p, i) => (
+            <li>
+              <button type="button" data-pzs-btn={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+                <span class="pzs__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="pzs__t">{p.t}</span>
+              </button>
+              <p class="pzs__d">{p.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-pzs]').forEach((root) => {
+    const fotos = [...root.querySelectorAll<HTMLElement>('[data-pzs-foto]')];
+    const btns = [...root.querySelectorAll<HTMLButtonElement>('[data-pzs-btn]')];
+    const activar = (i: number) => {
+      fotos.forEach((f, j) => f.toggleAttribute('data-on', i === j));
+      btns.forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)));
+    };
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => activar(i));
+      b.addEventListener('pointerenter', () => activar(i));
+    });
+  });
+</script>
+
+<style>
+  .pzs {
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+  }
+  .pzs__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .pzs__grid {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+  }
+  .pzs__fotos {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #1c2622;
+  }
+  .pzs__fotos figure {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    transform: scale(1.05);
+    transition:
+      opacity 0.6s ease,
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .pzs__fotos figure[data-on] {
+    opacity: 1;
+    transform: none;
+  }
+  .pzs__fotos :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .pzs__list li {
+    border-top: 1px solid rgb(46 72 62 / 0.2);
+    padding-block: 1rem;
+  }
+  .pzs__list button {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+  }
+  .pzs__n {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    color: #e35205;
+  }
+  .pzs__t {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+    line-height: 1.15;
+    transition: color 0.25s ease;
+  }
+  .pzs__list button[aria-pressed='true'] .pzs__t,
+  .pzs__list button:hover .pzs__t {
+    color: #e35205;
+  }
+  .pzs__d {
+    font-family: var(--font-helvetica);
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgb(46 72 62 / 0.84);
+    margin: 0.4rem 0 0 2rem;
+    max-width: 52ch;
+  }
+</style>

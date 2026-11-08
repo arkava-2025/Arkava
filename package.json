@@ -9,7 +9,7 @@
     "astro": "astro",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "codegen": "npx dotenv-cli graphql-codegen --config codegen.ts",
-    "test": "node --test --experimental-strip-types src/scripts/servicios-hero/*.test.ts"
+    "test": "node --test --experimental-strip-types src/scripts/servicios-hero/*.test.ts src/scripts/servicios-landing/*.test.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.1",

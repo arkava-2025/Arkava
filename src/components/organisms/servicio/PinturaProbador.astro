@@ -1,0 +1,171 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import foto from '@/assets/servicios/pintura-3.webp';
+import mascara from '@/assets/servicios/pintura-3-mascara.png?url';
+import { COLORES_PINTURA } from '@/lib/servicios/pintura-colores';
+
+const textura = await getImage({ src: foto, format: 'webp', width: 1280, height: 960, quality: 86 });
+---
+
+<section class="tool" aria-labelledby="pint-t" data-pint data-foto={textura.src} data-mascara={mascara}>
+  <div class="lnd-wrap">
+    <h2 id="pint-t" class="sr-only">Probador de color sobre un muro real</h2>
+    <div class="tool-grid">
+      <div>
+        <div class="tool-stage pint-stage" data-pint-stage>
+          <Picture fallbackFormat="webp"
+            src={foto}
+            formats={['avif', 'webp']}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(max-width: 1023px) 100vw, 52rem"
+            quality={70}
+            loading="eager"
+            fetchpriority="high"
+            alt="Pintor de Arkava aplicando pintura con rodillo sobre un muro con revestimiento en listones de madera, en Medellín"
+          />
+          <canvas data-pint-canvas aria-hidden="true"></canvas>
+          <span class="tool-tag">Obra real de Arkava</span>
+        </div>
+        <p class="tool-foot">
+          El color en pantalla es aproximado y cambia con la luz de cada espacio. Antes de comprar se
+          prueba una muestra sobre tu muro y se confirma el código en carta.
+        </p>
+      </div>
+
+      <div data-pint-controls>
+        <p class="tool-label">Qué muro quieres pintar</p>
+        <fieldset class="tool-chips">
+          <legend class="sr-only">Muro</legend>
+          <label class="tool-chip"><input type="radio" name="pint-zona" value="0" checked /><span>Muro principal</span></label>
+          <label class="tool-chip"><input type="radio" name="pint-zona" value="1" /><span>Muro de acento</span></label>
+        </fieldset>
+
+        <p class="tool-label">Color</p>
+        <fieldset class="pint-swatches">
+          <legend class="sr-only">Color</legend>
+          <label class="pint-sw" style="--sw: linear-gradient(135deg, #b9cbc9 50%, #7c5244 50%)" title="Color original">
+            <input type="radio" name="pint-color" value="-1" checked />
+            <span class="sr-only">Color original de la obra</span>
+          </label>
+          {
+            COLORES_PINTURA.map((c, i) => (
+              <label class="pint-sw" style={`--sw: ${c.hex}`} title={c.nombre}>
+                <input type="radio" name="pint-color" value={i} data-hex={c.hex} data-nombre={c.nombre} data-origen={c.origen} data-uso={c.uso} />
+                <span class="sr-only">{c.nombre}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+
+        <div class="tool-card" aria-live="polite">
+          <p class="pint-origin" data-pint-origen>Foto original</p>
+          <p class="tool-card__big" data-pint-nombre>Elige un color</p>
+          <p class="tool-card__text" data-pint-uso>Toca un color y mira cómo cambia el muro con la misma luz de la obra.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pint-list" data-reveal>
+      <h3 class="lnd-kicker">Colores tendencia 2027 y paleta Arkava</h3>
+      <ul>
+        {
+          COLORES_PINTURA.map((c) => (
+            <li>
+              <span class="pint-chip" style={`background: ${c.hex}`} aria-hidden="true" />
+              <h4 class="lnd-h3">{c.nombre}</h4>
+              <p class="pint-origin">{c.origen}</p>
+              <p class="tool-card__text">{c.uso}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initPintura } from '@/scripts/servicios-landing/pintura';
+  document.querySelectorAll<HTMLElement>('[data-pint]').forEach(initPintura);
+</script>
+
+<style>
+  .pint-stage {
+    aspect-ratio: 4 / 3;
+  }
+  .pint-stage canvas {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .pint-swatches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .pint-sw {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 0.7rem;
+    background: var(--sw);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .pint-sw:hover {
+    transform: translateY(-3px);
+  }
+  .pint-sw input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .pint-sw:has(input:checked) {
+    box-shadow:
+      0 0 0 2px #f9f6e7,
+      0 0 0 4px #e35205;
+  }
+  .pint-sw:has(input:focus-visible) {
+    outline: 2px solid #e35205;
+    outline-offset: 5px;
+  }
+  .pint-origin {
+    font-family: var(--font-pp-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e35205;
+    margin-bottom: 0.3rem;
+  }
+  .pint-list {
+    margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  }
+  .pint-list ul {
+    display: grid;
+    gap: 1.5rem 1.75rem;
+  }
+  @media (min-width: 640px) {
+    .pint-list ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .pint-list ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .pint-chip {
+    display: block;
+    height: 3.5rem;
+    border-radius: 0.6rem;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
+    margin-bottom: 0.7rem;
+  }
+  .pint-list .lnd-h3 {
+    margin-bottom: 0.15rem;
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import { Picture } from 'astro:assets';
+import foto from '@/assets/servicios/argamasa-2.webp';
+
+const FICHA = [
+  { k: 'Función', v: 'Nivelar y proteger el muro antes del acabado' },
+  { k: 'Mezcla habitual', v: 'Cemento y arena cernida 1:4' },
+  { k: 'Espesor habitual', v: 'Alrededor de 2 cm' },
+  { k: 'Carga que agrega', v: 'Unos 10 kg/m² por cada 5 mm' },
+  { k: 'Aplicación', v: 'Capas sucesivas con curado entre cada una' },
+  { k: 'Refuerzo', v: 'Malla en encuentros y zonas propensas a fisura' },
+];
+---
+
+<section class="ficha" aria-labelledby="ficha-t">
+  <div class="lnd-wrap ficha__grid">
+    <div class="ficha__foto" data-reveal>
+      <Picture fallbackFormat="webp" src={foto} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 40rem" quality={68}
+        alt="Oficiales de Arkava aplicando revoque de argamasa sobre un muro exterior de ladrillo en Medellín" />
+    </div>
+    <div data-reveal>
+      <p class="lnd-kicker">Ficha técnica</p>
+      <h2 id="ficha-t" class="lnd-h2">La base que no se ve y decide cómo envejece el muro</h2>
+      <dl class="ficha__dl">
+        {
+          FICHA.map((f) => (
+            <div>
+              <dt>{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="lnd-note">Valores habituales en obra. El espesor y la mezcla definitivos dependen del muro y del acabado que va encima.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ficha {
+    background: #f1ecd9;
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+  }
+  .ficha__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .ficha__grid {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+  }
+  .ficha__foto {
+    position: relative;
+  }
+  .ficha__foto :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3.4;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+  .ficha__dl > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1fr) 1.6fr;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-top: 1px solid rgb(46 72 62 / 0.22);
+  }
+  .ficha__dl dt {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.72;
+    padding-top: 0.2rem;
+  }
+  .ficha__dl dd {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+</style>

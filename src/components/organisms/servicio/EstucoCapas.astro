@@ -1,0 +1,73 @@
+---
+// Panel de capas que se apilan al hacer scroll. No necesita JavaScript.
+const CAPAS = [
+  { n: '01', t: 'Base sana', d: 'Revoque curado y plano. Sobre un muro con fisuras abiertas o humedad, cualquier estuco falla.', c: '#c9c3b2', o: '#2e483e' },
+  { n: '02', t: 'Primera mano', d: 'Se aplica con llana para cerrar poros y corregir pequeñas ondulaciones del revoque.', c: '#ddd8c8', o: '#2e483e' },
+  { n: '03', t: 'Segunda mano', d: 'En sentido contrario a la primera. Es la que deja el plano, y en acabados exigentes le sigue una tercera.', c: '#ebe7da', o: '#2e483e' },
+  { n: '04', t: 'Lijado con luz rasante', d: 'Se lija y se revisa con una lámpara casi paralela al muro. Lo que aparezca ahí se corrige antes de pintar.', c: '#f7f4ea', o: '#2e483e' },
+  { n: '05', t: 'Sello y pintura', d: 'El sellador iguala la absorción. Sin él, la pintura queda con manchas de brillo.', c: '#2e483e', o: '#f9f6e7' },
+];
+---
+
+<section class="capas" aria-labelledby="capas-t">
+  <div class="lnd-wrap capas__head">
+    <p class="lnd-kicker">Capa por capa</p>
+    <h2 id="capas-t" class="lnd-h2">Lo que hay debajo de un muro bien terminado</h2>
+  </div>
+  <ol class="capas__list lnd-wrap">
+    {
+      CAPAS.map((c, i) => (
+        <li class="capa" style={`--bg: ${c.c}; --fg: ${c.o}; --i: ${i}`}>
+          <span class="capa__n" aria-hidden="true">{c.n}</span>
+          <div>
+            <h3 class="capa__t">{c.t}</h3>
+            <p class="capa__d">{c.d}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .capas {
+    padding-block: clamp(3rem, 7vw, 5.5rem) 1rem;
+  }
+  .capas__list {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .capa {
+    position: sticky;
+    top: calc(var(--lnd-header) + 0.75rem + var(--i) * 2.6rem);
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    align-items: start;
+    min-height: clamp(11rem, 26vh, 15rem);
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    border-radius: 1rem;
+    background: var(--bg);
+    color: var(--fg);
+    box-shadow: 0 -10px 30px rgb(46 72 62 / 0.08);
+  }
+  .capa__n {
+    font-family: var(--font-pp-mono);
+    font-size: 13px;
+    opacity: 0.8;
+    padding-top: 0.5rem;
+  }
+  .capa__t {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.6vw, 3rem);
+    line-height: 1.08;
+  }
+  .capa__d {
+    font-family: var(--font-helvetica);
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 58ch;
+    margin-top: 0.6rem;
+    opacity: 0.88;
+  }
+</style>

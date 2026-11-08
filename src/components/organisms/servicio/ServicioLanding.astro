@@ -1,0 +1,1024 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import type { Landing } from '@/lib/servicios/landings/tipos';
+import { PRECIOS_ACTUALIZADOS } from '@/lib/servicios/hub';
+import { whatsappLink } from '@/lib/utils/whatsapp';
+
+interface Props {
+  data: Landing;
+  // herramienta: título corto y la herramienta arriba. editorial: foto a todo el ancho.
+  variante: 'herramienta' | 'editorial';
+}
+
+const { data, variante } = Astro.props;
+
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/servicios/*.webp', {
+  eager: true,
+});
+const foto = (nombre: string) => files[`/src/assets/servicios/${nombre}.webp`].default;
+
+const SITE = 'https://www.arkava.com.co';
+const PAGE = `${SITE}/servicios/${data.slug}/`;
+const BUSINESS = { '@id': `${SITE}/#business` };
+const og = await getImage({
+  src: foto(data.ogFoto),
+  format: 'jpg',
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  quality: 78,
+});
+const zonas = ['Medellín', 'Envigado', 'Sabaneta', 'Itagüí', 'La Estrella', 'Bello', 'Rionegro'];
+
+// Página, breadcrumb, servicio (enlazado al negocio) y preguntas frecuentes
+const schema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${PAGE}#webpage`,
+      url: PAGE,
+      name: data.seoTitle,
+      description: data.seoDescription,
+      inLanguage: 'es-CO',
+      dateModified: PRECIOS_ACTUALIZADOS,
+      isPartOf: { '@id': `${SITE}/#website` },
+      about: { '@id': `${PAGE}#servicio` },
+      breadcrumb: { '@id': `${PAGE}#breadcrumb` },
+      primaryImageOfPage: { '@type': 'ImageObject', url: `${SITE}${og.src}`, width: 1200, height: 630 },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${PAGE}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Servicios', item: `${SITE}/servicios/` },
+        { '@type': 'ListItem', position: 3, name: data.nombre, item: PAGE },
+      ],
+    },
+    {
+      '@type': 'Service',
+      '@id': `${PAGE}#servicio`,
+      name: data.h1,
+      serviceType: data.serviceType,
+      description: data.seoDescription,
+      url: PAGE,
+      provider: BUSINESS,
+      areaServed: zonas.map((name) => ({ '@type': 'City', name })),
+      ...(data.priceFrom && {
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'COP',
+          url: PAGE,
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            priceCurrency: 'COP',
+            minPrice: data.priceFrom,
+            referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK', unitText: 'm²' },
+          },
+        },
+      }),
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${PAGE}#faq`,
+      mainEntity: data.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+});
+
+const waHref = whatsappLink(undefined, data.waTexto);
+const pad = (n: number) => String(n).padStart(2, '0');
+const indice = [
+  ...data.bloques.map((b) => ({ id: b.id, titulo: b.kicker })),
+  ...(data.precios ? [{ id: 'precios', titulo: 'Precios' }] : []),
+  { id: 'proceso', titulo: 'Proceso' },
+  { id: 'faq', titulo: 'Preguntas' },
+];
+const heroFoto = foto(data.fotos[0].archivo);
+---
+
+<BaseLayout title={data.seoTitle} description={data.seoDescription} ogImage={og.src} schema={schema}>
+  <article class={`lnd lnd--${variante}`} data-lnd>
+    {
+      variante === 'editorial' ? (
+        <header class="lnd-cover">
+          <div class="lnd-cover__img" data-lnd-parallax>
+            <Picture fallbackFormat="webp"
+              src={heroFoto}
+              formats={['avif', 'webp']}
+              widths={[640, 960, 1280, 1600].filter((w) => w <= heroFoto.width)}
+              sizes="100vw"
+              quality={68}
+              loading="eager"
+              fetchpriority="high"
+              alt={data.fotos[0].alt}
+            />
+          </div>
+          <div class="lnd-cover__body">
+            <nav class="lnd-crumbs lnd-crumbs--light" aria-label="Migas de pan">
+              <ol>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/servicios/">Servicios</a></li>
+                <li aria-current="page">{data.nombre}</li>
+              </ol>
+            </nav>
+            <p class="lnd-kicker lnd-kicker--light">{data.kicker}</p>
+            <h1 class="lnd-h1 lnd-h1--cover">{data.h1}</h1>
+            <p class="lnd-lead lnd-lead--light">{data.lead}</p>
+            <dl class="lnd-facts lnd-facts--light">
+              {data.datos.map((d) => (
+                <div>
+                  <dt>{d.label}</dt>
+                  <dd>{d.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </header>
+      ) : (
+        <header class="lnd-head">
+          <div class="lnd-wrap">
+            <nav class="lnd-crumbs" aria-label="Migas de pan">
+              <ol>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/servicios/">Servicios</a></li>
+                <li aria-current="page">{data.nombre}</li>
+              </ol>
+            </nav>
+            <div class="lnd-head__grid">
+              <div>
+                <p class="lnd-kicker">{data.kicker}</p>
+                <h1 class="lnd-h1">{data.h1}</h1>
+              </div>
+              <p class="lnd-lead">{data.lead}</p>
+            </div>
+          </div>
+        </header>
+      )
+    }
+
+    <slot name="herramienta" />
+
+    {
+      variante === 'herramienta' && (
+        <div class="lnd-wrap">
+          <dl class="lnd-facts">
+            {data.datos.map((d) => (
+              <div>
+                <dt>{d.label}</dt>
+                <dd>{d.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )
+    }
+
+    <slot name="firma" />
+
+    <div class="lnd-wrap lnd-body">
+      <nav class="lnd-toc" aria-label="En esta página">
+        <p class="lnd-toc__t">En esta página</p>
+        <ol>{indice.map((i) => <li><a href={`#${i.id}`}>{i.titulo}</a></li>)}</ol>
+      </nav>
+
+      <div class="lnd-main">
+        {
+          data.bloques.map((b) => (
+            <section id={b.id} class="lnd-block" aria-labelledby={`${b.id}-t`} data-reveal>
+              <p class="lnd-kicker">{b.kicker}</p>
+              <h2 id={`${b.id}-t`} class="lnd-h2">{b.titulo}</h2>
+              {b.parrafos.map((p) => <p class="lnd-p">{p}</p>)}
+              {b.lista && (
+                <ul class="lnd-list">
+                  {b.lista.map((l) => (
+                    <li>
+                      <h3 class="lnd-h3">{l.titulo}</h3>
+                      <p class="lnd-p">{l.texto}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {b.tabla && (
+                <div class="lnd-table-wrap">
+                  <table class="lnd-table">
+                    <caption class="sr-only">{b.tabla.caption}</caption>
+                    <thead>
+                      <tr>{b.tabla.columnas.map((c) => <th scope="col">{c}</th>)}</tr>
+                    </thead>
+                    <tbody>
+                      {b.tabla.filas.map((f) => (
+                        <tr>
+                          {f.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+          ))
+        }
+
+        {
+          data.precios && (
+            <section id="precios" class="lnd-block" aria-labelledby="precios-t" data-reveal>
+              <p class="lnd-kicker">Precios de referencia</p>
+              <h2 id="precios-t" class="lnd-h2">{data.precios.titulo}</h2>
+              <div class="lnd-table-wrap">
+                <table class="lnd-table">
+                  <caption class="sr-only">{data.precios.caption}</caption>
+                  <thead>
+                    <tr>{data.precios.columnas.map((c) => <th scope="col">{c}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {data.precios.filas.map((f) => (
+                      <tr>
+                        {f.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p class="lnd-note">{data.precios.nota}</p>
+            </section>
+          )
+        }
+
+        <section id="proceso" class="lnd-block" aria-labelledby="proceso-t" data-reveal>
+          <p class="lnd-kicker">Cómo trabajamos</p>
+          <h2 id="proceso-t" class="lnd-h2">{data.proceso.titulo}</h2>
+          <ol class="lnd-steps">
+            {
+              data.proceso.pasos.map((s, i) => (
+                <li>
+                  <span class="lnd-num" aria-hidden="true">{pad(i + 1)}</span>
+                  <div>
+                    <h3 class="lnd-h3">{s.titulo}</h3>
+                    <p class="lnd-p">{s.texto}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+      </div>
+    </div>
+
+    <section class="lnd-gallery" aria-labelledby="galeria-t">
+      <div class="lnd-wrap">
+        <p class="lnd-kicker lnd-kicker--light">Obras de Arkava</p>
+        <h2 id="galeria-t" class="lnd-h2 lnd-h2--light">Fotos de obra</h2>
+      </div>
+      <div class="lnd-strip" tabindex="0" role="group" aria-label="Galería de fotos de obra">
+        {
+          data.fotos.map((f) => (
+            <figure>
+              <Picture fallbackFormat="webp"
+                src={foto(f.archivo)}
+                formats={['avif', 'webp']}
+                widths={[480, 800, 1200].filter((w) => w <= foto(f.archivo).width)}
+                sizes="(max-width: 767px) 82vw, 34rem"
+                quality={66}
+                alt={f.alt}
+              />
+              <figcaption>{f.caption}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      {
+        data.proyectos.length > 0 && (
+          <div class="lnd-wrap">
+            <ul class="lnd-projects">
+              {data.proyectos.map((p) => (
+                <li>
+                  <a href={p.href}>
+                    <span class="lnd-projects__n">{p.nombre}</span>
+                    <span class="lnd-projects__d">{p.detalle}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </section>
+
+    <section id="faq" class="lnd-faq" aria-labelledby="faq-t">
+      <div class="lnd-wrap lnd-faq__grid">
+        <div>
+          <p class="lnd-kicker">Preguntas frecuentes</p>
+          <h2 id="faq-t" class="lnd-h2">Lo que nos preguntan sobre {data.nombre.toLowerCase()}</h2>
+        </div>
+        <div class="lnd-faq__list">
+          {
+            data.faq.map((f) => (
+              <details>
+                <summary><h3 class="lnd-h3">{f.q}</h3></summary>
+                <p class="lnd-p">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="lnd-links" aria-labelledby="enlaces-t">
+      <div class="lnd-wrap lnd-links__grid">
+        <div>
+          <h2 id="enlaces-t" class="lnd-h3">Servicios relacionados</h2>
+          <ul>{data.relacionados.map((r) => <li><a href={r.href}>{r.titulo}</a></li>)}</ul>
+        </div>
+        {
+          data.blog.length > 0 && (
+            <div>
+              <h2 class="lnd-h3">Guías del blog</h2>
+              <ul>{data.blog.map((r) => <li><a href={r.href}>{r.titulo}</a></li>)}</ul>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="lnd-cta" aria-labelledby="cta-t">
+      <div class="lnd-wrap">
+        <h2 id="cta-t" class="lnd-h2 lnd-h2--light">Cuéntanos qué necesitas en tu obra</h2>
+        <p class="lnd-cta__t">Envíanos fotos y medidas del espacio y te decimos por dónde empezar.</p>
+        <div class="lnd-cta__a">
+          <a href={waHref} class="lnd-btn" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+          <a href="/contacto/" class="lnd-btn lnd-btn--ghost">Ir al formulario</a>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<script>
+  import { initLanding } from '@/scripts/servicios-landing/landing';
+  document.querySelectorAll<HTMLElement>('[data-lnd]').forEach(initLanding);
+</script>
+
+<style is:global>
+  .lnd {
+    --g: #2e483e;
+    --c: #f9f6e7;
+    --o: #e35205;
+    --lnd-header: 5.5rem;
+    background: var(--c);
+    color: var(--g);
+    overflow-x: clip;
+  }
+  .lnd-wrap {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding-inline: 1.25rem;
+  }
+  .lnd-kicker {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--o);
+    margin-bottom: 0.9rem;
+  }
+  .lnd-kicker--light {
+    color: #f3b089;
+  }
+  .lnd-h1 {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(2rem, 3.4vw, 3.1rem);
+    line-height: 1.06;
+    letter-spacing: -0.015em;
+    max-width: 19ch;
+  }
+  .lnd-h1--cover {
+    color: #fff;
+    font-size: clamp(2.5rem, 6.4vw, 5.6rem);
+    max-width: 15ch;
+  }
+  .lnd-h2 {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    max-width: 26ch;
+    margin-bottom: 1.4rem;
+  }
+  .lnd-h2--light {
+    color: var(--c);
+  }
+  .lnd-h3 {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: 1.12rem;
+    line-height: 1.3;
+  }
+  .lnd-p,
+  .lnd-lead {
+    font-family: var(--font-helvetica);
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgb(46 72 62 / 0.86);
+    max-width: 66ch;
+  }
+  .lnd-p + .lnd-p {
+    margin-top: 1rem;
+  }
+  .lnd-lead--light {
+    color: rgb(255 255 255 / 0.9);
+    max-width: 56ch;
+    margin-top: 1.1rem;
+  }
+  .lnd-crumbs {
+    margin-bottom: 1.6rem;
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .lnd-crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .lnd-crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    opacity: 0.5;
+  }
+  .lnd-crumbs a:hover {
+    color: var(--o);
+  }
+  .lnd-crumbs--light {
+    color: rgb(255 255 255 / 0.85);
+  }
+  .lnd-head {
+    padding: 2rem 0 1.75rem;
+  }
+  .lnd-head__grid {
+    display: grid;
+    gap: 1.25rem;
+    align-items: end;
+  }
+  @media (min-width: 1024px) {
+    .lnd-head__grid {
+      grid-template-columns: 1.35fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .lnd-cover {
+    position: relative;
+    min-height: calc(100svh - var(--lnd-header));
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: #18231f;
+  }
+  .lnd-cover__img {
+    position: absolute;
+    inset: -8% 0;
+    will-change: transform;
+  }
+  .lnd-cover__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: lnd-zoom 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .lnd-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(15 22 19 / 0.45) 0%, rgb(15 22 19 / 0.1) 32%, rgb(15 22 19 / 0.86) 100%);
+  }
+  .lnd-cover__body {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem clamp(2rem, 5vw, 3.5rem);
+  }
+  @keyframes lnd-zoom {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .lnd-facts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    margin: 2rem 0 0;
+    border-top: 1px solid rgb(46 72 62 / 0.22);
+  }
+  @media (min-width: 768px) {
+    .lnd-facts {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .lnd-facts > div {
+    padding: 1rem 1rem 1rem 0;
+  }
+  .lnd-facts dt {
+    font-family: var(--font-pp-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .lnd-facts dd {
+    font-family: var(--font-pp-sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 0.3rem;
+    line-height: 1.25;
+  }
+  .lnd-facts--light {
+    color: #fff;
+    border-top-color: rgb(255 255 255 / 0.3);
+  }
+
+  .lnd-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+  }
+  @media (min-width: 1024px) {
+    .lnd-body {
+      grid-template-columns: 13rem minmax(0, 1fr);
+      gap: 5rem;
+    }
+  }
+  .lnd-toc {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .lnd-toc {
+      display: block;
+      position: sticky;
+      top: calc(var(--lnd-header) + 1.5rem);
+      align-self: start;
+    }
+  }
+  .lnd-toc__t {
+    font-family: var(--font-pp-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.8rem;
+  }
+  .lnd-toc li + li {
+    border-top: 1px solid rgb(46 72 62 / 0.14);
+  }
+  .lnd-toc a {
+    display: block;
+    padding: 0.55rem 0;
+    font-family: var(--font-helvetica);
+    font-size: 14.5px;
+  }
+  .lnd-toc a:hover,
+  .lnd-toc a[aria-current='true'] {
+    color: var(--o);
+  }
+  .lnd-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 4.75rem);
+    min-width: 0;
+  }
+  .lnd-block {
+    scroll-margin-top: calc(var(--lnd-header) + 1.5rem);
+  }
+  .js-lnd [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .js-lnd [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .lnd-list {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.6rem;
+  }
+  @media (min-width: 720px) {
+    .lnd-list {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem 2.25rem;
+    }
+  }
+  .lnd-list li {
+    border-top: 1px solid rgb(46 72 62 / 0.2);
+    padding-top: 0.9rem;
+  }
+  .lnd-list .lnd-p {
+    font-size: 15.5px;
+    margin-top: 0.3rem;
+  }
+  .lnd-table-wrap {
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    border-radius: 0.9rem;
+    border: 1px solid rgb(46 72 62 / 0.18);
+    background: #fffdf4;
+  }
+  .lnd-table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-family: var(--font-helvetica);
+    font-size: 15px;
+  }
+  .lnd-table th,
+  .lnd-table td {
+    text-align: left;
+    padding: 0.85rem 1.05rem;
+    border-bottom: 1px solid rgb(46 72 62 / 0.12);
+    vertical-align: top;
+  }
+  .lnd-table tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+  .lnd-table thead th {
+    font-family: var(--font-pp-mono);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--o);
+  }
+  .lnd-table tbody th {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+  }
+  .lnd-note {
+    margin-top: 0.9rem;
+    font-family: var(--font-helvetica);
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgb(46 72 62 / 0.72);
+    max-width: 72ch;
+  }
+  .lnd-steps {
+    display: grid;
+    gap: 1.35rem;
+  }
+  .lnd-steps li {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+  }
+  .lnd-steps .lnd-p {
+    font-size: 16px;
+    margin-top: 0.2rem;
+  }
+  .lnd-num {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    color: var(--o);
+    padding-top: 0.35rem;
+  }
+
+  .lnd-gallery {
+    background: var(--g);
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+  }
+  .lnd-strip {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 0.5rem max(1.25rem, calc((100vw - 77.5rem) / 2)) 1rem;
+    scrollbar-color: rgb(249 246 231 / 0.4) transparent;
+  }
+  .lnd-strip figure {
+    flex: 0 0 min(82vw, 34rem);
+    scroll-snap-align: center;
+  }
+  .lnd-strip img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 0.8rem;
+  }
+  .lnd-strip figcaption {
+    margin-top: 0.6rem;
+    font-family: var(--font-helvetica);
+    font-size: 14px;
+    color: rgb(249 246 231 / 0.78);
+  }
+  .lnd-projects {
+    display: grid;
+    gap: 0 2.5rem;
+    margin-top: 1.5rem;
+    color: var(--c);
+  }
+  @media (min-width: 768px) {
+    .lnd-projects {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .lnd-projects a {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgb(249 246 231 / 0.2);
+  }
+  .lnd-projects__n {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+  }
+  .lnd-projects a:hover .lnd-projects__n {
+    color: #f3b089;
+  }
+  .lnd-projects__d {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.72;
+    text-align: right;
+  }
+
+  .lnd-faq {
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+    scroll-margin-top: var(--lnd-header);
+  }
+  .lnd-faq__grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .lnd-faq__grid {
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+    }
+  }
+  .lnd-faq__list {
+    border-top: 1px solid rgb(46 72 62 / 0.2);
+  }
+  .lnd-faq details {
+    border-bottom: 1px solid rgb(46 72 62 / 0.2);
+    padding: 1.05rem 0;
+  }
+  .lnd-faq summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .lnd-faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .lnd-faq summary::after {
+    content: '+';
+    font-family: var(--font-pp-mono);
+    color: var(--o);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  .lnd-faq details[open] summary::after {
+    content: '–';
+  }
+  .lnd-faq details .lnd-p {
+    margin-top: 0.7rem;
+    font-size: 16px;
+  }
+
+  .lnd-links {
+    background: #f1ecd9;
+    padding-block: 2.75rem;
+  }
+  .lnd-links__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .lnd-links__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .lnd-links ul {
+    margin-top: 0.75rem;
+    display: grid;
+    gap: 0.45rem;
+    font-family: var(--font-helvetica);
+    font-size: 15.5px;
+  }
+  .lnd-links a {
+    text-decoration: underline;
+    text-decoration-color: rgb(227 82 5 / 0.5);
+    text-underline-offset: 4px;
+  }
+  .lnd-links a:hover {
+    color: var(--o);
+  }
+  .lnd-cta {
+    background: var(--g);
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+    text-align: center;
+  }
+  .lnd-cta .lnd-h2 {
+    margin-inline: auto;
+    margin-bottom: 0.8rem;
+  }
+  .lnd-cta__t {
+    font-family: var(--font-helvetica);
+    font-size: 17px;
+    color: rgb(249 246 231 / 0.82);
+    margin-bottom: 1.75rem;
+  }
+  .lnd-cta__a {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  .lnd-btn {
+    display: inline-block;
+    padding: 0.9rem 1.5rem;
+    border-radius: 9999px;
+    background: var(--o);
+    color: #fff;
+    font-family: var(--font-pp-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 0;
+    cursor: pointer;
+  }
+  .lnd-btn:hover {
+    background: #c94804;
+  }
+  .lnd-btn--ghost {
+    background: transparent;
+    border: 1px solid rgb(249 246 231 / 0.4);
+  }
+  .lnd-btn--ghost:hover {
+    background: rgb(249 246 231 / 0.08);
+  }
+  .lnd a:focus-visible,
+  .lnd summary:focus-visible,
+  .lnd button:focus-visible,
+  .lnd input:focus-visible,
+  .lnd [tabindex]:focus-visible {
+    outline: 2px solid var(--o);
+    outline-offset: 3px;
+  }
+
+  /* Piezas comunes de las herramientas */
+  .tool {
+    padding-block: 0.5rem 1rem;
+  }
+  .tool-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .tool-grid {
+      grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+      gap: 2.25rem;
+      align-items: start;
+    }
+  }
+  .tool-stage {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #1c2622;
+  }
+  .tool-stage img,
+  .tool-stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .tool-tag {
+    position: absolute;
+    z-index: 6;
+    left: 0.8rem;
+    top: 0.8rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: 9999px;
+    background: rgb(20 28 25 / 0.74);
+    color: #fff;
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tool-label {
+    font-family: var(--font-pp-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.68;
+    margin: 1.25rem 0 0.6rem;
+  }
+  .tool-label:first-child {
+    margin-top: 0;
+  }
+  .tool-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .tool-chip {
+    position: relative;
+  }
+  .tool-chip input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .tool-chip span {
+    display: block;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid rgb(46 72 62 / 0.3);
+    border-radius: 9999px;
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .tool-chip input:hover + span {
+    border-color: var(--o);
+  }
+  .tool-chip input:checked + span {
+    background: var(--g);
+    border-color: var(--g);
+    color: var(--c);
+  }
+  .tool-chip input:focus-visible + span {
+    outline: 2px solid var(--o);
+    outline-offset: 2px;
+  }
+  .tool-card {
+    margin-top: 1rem;
+    padding: 1.05rem 1.15rem;
+    border-radius: 0.8rem;
+    background: #fffdf4;
+  }
+  .tool-card__big {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.15;
+  }
+  .tool-card__text {
+    font-family: var(--font-helvetica);
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgb(46 72 62 / 0.82);
+  }
+  .tool-foot {
+    margin-top: 0.75rem;
+    font-family: var(--font-helvetica);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgb(46 72 62 / 0.68);
+    max-width: 78ch;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lnd-cover__img img {
+      animation: none;
+    }
+    .js-lnd [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

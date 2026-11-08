@@ -1,0 +1,234 @@
+---
+import { Picture } from 'astro:assets';
+import apagado from '@/assets/servicios-hero/16-cielo-apagado.jpg';
+import encendido from '@/assets/servicios-hero/15-cielo-encendido.jpg';
+import placas from '@/assets/servicios-hero/16b-cielo-placas.jpg';
+import losa from '@/assets/servicios-hero/17-cielo-losa.jpg';
+import aislamiento from '@/assets/servicios/cielo-2.webp';
+import instalacion from '@/assets/servicios/cielo-3.webp';
+
+const WIDTHS = [640, 960, 1280, 1600];
+const SIZES = '(max-width: 1023px) 100vw, 52rem';
+const ETAPAS = [
+  { v: 'terminado', t: 'Terminado', d: 'Placa masillada, lijada y pintada, con una dilatación perimetral que esconde la cinta LED. La luz rebota en el cielo y llega al espacio de forma indirecta.' },
+  { v: 'placas', t: 'Placas', d: 'Placa atornillada a la perfilería, juntas con cinta de papel y masilla en varias pasadas. Aquí se decide si después se notan las uniones.' },
+  { v: 'estructura', t: 'Estructura', d: 'Lo que el cielo esconde: losa, tuberías eléctricas y cajas de paso. Por eso las redes se revisan y se dejan registros antes de cerrar.' },
+];
+---
+
+<section class="tool" aria-labelledby="cielo-t" data-cielo>
+  <div class="lnd-wrap">
+    <h2 id="cielo-t" class="sr-only">Visor de cielo raso: luz indirecta y lo que hay detrás</h2>
+    <div class="tool-grid">
+      <div class="tool-stage cielo-stage" data-cielo-stage>
+        <Picture fallbackFormat="webp" src={apagado} formats={['avif', 'webp']} widths={WIDTHS} sizes={SIZES} quality={68} loading="eager" fetchpriority="high"
+          alt="Ilustración de una sala con cielo raso en drywall y dilatación perimetral, con la luz apagada" />
+        <div class="cielo-layer cielo-on" data-cielo-on aria-hidden="true">
+          <Picture fallbackFormat="webp" src={encendido} formats={['avif', 'webp']} widths={WIDTHS} sizes={SIZES} quality={68} alt="" />
+        </div>
+        <div class="cielo-layer cielo-capa" data-cielo-capa="placas" aria-hidden="true">
+          <Picture fallbackFormat="webp" src={placas} formats={['avif', 'webp']} widths={WIDTHS} sizes={SIZES} quality={68} alt="" />
+        </div>
+        <div class="cielo-layer cielo-capa" data-cielo-capa="estructura" aria-hidden="true">
+          <Picture fallbackFormat="webp" src={losa} formats={['avif', 'webp']} widths={WIDTHS} sizes={SIZES} quality={68} alt="" />
+        </div>
+        <div class="cielo-layer cielo-lens" data-cielo-lens aria-hidden="true">
+          <Picture fallbackFormat="webp" src={losa} formats={['avif', 'webp']} widths={WIDTHS} sizes={SIZES} quality={68} alt="" />
+          <span class="cielo-note" style="left: 19%; top: 9%">Losa de concreto</span>
+          <span class="cielo-note" style="left: 44%; top: 16%">Tubería eléctrica</span>
+          <span class="cielo-note" style="left: 28%; top: 27%">Caja de paso</span>
+          <span class="cielo-note" style="left: 48%; top: 36%">Redes colgadas</span>
+        </div>
+        <span class="cielo-ring" data-cielo-ring aria-hidden="true"></span>
+        <span class="tool-tag">Ilustración del proceso</span>
+        <p class="cielo-hint">Mueve el cursor por el techo para ver detrás del cielo</p>
+      </div>
+
+      <div>
+        <p class="tool-label">Luz indirecta</p>
+        <div class="cielo-row">
+          <button type="button" class="cielo-sw" data-cielo-sw role="switch" aria-checked="false" aria-label="Encender la luz indirecta"><i></i></button>
+          <input type="range" min="0" max="100" value="0" data-cielo-dim aria-label="Intensidad de la luz" />
+        </div>
+
+        <p class="tool-label">Temperatura de la luz</p>
+        <fieldset class="tool-chips">
+          <legend class="sr-only">Temperatura de la luz</legend>
+          <label class="tool-chip"><input type="radio" name="cielo-temp" value="calida" checked /><span>Cálida 3000 K</span></label>
+          <label class="tool-chip"><input type="radio" name="cielo-temp" value="neutra" /><span>Neutra 4000 K</span></label>
+        </fieldset>
+
+        <p class="tool-label">Etapa de obra</p>
+        <fieldset class="tool-chips">
+          <legend class="sr-only">Etapa de obra</legend>
+          {
+            ETAPAS.map((e, i) => (
+              <label class="tool-chip">
+                <input type="radio" name="cielo-etapa" value={e.v} checked={i === 0} data-d={e.d} />
+                <span>{e.t}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+
+        <div class="tool-card" aria-live="polite">
+          <p class="tool-card__text" data-cielo-d>{ETAPAS[0].d}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cielo-reales" data-reveal>
+      <figure>
+        <Picture fallbackFormat="webp" src={aislamiento} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(max-width: 767px) 100vw, 40rem" quality={66}
+          alt="Técnico de Arkava instalando lana de aislamiento sobre la perfilería de un cielo raso en Medellín" />
+        <figcaption>Obra real: aislamiento sobre la perfilería, antes de cerrar con placa.</figcaption>
+      </figure>
+      <figure>
+        <Picture fallbackFormat="webp" src={instalacion} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(max-width: 767px) 100vw, 40rem" quality={66}
+          alt="Cielo raso en drywall con placas masilladas y dilataciones para luz, en instalación por Arkava" />
+        <figcaption>Obra real: placas con juntas masilladas y dilataciones listas para la luz.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initCielo } from '@/scripts/servicios-landing/cielo';
+  document.querySelectorAll<HTMLElement>('[data-cielo]').forEach(initCielo);
+</script>
+
+<style>
+  .cielo-stage {
+    aspect-ratio: 16 / 9;
+    touch-action: pan-y;
+    --x: 45%;
+    --y: 24%;
+    --r: clamp(90px, 15vw, 170px);
+  }
+  .cielo-layer {
+    position: absolute;
+    inset: 0;
+  }
+  .cielo-layer :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cielo-on {
+    opacity: var(--luz, 0);
+  }
+  .cielo-stage[data-temp='neutra'] .cielo-on :global(img) {
+    filter: saturate(0.55) hue-rotate(-8deg) brightness(1.06);
+  }
+  .cielo-capa {
+    opacity: 0;
+    transition: opacity 0.55s ease;
+  }
+  .cielo-capa.is-on {
+    opacity: 1;
+  }
+  .cielo-lens {
+    -webkit-mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), #000 97%, transparent 100%);
+    mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), #000 97%, transparent 100%);
+  }
+  .cielo-ring {
+    position: absolute;
+    z-index: 5;
+    left: var(--x);
+    top: var(--y);
+    width: calc(var(--r) * 2);
+    height: calc(var(--r) * 2);
+    transform: translate(-50%, -50%);
+    border: 1.5px solid #f3b089;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 0 9999px rgb(0 0 0 / 0);
+  }
+  .cielo-note {
+    position: absolute;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    background: rgb(20 28 25 / 0.82);
+    color: #fff;
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .cielo-hint {
+    position: absolute;
+    z-index: 6;
+    right: 0.8rem;
+    bottom: 0.7rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: 9999px;
+    background: rgb(20 28 25 / 0.68);
+    color: #fff;
+    font-family: var(--font-helvetica);
+    font-size: 12.5px;
+    transition: opacity 0.4s ease;
+  }
+  .cielo-stage.is-used .cielo-hint {
+    opacity: 0;
+  }
+  .cielo-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .cielo-row input {
+    flex: 1;
+    accent-color: #e35205;
+  }
+  .cielo-sw {
+    flex: none;
+    position: relative;
+    width: 66px;
+    height: 34px;
+    border: 0;
+    border-radius: 9999px;
+    background: rgb(46 72 62 / 0.28);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .cielo-sw i {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    transition: left 0.3s ease;
+  }
+  .cielo-sw[aria-checked='true'] {
+    background: #e35205;
+  }
+  .cielo-sw[aria-checked='true'] i {
+    left: 36px;
+  }
+  .cielo-reales {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    .cielo-reales {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .cielo-reales :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 0.8rem;
+  }
+  .cielo-reales figcaption {
+    margin-top: 0.45rem;
+    font-family: var(--font-helvetica);
+    font-size: 14px;
+    color: rgb(46 72 62 / 0.75);
+  }
+</style>

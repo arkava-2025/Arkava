@@ -1,0 +1,154 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import foto from '@/assets/servicios/enchape-1.webp';
+import { FORMATOS_ENCHAPE, MATERIALES_ENCHAPE } from '@/lib/servicios/enchape-opciones';
+
+const textura = await getImage({ src: foto, format: 'webp', width: 1170, quality: 86 });
+---
+
+<section
+  class="tool"
+  aria-labelledby="ench-t"
+  data-ench
+  data-foto={textura.src}
+  data-formatos={JSON.stringify(FORMATOS_ENCHAPE)}
+  data-materiales={JSON.stringify(MATERIALES_ENCHAPE)}
+>
+  <div class="lnd-wrap">
+    <h2 id="ench-t" class="sr-only">Simulador de formatos, materiales y cantidades de enchape</h2>
+    <div class="tool-grid">
+      <div>
+        <div class="tool-stage ench-stage">
+          <Picture fallbackFormat="webp"
+            src={foto}
+            formats={['avif', 'webp']}
+            widths={[640, 960, 1170]}
+            sizes="(max-width: 1023px) 100vw, 52rem"
+            quality={70}
+            loading="eager"
+            fetchpriority="high"
+            alt="Habitación entregada por Arkava en Medellín, con piso de tablón tipo madera y zócalo blanco"
+          />
+          <canvas data-ench-canvas aria-hidden="true"></canvas>
+          <canvas data-ench-snap aria-hidden="true"></canvas>
+          <span class="tool-tag">Obra real de Arkava</span>
+        </div>
+        <p class="tool-foot">
+          Simulación sobre una foto real, con piezas a escala. Los tonos varían entre fabricantes y
+          lotes: la elección final se hace con la pieza física en el espacio.
+        </p>
+      </div>
+
+      <div>
+        <p class="tool-label">Formato y patrón</p>
+        <fieldset class="tool-chips">
+          <legend class="sr-only">Formato y patrón</legend>
+          {
+            FORMATOS_ENCHAPE.map((f, i) => (
+              <label class="tool-chip">
+                <input type="radio" name="ench-formato" value={i} checked={i === 0} />
+                <span>{f.nombre}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+
+        <p class="tool-label">Material</p>
+        <fieldset class="tool-chips">
+          <legend class="sr-only">Material</legend>
+          {
+            MATERIALES_ENCHAPE.map((m, i) => (
+              <label class="tool-chip">
+                <input type="radio" name="ench-material" value={i} checked={i === 0} />
+                <span>{m.nombre}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+
+        <p class="tool-label">Medidas de tu espacio</p>
+        <div class="ench-medidas">
+          <label>
+            <span>Largo (m)</span>
+            <input type="number" min="0.5" max="40" step="0.05" value="4.2" inputmode="decimal" data-ench-largo />
+          </label>
+          <label>
+            <span>Ancho (m)</span>
+            <input type="number" min="0.5" max="40" step="0.05" value="3.4" inputmode="decimal" data-ench-ancho />
+          </label>
+        </div>
+
+        <div class="tool-card" aria-live="polite">
+          <p class="tool-card__text">Material a comprar</p>
+          <p class="tool-card__big" data-ench-total></p>
+          <dl class="ench-datos">
+            <div><dt>Área</dt><dd data-ench-area></dd></div>
+            <div><dt>Piezas</dt><dd data-ench-piezas></dd></div>
+            <div><dt>Cajas</dt><dd data-ench-cajas></dd></div>
+          </dl>
+          <p class="tool-card__text" data-ench-nota></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initEnchape } from '@/scripts/servicios-landing/enchape';
+  document.querySelectorAll<HTMLElement>('[data-ench]').forEach(initEnchape);
+</script>
+
+<style>
+  .ench-stage {
+    aspect-ratio: 1170 / 1266;
+  }
+  @media (min-width: 1024px) {
+    .ench-stage {
+      aspect-ratio: 1 / 0.92;
+    }
+  }
+  .ench-stage canvas {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .ench-medidas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .ench-medidas span {
+    display: block;
+    font-family: var(--font-helvetica);
+    font-size: 13.5px;
+    margin-bottom: 0.25rem;
+  }
+  .ench-medidas input {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border-radius: 0.55rem;
+    border: 1px solid rgb(46 72 62 / 0.3);
+    background: #fffdf4;
+    font-family: var(--font-helvetica);
+    font-size: 16px;
+  }
+  .ench-datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin: 0.7rem 0;
+    padding-block: 0.7rem;
+    border-block: 1px solid rgb(46 72 62 / 0.14);
+  }
+  .ench-datos dt {
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.68;
+  }
+  .ench-datos dd {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    margin-top: 0.15rem;
+  }
+</style>

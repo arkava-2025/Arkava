@@ -1,0 +1,212 @@
+---
+import { COMPOSICIONES, PISTAS } from '@/lib/servicios/drywall-composiciones';
+import { nivelAlOtroLado, resumenMuro } from '@/scripts/servicios-landing/acustica';
+const inicial = COMPOSICIONES[1];
+const resumen = resumenMuro(inicial);
+const nivel = Math.round(nivelAlOtroLado(inicial.tl, PISTAS[0].espectro, 80));
+---
+
+<section class="tool" aria-labelledby="dw-t" data-dw data-composiciones={JSON.stringify(COMPOSICIONES)} data-pistas={JSON.stringify(PISTAS)}>
+  <div class="lnd-wrap">
+    <h2 id="dw-t" class="sr-only">Simulador: cuánto ruido pasa según el muro</h2>
+    <div class="tool-grid">
+      <div>
+        <div class="dw-stage" data-dw-stage>
+          <svg viewBox="0 0 720 400" role="img" aria-label="Corte del muro con sus capas" data-dw-svg></svg>
+          <span class="tool-tag">Corte del muro a escala</span>
+        </div>
+        <p class="tool-foot">
+          Índices Rw calculados según ISO 717-1 con ensayos de laboratorio del Consejo Nacional de
+          Investigación de Canadá. En obra el resultado suele ser menor, porque el sonido también
+          pasa por puertas, tomas eléctricas y losas: "probable en obra" resta de 3 a 10 dB y es una
+          estimación. Los ensayos usan perfil de 90 mm cada 40 cm, y otra placa u otra separación
+          cambian el resultado. Música: Preludio n.º 1 de Bach, por Kimiko Ishizaka (CC0), y un fragmento de "Acid Jazz", de
+          Kevin MacLeod (incompetech.com, licencia
+          <a href="https://creativecommons.org/licenses/by/3.0/deed.es" target="_blank" rel="noopener license">CC BY 3.0</a>).
+        </p>
+      </div>
+
+      <div>
+        <p class="tool-label">Composición del muro</p>
+        <fieldset class="dw-opts">
+          <legend class="sr-only">Composición del muro</legend>
+          {
+            COMPOSICIONES.map((c, i) => (
+              <label class="tool-chip">
+                <input type="radio" name="dw-comp" value={i} checked={i === 1} />
+                <span>{c.nombre}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+
+        <div class="tool-card" aria-live="polite">
+          <p class="tool-card__text" data-dw-rw-label>Índice Rw de laboratorio</p>
+          <p class="tool-card__big"><span data-dw-rw>{resumen.rw}</span> dB</p>
+          <div class="dw-meter" aria-hidden="true"><i data-dw-bar></i></div>
+          <p class="tool-card__text" data-dw-texto>{inicial.texto}</p>
+          <dl class="dw-cifras">
+            <div><dt>En ensayos</dt><dd data-dw-rango>{inicial.rangoEnsayos}</dd></div>
+            <div><dt>Probable en obra</dt><dd data-dw-obra>{resumen.obra}</dd></div>
+            <div><dt>Música con bajos</dt><dd data-dw-bajos>{resumen.bajos}</dd></div>
+          </dl>
+          <dl class="dw-datos">
+            <div><dt>Espesor</dt><dd data-dw-esp>{inicial.espesor}</dd></div>
+            <div><dt>Ideal para</dt><dd data-dw-uso>{inicial.uso}</dd></div>
+          </dl>
+          <p class="dw-llega">Con música a 80 dB(A), el cálculo con datos de laboratorio da <strong data-dw-nivel>{nivel} dB(A)</strong> al otro lado. En obra llegaría más sonido.</p>
+          <p class="dw-dato" data-dw-fuente>{inicial.fuente}</p>
+        </div>
+
+        <p class="tool-label">Música en la habitación con ruido</p>
+        <fieldset class="tool-chips">
+          <legend class="sr-only">Tipo de música</legend>
+          {
+            PISTAS.map((p, i) => (
+              <label class="tool-chip">
+                <input type="radio" name="dw-pista" value={i} checked={i === 0} />
+                <span>{p.nombre}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+        <button type="button" class="lnd-btn dw-play" data-dw-play aria-pressed="false">Escuchar la música a través del muro</button>
+        <p class="dw-ayuda">El volumen está amplificado por igual en todos los muros para que se oiga en cualquier parlante. La diferencia entre un muro y otro es la medida en laboratorio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initDrywall } from '@/scripts/servicios-landing/drywall';
+  document.querySelectorAll<HTMLElement>('[data-dw]').forEach(initDrywall);
+</script>
+
+<style>
+  .dw-stage {
+    position: relative;
+    border-radius: 1rem;
+    background: #fffdf4;
+    overflow: hidden;
+  }
+  .dw-stage svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .dw-opts {
+    display: grid;
+    gap: 0.4rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .dw-opts .tool-chip span {
+    border-radius: 0.6rem;
+  }
+  .dw-meter {
+    height: 8px;
+    border-radius: 9999px;
+    background: rgb(46 72 62 / 0.14);
+    overflow: hidden;
+    margin: 0.5rem 0 0.75rem;
+  }
+  .dw-meter i {
+    display: block;
+    height: 100%;
+    background: #e35205;
+    transition: width 0.5s ease;
+  }
+  .dw-datos {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    margin-top: 0.8rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(46 72 62 / 0.14);
+  }
+  .dw-datos dt {
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.68;
+  }
+  .dw-datos dd {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    margin-top: 0.15rem;
+    line-height: 1.3;
+  }
+  .dw-cifras {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.8rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(46 72 62 / 0.14);
+  }
+  .dw-cifras dt {
+    font-family: var(--font-pp-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.68;
+  }
+  .dw-cifras dd {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    margin-top: 0.15rem;
+    line-height: 1.25;
+  }
+  .dw-llega {
+    margin-top: 0.8rem;
+    font-family: var(--font-helvetica);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .dw-dato {
+    margin-top: 0.5rem;
+    font-family: var(--font-pp-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.68;
+  }
+  .dw-ayuda {
+    margin-top: 1rem;
+    font-family: var(--font-helvetica);
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgb(46 72 62 / 0.78);
+  }
+  .dw-play {
+    margin-top: 0.9rem;
+  }
+</style>
+
+<style is:global>
+  [data-dw-svg] .dw-layer {
+    animation: dw-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes dw-in {
+    from {
+      opacity: 0;
+      transform: translateY(-14px);
+    }
+  }
+  [data-dw].is-playing .dw-wave {
+    animation: dw-pulse 1.3s ease-in-out infinite;
+  }
+  @keyframes dw-pulse {
+    50% {
+      opacity: 0.25;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-dw-svg] .dw-layer,
+    [data-dw].is-playing .dw-wave {
+      animation: none;
+    }
+  }
+</style>
