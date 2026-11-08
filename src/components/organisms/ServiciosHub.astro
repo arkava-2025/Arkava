@@ -10,6 +10,7 @@ import {
   FAQ,
   PRECIOS_ACTUALIZADOS,
 } from '@/lib/servicios/hub';
+import CalculadoraServicios from '@/components/organisms/servicio/CalculadoraServicios.astro';
 import { whatsappLink } from '@/lib/utils/whatsapp';
 
 const waHref = whatsappLink(undefined, 'Hola Arkava, quiero cotizar una remodelación');
@@ -153,6 +154,8 @@ const fechaPrecios = new Date(`${PRECIOS_ACTUALIZADOS}T12:00:00`).toLocaleDateSt
       </p>
     </div>
   </section>
+
+  <CalculadoraServicios />
 
   <!-- Metodología y garantías: confianza (E-E-A-T) -->
   <section class="svc-sec" aria-labelledby="svc-proceso">

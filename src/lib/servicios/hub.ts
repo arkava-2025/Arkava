@@ -137,6 +137,17 @@ export const PRECIOS: PriceRow[] = [
   { item: 'Cielo raso en drywall', range: '$70.000 – $95.000 por m²', note: 'PVC: $65.000 – $90.000 por m²', href: '/blog/tipos-cielo-raso-hogar/' },
 ];
 
+// Rangos por m² de la calculadora del hub. Son los mismos de la tabla de precios.
+export const CALCULADORA = [
+  { nombre: 'Pintura de interiores', min: 18000, max: 35000 },
+  { nombre: 'Estuco y pintura de muros', min: 25000, max: 60000 },
+  { nombre: 'Enchape', min: 80000, max: 350000 },
+  { nombre: 'Pisos en porcelanato o laminado', min: 80000, max: 180000 },
+  { nombre: 'Microcemento', min: 95000, max: 140000 },
+  { nombre: 'Cielo raso en drywall', min: 70000, max: 95000 },
+  { nombre: 'Remodelación integral', min: 850000, max: 1800000 },
+];
+
 export const PROCESO = [
   { title: 'Evaluación técnica', text: 'Revisamos el espacio, el estado de muros, redes y estructura, y escuchamos qué quieres lograr.' },
   { title: 'Planeación y presupuesto', text: 'Definimos diseño y materiales, y armamos un presupuesto por partidas. Lo que firmas es lo que pagas.' },

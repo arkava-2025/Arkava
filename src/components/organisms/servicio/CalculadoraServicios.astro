@@ -1,0 +1,161 @@
+---
+import { CALCULADORA } from '@/lib/servicios/hub';
+const SERVICIO_INICIAL = 5;
+---
+
+<section class="calc" aria-labelledby="calc-t" data-calc data-precios={JSON.stringify(CALCULADORA)}>
+  <div class="calc__wrap">
+    <div>
+      <p class="calc__k">Calculadora</p>
+      <h2 id="calc-t" class="calc__h">Calcula un rango y cotiza con el dato listo</h2>
+      <p class="calc__p">Elige el servicio y el área. Te mostramos un rango de referencia y puedes enviarlo por WhatsApp para que lo ajustemos a tu obra.</p>
+    </div>
+    <form class="calc__form" onsubmit="return false">
+      <label class="calc__f">
+        <span>Servicio</span>
+        <select data-calc-s>
+          {CALCULADORA.map((c, i) => <option value={i} selected={i === SERVICIO_INICIAL}>{c.nombre}</option>)}
+        </select>
+      </label>
+      <label class="calc__f">
+        <span>Área: <output data-calc-v>40</output> m²</span>
+        <input type="range" min="5" max="300" step="1" value="40" data-calc-m />
+      </label>
+      <p class="calc__l">Rango de referencia</p>
+      <p class="calc__r" aria-live="polite" data-calc-r></p>
+      <a class="calc__b" data-calc-w target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+      <p class="calc__n">Rango orientativo con mano de obra. El valor real sale de la evaluación técnica.</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { whatsappLink } from '@/lib/utils/whatsapp';
+  document.querySelectorAll<HTMLElement>('[data-calc]').forEach((root) => {
+    const precios: { nombre: string; min: number; max: number }[] = JSON.parse(root.dataset.precios!);
+    const s = root.querySelector<HTMLSelectElement>('[data-calc-s]')!;
+    const m = root.querySelector<HTMLInputElement>('[data-calc-m]')!;
+    const v = root.querySelector<HTMLElement>('[data-calc-v]')!;
+    const r = root.querySelector<HTMLElement>('[data-calc-r]')!;
+    const w = root.querySelector<HTMLAnchorElement>('[data-calc-w]')!;
+    const cop = (n: number) => `$${Math.round(n).toLocaleString('es-CO')}`;
+    const update = () => {
+      const p = precios[Number(s.value)];
+      const area = Number(m.value);
+      const texto = `${cop(p.min * area)} a ${cop(p.max * area)}`;
+      v.textContent = String(area);
+      r.textContent = texto;
+      w.href = whatsappLink(undefined, `Hola Arkava, quiero cotizar ${p.nombre.toLowerCase()} para ${area} m². Vi un rango de ${texto} en la página.`);
+    };
+    s.addEventListener('change', update);
+    m.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .calc {
+    background: #f1ecd9;
+    padding: clamp(3.5rem, 8vw, 6.5rem) 1.25rem;
+  }
+  .calc__wrap {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .calc__wrap {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+  }
+  .calc__k {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #e35205;
+    margin-bottom: 0.9rem;
+  }
+  .calc__h {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    max-width: 22ch;
+  }
+  .calc__p {
+    margin-top: 1rem;
+    font-family: var(--font-helvetica);
+    font-size: 17px;
+    line-height: 1.7;
+    max-width: 52ch;
+    color: rgb(46 72 62 / 0.85);
+  }
+  .calc__form {
+    background: #2e483e;
+    color: #f9f6e7;
+    border-radius: 1rem;
+    padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  }
+  .calc__f {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 1.1rem;
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .calc__f select {
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.55rem;
+    border: 0;
+    background: #fffdf4;
+    color: #2e483e;
+    font-family: var(--font-helvetica);
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .calc__f input {
+    accent-color: #e35205;
+  }
+  .calc__l {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.72;
+  }
+  .calc__r {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.9vw, 2.2rem);
+    line-height: 1.2;
+    margin: 0.3rem 0 1.2rem;
+  }
+  .calc__b {
+    display: inline-block;
+    padding: 0.9rem 1.5rem;
+    border-radius: 9999px;
+    background: #e35205;
+    color: #fff;
+    font-family: var(--font-pp-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .calc__b:hover {
+    background: #c94804;
+  }
+  .calc__n {
+    margin-top: 0.9rem;
+    font-family: var(--font-helvetica);
+    font-size: 13.5px;
+    opacity: 0.75;
+  }
+</style>
