@@ -30,6 +30,14 @@ export type Spot = {
   priceFrom?: number;
 };
 
+// Convierte el campo `ids` de cada servicio en Hygraph en el punto del edificio.
+// Los servicios que no están aquí usan el mismo valor en los dos lados.
+const SPOT_POR_CMS: Record<string, SpotId> = {
+  'cielo-raso': 'cielo',
+  'muros-drywall': 'drywall',
+  'muros-decorativos': 'decorativos',
+};
+
 export const SPOTS: Spot[] = [
   {
     id: 'integral',
@@ -158,3 +166,9 @@ export const SPOTS: Spot[] = [
     cta: 'Ver carpintería arquitectónica',
   },
 ];
+
+// Enlace que abre /servicios/ y lleva directo a la escena de ese servicio
+export function hrefServicioHero(cmsId?: string | null): string {
+  const id = cmsId ? (SPOT_POR_CMS[cmsId] ?? cmsId) : '';
+  return SPOTS.some((s) => s.id === id) ? `/servicios/#${id}` : '/servicios/';
+}

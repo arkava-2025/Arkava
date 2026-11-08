@@ -36,6 +36,7 @@ const query = graphql(`
             }
             services {
               title
+              ids
               description { raw }
               iconService
               imageService {

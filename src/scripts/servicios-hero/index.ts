@@ -6,6 +6,9 @@ import { EFFECTS, resetLayer } from './effects';
 // capas se mueven en la misma dirección, así se lee como entrar por la ventana.
 const PUSH = { scale: 2.6, duration: 1.5, fadeAt: 0.55, fadeDuration: 0.95, fromScale: 0.42 };
 
+// Tiempo que se alcanza a ver el edificio antes de entrar por un enlace directo (ms)
+const DEEP_LINK_PAUSE = 650;
+
 type Mounted = { layer: HTMLElement; ready: Promise<void> };
 
 export function initServiciosHero(root: HTMLElement) {
@@ -35,6 +38,8 @@ export function initServiciosHero(root: HTMLElement) {
 
   let active: string | null = null;
   let trigger: HTMLElement | null = null;
+  // Al entrar por un enlace nadie ha interactuado: no se mueve el foco
+  let llegoPorEnlace = false;
   let effect: gsap.core.Timeline | null = null;
   let queue: Promise<void> = Promise.resolve();
 
@@ -144,7 +149,8 @@ export function initServiciosHero(root: HTMLElement) {
     }
 
     await tl.then();
-    if (active === id) back?.focus({ preventScroll: true });
+    if (active === id && !llegoPorEnlace) back?.focus({ preventScroll: true });
+    llegoPorEnlace = false;
     if (!desktop.matches && active === id) card.scrollIntoView({ behavior: motion ? 'smooth' : 'auto', block: 'nearest' });
   }
 
@@ -184,6 +190,9 @@ export function initServiciosHero(root: HTMLElement) {
       tl.to(spots, { autoAlpha: 1, duration: 0.35, stagger: 0.04 }, '-=0.35');
     }
     await tl.then();
+
+    // Al volver al edificio, recargar no debe reabrir la escena del enlace
+    if (!switching && location.hash) history.replaceState(null, '', location.pathname + location.search);
 
     card.hidden = true;
     if (m) {
@@ -238,7 +247,30 @@ export function initServiciosHero(root: HTMLElement) {
     if (e.key === 'Escape' && active) run(() => close());
   });
 
-  if (!reduce.matches) {
+  // Enlace directo (/servicios/#pintura), por ejemplo desde el home: se ve el
+  // edificio un momento y la cámara entra sola a la escena de ese servicio.
+  const fromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    return cards.has(id) ? id : null;
+  };
+  const openFromHash = (id: string) => {
+    trigger = spots.find((s) => s.dataset.svhSpot === id) ?? null;
+    llegoPorEnlace = true;
+    run(() => open(id));
+  };
+  window.addEventListener('hashchange', () => {
+    const id = fromHash();
+    if (id) openFromHash(id);
+  });
+
+  const inicial = fromHash();
+  if (inicial) {
+    prefetch(inicial);
+    const edificio = canvas.querySelector('img');
+    void Promise.resolve(edificio?.decode())
+      .catch(() => {})
+      .then(() => window.setTimeout(() => openFromHash(inicial), reduce.matches ? 0 : DEEP_LINK_PAUSE));
+  } else if (!reduce.matches) {
     gsap.from(spots, { autoAlpha: 0, scale: 0.4, duration: 0.5, stagger: 0.06, delay: 0.4, ease: 'back.out(2)' });
   }
 }
