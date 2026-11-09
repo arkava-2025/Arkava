@@ -43,6 +43,9 @@ const sceneImages = await Promise.all(
 // Escritorio: la foto a todo el ancho. Móvil: el escenario es más alto que
 // la foto en 16:9 y se recortan los lados, por eso pide una imagen más ancha.
 const SIZES = '(max-width: 767px) 145vw, 100vw';
+// El edificio es la imagen que marca la carga: en móvil se pide un tamaño menor
+// porque en pantallas de alta densidad 145vw traía una foto de 1600 px.
+const SIZES_EDIFICIO = '(max-width: 767px) 110vw, 100vw';
 ---
 
 <section class="svh" aria-labelledby="svh-title" data-svh>
@@ -64,7 +67,7 @@ const SIZES = '(max-width: 767px) 145vw, 100vw';
           src={edificio}
           formats={['avif', 'webp']}
           widths={[640, 960, 1280, 1600, 1920, 2560]}
-          sizes={SIZES}
+          sizes={SIZES_EDIFICIO}
           quality={62}
           loading="eager"
           fetchpriority="high"
