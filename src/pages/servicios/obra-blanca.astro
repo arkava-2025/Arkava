@@ -1,0 +1,9 @@
+---
+import ServicioLanding from '@/components/organisms/servicio/ServicioLanding.astro';
+import ObraBlancaEtapas from '@/components/organisms/servicio/ObraBlancaEtapas.astro';
+import { OBRA_BLANCA } from '@/lib/servicios/landings/obra-blanca';
+---
+
+<ServicioLanding data={OBRA_BLANCA} variante="editorial">
+  <ObraBlancaEtapas slot="firma" />
+</ServicioLanding>

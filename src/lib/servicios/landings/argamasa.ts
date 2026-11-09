@@ -85,6 +85,7 @@ export const ARGAMASA: Landing = {
     { q: '¿Cuánto debe secar un revoque antes de estucar?', a: 'Depende del espesor y del clima. Debe estar curado y seco antes de recibir el estuco, porque la humedad atrapada hace que el acabado se sople.' },
   ],
   relacionados: [
+    { titulo: 'Obra blanca en Medellín', href: '/servicios/obra-blanca/' },
     { titulo: 'Estuco para muros', href: '/servicios/estuco/' },
     { titulo: 'Pintura de fachadas', href: '/servicios/pintura/' },
     { titulo: 'Instalación de enchapes', href: '/servicios/enchape/' },

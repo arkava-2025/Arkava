@@ -4,6 +4,7 @@
 type Enlace = { titulo: string; href: string };
 
 const REGLAS: { patron: RegExp; enlace: Enlace }[] = [
+  { patron: /obra (negra|gris|blanca)/i, enlace: { titulo: 'Obra blanca', href: '/servicios/obra-blanca/' } },
   { patron: /pintura/i, enlace: { titulo: 'Pintura', href: '/servicios/pintura/' } },
   { patron: /estuco/i, enlace: { titulo: 'Estuco', href: '/servicios/estuco/' } },
   { patron: /enchape/i, enlace: { titulo: 'Enchape', href: '/servicios/enchape/' } },

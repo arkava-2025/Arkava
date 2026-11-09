@@ -1,8 +1,9 @@
 ---
 title: "Tipos de cielo raso en Medellín: cuál elegir y cuánto cuesta (2026)"
-seoTitle: "Tipos de cielo raso: cuál elegir y precios 2026 | Arkava"
-description: "Drywall, PVC, fibra mineral o madera: qué cielo raso conviene en cada espacio, precios por m² en 2026 y errores que encarecen la instalación."
+seoTitle: "Tipos de cielo raso: drywall, PVC, madera y precios 2026"
+description: "Compara los tipos de cielo raso: drywall desde $70.000/m², PVC desde $65.000/m², fibra mineral y madera. Cuál conviene en cada espacio de tu hogar."
 pubDate: 2026-03-05
+updatedDate: 2026-11-08
 author: "Equipo Arkava"
 category: "Acabados"
 tags: ["cielo raso", "drywall", "cielo raso PVC", "acabados", "cielo raso Medellín", "interiores", "remodelación", "tipos de cielo raso", "clases de cielo raso", "cielos falsos"]
@@ -31,7 +32,7 @@ El *cielo raso* es el elemento clave para regular la temperatura, aislar el soni
 
 ---
 
-## Comparativa de Cielos Rasos (Precios 2026)
+## Tipos de cielo raso y precios por m² (2026)
 
 | Material | Uso Recomendado | Resistencia Humedad | Inversión Estimada (COP/m²) |
 | :--- | :--- | :--- | :--- |

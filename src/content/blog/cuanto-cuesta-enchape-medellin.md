@@ -1,8 +1,9 @@
 ---
 title: "¿Cuánto cuesta enchapar en Medellín? Precios por m², baño y cocina 2026"
-seoTitle: "Cuánto cuesta enchapar en Medellín: precios 2026 | Arkava"
-description: "Enchape en Medellín desde $80.000/m² en cerámica hasta $350.000/m² en porcelanato. Precios por baño y cocina, mano de obra y errores que encarecen la obra."
+seoTitle: "Precio del metro de enchape 2026 y mano de obra | Arkava"
+description: "El metro de enchape instalado va de $80.000 a $350.000 en Medellín; solo la mano de obra, de $30.000 a $70.000. Precios 2026 por material, baño y cocina."
 pubDate: 2026-04-28
+updatedDate: 2026-11-08
 author: "Equipo Arkava"
 category: "Guías"
 tags:
@@ -20,6 +21,8 @@ imageAlt: "Instalación de enchape en baño — obra Arkava en Medellín"
 featured: false
 readTime: 12
 faq:
+  - q: "¿A cómo está el metro de enchape?"
+    a: "En Medellín, en 2026, el metro de enchape instalado va de $80.000 a $350.000 con material y mano de obra, según la pieza. Si ya tienes el material, la mano de obra sola cuesta entre $30.000 y $70.000 por m². En otras ciudades de Colombia los valores cambian con el costo local de la mano de obra."
   - q: "¿Cuánto cuesta enchapar en Medellín por metro cuadrado?"
     a: "En 2026, en Medellín el enchape instalado (material + mano de obra) suele estar entre $80.000 y $350.000 por m² según el producto: cerámica económica en el rango bajo, porcelanato nacional en el medio y porcelanato rectificado o importado en el rango alto. Cocinas y baños suman más metros por despiece y cortes."
   - q: "¿Cuánto cobran por enchapar un baño en Colombia?"
@@ -40,6 +43,14 @@ Esta guía resume **precios reales (2026)**, cómo se arma un presupuesto por **
 
 ---
 
+## ¿A cómo está el metro de enchape?
+
+Con material y mano de obra, el metro de enchape instalado en Medellín va de **$80.000 a $350.000**, según la pieza que elijas. Si ya compraste el material, la **mano de obra** cuesta entre **$30.000 y $70.000 por m²**.
+
+Son valores de Medellín en 2026. En otras ciudades de Colombia cambian con el costo de la mano de obra local, así que tómalos como punto de partida. Lo que más mueve el precio es el formato de la pieza y el estado de la superficie.
+
+---
+
 ## ¿Cuánto cuesta enchapar en Medellín? Rangos por tipo de material
 
 Los valores siguientes son referencias de mercado para **material + instalación** en proyectos residenciales bien ejecutados. Siempre valida con una medición en sitio: el **despiece** (cortes, zócalos, mallas y rotaciones) puede sumar **15–35%** más de m² "teóricos".
@@ -51,7 +62,7 @@ Los valores siguientes son referencias de mercado para **material + instalación
 | **Porcelanato rectificado / formato grande** | Áreas sociales, continuidad piso–pared | $200.000 – $280.000 |
 | **Importado / piezas especiales** | Proyectos premium | $280.000 – $350.000+ |
 
-### Mano de obra de enchape (sin materiales)
+## Mano de obra de enchape por metro cuadrado (sin materiales)
 
 Solo como referencia, la instalación puede moverse entre **$30.000 y $70.000 por m²** según formato, altura, complejidad y estado de la superficie base. En **zonas húmedas** suele sumarse impermeabilización y detalles que no aplican en una sala seca.
 

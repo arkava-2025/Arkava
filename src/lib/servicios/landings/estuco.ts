@@ -97,6 +97,7 @@ export const ESTUCO: Landing = {
     { q: '¿El estuco sirve para fachadas?', a: 'Sí, siempre que sea un producto para exterior. Los estucos de interior no resisten el agua y se desprenden en poco tiempo.' },
   ],
   relacionados: [
+    { titulo: 'Obra blanca en Medellín', href: '/servicios/obra-blanca/' },
     { titulo: 'Argamasa y revoque', href: '/servicios/argamasa/' },
     { titulo: 'Pintura de interiores y fachadas', href: '/servicios/pintura/' },
     { titulo: 'Microcemento y muros decorativos', href: '/servicios/muros-decorativos/' },

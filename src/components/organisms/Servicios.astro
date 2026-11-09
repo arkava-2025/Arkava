@@ -3,7 +3,7 @@ import Container from '../molecules/Container.astro';
 import Section from '@/components/atoms/Section.astro';
 import Title from '@/components/atoms/Title.astro';
 import { hrefServicioHero } from '@/lib/servicios-hero/spots';
-import { ESPECIALIDADES } from '@/lib/servicios/hub';
+import { ESPECIALIDADES, PROYECTOS_TIPO } from '@/lib/servicios/hub';
 
 const { data } = Astro.props;
 const { servicetitle, bgImage, services } = data;
@@ -85,7 +85,7 @@ const fallbackSvg = `<svg width="48" height="48" viewBox="0 0 24 24" xmlns="http
     <nav aria-label="Páginas de cada servicio" class="w-full mt-8">
       <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 font-helvetica text-sm md:text-base">
         {
-          ESPECIALIDADES.map((c) => (
+          [...PROYECTOS_TIPO.filter((c) => c.href.startsWith('/servicios/')), ...ESPECIALIDADES].map((c) => (
             <li>
               <a
                 href={c.href}

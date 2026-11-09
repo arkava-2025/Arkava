@@ -1,0 +1,190 @@
+---
+import { Picture } from 'astro:assets';
+import gris from '@/assets/servicios-hero/04-integral-obra-gris.jpg';
+import blanca from '@/assets/servicios-hero/03-integral-obra-blanca.jpg';
+import terminado from '@/assets/servicios-hero/02-integral-terminado.jpg';
+
+const ETAPAS = [
+  {
+    img: gris,
+    t: 'Como te lo entregan',
+    d: 'Estructura, redes, ventanas y puerta principal. Muros y placas todavía en bruto.',
+    falta: 'Falta casi todo lo que se ve',
+    alt: 'Ilustración de un apartamento en obra gris, con muros y losa sin acabados',
+  },
+  {
+    img: blanca,
+    t: 'Obra blanca',
+    d: 'Muros nivelados y estucados, cielos cerrados, pisos y enchapes instalados, y primera mano de pintura.',
+    falta: 'Faltan carpintería y remates',
+    alt: 'Ilustración del mismo apartamento con muros estucados, cielos y pisos instalados',
+  },
+  {
+    img: terminado,
+    t: 'Listo para habitar',
+    d: 'Carpintería y aparatos montados, mano final de pintura y aseo. El espacio se entrega funcionando.',
+    falta: 'Solo faltan tus muebles',
+    alt: 'Ilustración del mismo apartamento terminado y amoblado',
+  },
+];
+---
+
+<section class="ob" aria-labelledby="ob-t" data-ob>
+  <div class="lnd-wrap">
+    <p class="lnd-kicker lnd-kicker--light">De obra gris a tu casa</p>
+    <h2 id="ob-t" class="lnd-h2 lnd-h2--light">Tres momentos del mismo apartamento</h2>
+    <div class="ob__grid">
+      <div class="ob__stage">
+        {
+          ETAPAS.map((e, i) => (
+            <div class="ob__img" data-ob-img data-on={i === 0 ? '' : undefined}>
+              <Picture src={e.img} formats={['avif', 'webp']} fallbackFormat="webp" widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 46rem" quality={66} alt={e.alt} />
+            </div>
+          ))
+        }
+        <span class="tool-tag">Ilustración del proceso</span>
+      </div>
+      <ol class="ob__list">
+        {
+          ETAPAS.map((e, i) => (
+            <li>
+              <button type="button" data-ob-btn aria-pressed={i === 0 ? 'true' : 'false'}>
+                <span class="ob__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="ob__t">{e.t}</span>
+              </button>
+              <p class="ob__d">{e.d}</p>
+              <p class="ob__f">{e.falta}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ob]').forEach((root) => {
+    const imgs = [...root.querySelectorAll<HTMLElement>('[data-ob-img]')];
+    const btns = [...root.querySelectorAll<HTMLButtonElement>('[data-ob-btn]')];
+    const activar = (i: number) => {
+      imgs.forEach((im, j) => im.toggleAttribute('data-on', i === j));
+      btns.forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)));
+    };
+
+    let timer = 0;
+    const parar = () => window.clearInterval(timer);
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => {
+        parar();
+        activar(i);
+      });
+    });
+
+    // Avanza sola mientras está en pantalla, hasta que alguien elige una etapa
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let actual = 0;
+    let usada = false;
+    btns.forEach((b) => b.addEventListener('click', () => (usada = true)));
+    new IntersectionObserver((e) => {
+      parar();
+      if (usada || !e.some((x) => x.isIntersecting)) return;
+      timer = window.setInterval(() => {
+        actual = (actual + 1) % imgs.length;
+        activar(actual);
+      }, 3200);
+    }, { threshold: 0.4 }).observe(root);
+  });
+</script>
+
+<style>
+  .ob {
+    background: var(--g, #2e483e);
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+    color: #f9f6e7;
+  }
+  .ob__grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+  @media (min-width: 1024px) {
+    .ob__grid {
+      grid-template-columns: 1.5fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+  }
+  .ob__stage {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #18231f;
+  }
+  .ob__img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .ob__img[data-on] {
+    opacity: 1;
+  }
+  .ob__img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ob__list li {
+    border-top: 1px solid rgb(249 246 231 / 0.22);
+    padding-block: 1rem;
+  }
+  .ob__list button {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .ob__n {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    color: #f3b089;
+  }
+  .ob__t {
+    font-family: var(--font-pp-sans);
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+    line-height: 1.15;
+    opacity: 0.62;
+    transition: opacity 0.3s ease;
+  }
+  .ob__list button[aria-pressed='true'] .ob__t,
+  .ob__list button:hover .ob__t {
+    opacity: 1;
+  }
+  .ob__d {
+    font-family: var(--font-helvetica);
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgb(249 246 231 / 0.84);
+    margin: 0.4rem 0 0 1.9rem;
+    max-width: 48ch;
+  }
+  .ob__f {
+    font-family: var(--font-pp-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #f3b089;
+    margin: 0.5rem 0 0 1.9rem;
+  }
+  .ob button:focus-visible {
+    outline: 2px solid #f3b089;
+    outline-offset: 3px;
+  }
+</style>

@@ -39,8 +39,8 @@ export const PROYECTOS_TIPO: LinkCard[] = [
   {
     title: 'Obra blanca',
     text: 'Para inmuebles entregados en obra gris: revoque, estuco, pintura, cielos, enchapes y carpintería, hasta dejarlo listo para habitar.',
-    href: '/contacto/',
-    cta: 'Cotizar obra blanca',
+    href: '/servicios/obra-blanca/',
+    cta: 'Obra blanca en Medellín',
   },
   {
     title: 'Locales comerciales y oficinas',

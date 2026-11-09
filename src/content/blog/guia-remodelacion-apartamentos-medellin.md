@@ -200,6 +200,7 @@ En **Arkava** llevamos más de doce años ejecutando proyectos de remodelación 
 
 - [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin/) — Tabla por m² y qué encarece baños y cocinas.
 - [Servicios y precios de remodelación en Medellín](/servicios/) — Vista por servicio cuando la obra es completa.
+- [Obra blanca en Medellín](/servicios/obra-blanca/) — Qué incluye si tu apartamento se entregó en obra gris.
 - [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — Precios reales por ítem: enchape, sanitarios, grifería y mano de obra.
 - [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales/) — La cocina y el baño son el combo con mayor retorno. Aquí los precios completos.
 - [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Drywall, PVC, fibra mineral y madera: comparativa con precios 2026.
