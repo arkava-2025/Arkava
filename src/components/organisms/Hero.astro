@@ -1,30 +1,45 @@
 ---
 import Carousel from '@/components/molecules/Carousel.jsx';
 const { data } = Astro.props;
+
+// La imagen fija es lo primero que se pinta; el video entra cuando la página ya cargó.
+const CLOUDINARY = 'https://res.cloudinary.com/dx9vtev71/video/upload';
+const MOVIL = 'v1764353621/mobile_1_gblhox';
+const DESKTOP = 'v1764281243/hero-bf_ab0mgf';
+const poster = (id: string, ancho: number) =>
+  `${CLOUDINARY}/so_0,f_auto,q_auto,w_${ancho}/${id}.jpg`;
 ---
 
 <section class="relative w-full h-[80vh] md:h-[85vh] overflow-hidden">
   <div class="absolute inset-0">
     <!-- <Carousel client:only="react"> -->
+    <picture>
+      <source
+        media="(min-width: 768px)"
+        srcset={`${poster(DESKTOP, 1280)} 1280w, ${poster(DESKTOP, 1920)} 1920w`}
+        sizes="100vw"
+      />
+      <img
+        src={poster(MOVIL, 828)}
+        srcset={`${poster(MOVIL, 480)} 480w, ${poster(MOVIL, 828)} 828w, ${poster(MOVIL, 1080)} 1080w`}
+        sizes="100vw"
+        alt="Espacio remodelado por Arkava en Medellín"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+    </picture>
     <video
-      src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764353621/mobile_1_gblhox.mp4"
-      autoplay
+      data-hero-video
+      data-movil={`${CLOUDINARY}/${MOVIL}.mp4`}
+      data-desktop={`${CLOUDINARY}/${DESKTOP}.mp4`}
       muted
       loop
       playsinline
       preload="none"
-      poster="https://res.cloudinary.com/dx9vtev71/video/upload/so_0/v1764353621/mobile_1_gblhox.jpg"
-      class="flex md:hidden w-full h-full object-cover"></video>
-
-    <video
-      src="https://res.cloudinary.com/dx9vtev71/video/upload/v1764281243/hero-bf_ab0mgf.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="none"
-      poster="https://res.cloudinary.com/dx9vtev71/video/upload/so_0/v1764281243/hero-bf_ab0mgf.jpg"
-      class="hidden md:flex w-full h-full object-cover"></video>
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"></video>
     <!-- </Carousel> -->
   </div>
 
@@ -62,3 +77,26 @@ const { data } = Astro.props;
     </div>
   </div>
 </section>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  const conexion = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (video && !conexion?.saveData && !sinMovimiento) {
+    const cargar = () => {
+      video.src = window.matchMedia('(min-width: 768px)').matches
+        ? video.dataset.desktop!
+        : video.dataset.movil!;
+      video.muted = true;
+      video.addEventListener('playing', () => video.classList.remove('opacity-0'), { once: true });
+      void video.play().catch(() => {});
+    };
+    const programar = () => {
+      if ('requestIdleCallback' in window) requestIdleCallback(cargar, { timeout: 2500 });
+      else setTimeout(cargar, 1200);
+    };
+    if (document.readyState === 'complete') programar();
+    else window.addEventListener('load', programar, { once: true });
+  }
+</script>
