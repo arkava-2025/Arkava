@@ -39,7 +39,7 @@ Una reforma integral casi nunca es una sola partida. En la práctica se coordina
 - **[Muros en drywall](/servicios/muros-drywall/)** cuando hay redistribución de espacios
 - **[Carpintería a medida](/servicios/carpinteria/)** en cocinas, closets y detalles de acabado
 
-Si buscas primero el **mapa de costos de una obra completa**, entra a **[costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026/)**.
+Si buscas primero el **mapa de costos de una obra completa**, entra a **[precios de referencia de remodelación en Medellín](/servicios/)**.
 
 ---
 
@@ -199,7 +199,7 @@ En **Arkava** llevamos más de doce años ejecutando proyectos de remodelación 
 ## También te puede interesar
 
 - [¿Cuánto cuesta enchapar en Medellín?](/blog/cuanto-cuesta-enchape-medellin/) — Tabla por m² y qué encarece baños y cocinas.
-- [Costos de remodelación integral en Medellín 2026](/blog/costos-remodelacion-integral-medellin-2026/) — Vista por partidas cuando la obra es completa.
+- [Servicios y precios de remodelación en Medellín](/servicios/) — Vista por servicio cuando la obra es completa.
 - [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — Precios reales por ítem: enchape, sanitarios, grifería y mano de obra.
 - [Remodelación de cocina en Medellín: costos y qué no hacer](/blog/remodelacion-cocina-medellin-costos-materiales/) — La cocina y el baño son el combo con mayor retorno. Aquí los precios completos.
 - [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Drywall, PVC, fibra mineral y madera: comparativa con precios 2026.

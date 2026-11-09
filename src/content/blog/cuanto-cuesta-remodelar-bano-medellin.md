@@ -149,6 +149,7 @@ Los tiempos asumen materiales disponibles al iniciar. Los retrasos en entrega de
 
 ## También te puede interesar
 
+- [Instalación de enchapes y porcelanato en Medellín](/servicios/enchape/) — Formatos, materiales y cuánto comprar para tu baño.
 - [Remodelación de cocina en Medellín: costos y materiales](/blog/remodelacion-cocina-medellin-costos-materiales/) — Después del baño, la cocina es el espacio con mayor retorno. Guía completa de precios.
 - [Tipos de cielo raso para tu hogar: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Si también renovarás el techo, aquí están las opciones y precios.
 - [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin/) — Costos y etapas cuando el proyecto va más allá del baño.

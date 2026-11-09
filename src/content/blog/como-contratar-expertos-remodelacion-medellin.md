@@ -105,6 +105,8 @@ Cada proyecto incluye contrato legal, materiales especificados, póliza de cumpl
 
 Hemos ejecutado proyectos residenciales y comerciales en Medellín, incluyendo hoteles como Hunters, Heiss, Nakua y Calle Flora. Esa experiencia en hospitalidad — donde los plazos no son negociables y los acabados son auditados — se aplica a cada proyecto residencial con el mismo estándar.
 
+Si ya sabe qué necesita, puede revisar los [servicios de remodelación y acabados](/servicios/) con precios de referencia, como [pintura](/servicios/pintura/), [enchape](/servicios/enchape/) y [cielo raso](/servicios/cielo-raso/).
+
 **¿Tiene un proyecto en mente?** Cuéntenos qué necesita y coordinamos una visita técnica. El presupuesto llega después de ver la obra, no antes.
 
 [Solicitar visita técnica →](/contacto/)

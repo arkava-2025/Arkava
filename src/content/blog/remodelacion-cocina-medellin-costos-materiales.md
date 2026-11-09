@@ -175,6 +175,8 @@ En **Arkava** acompañamos el proceso completo, desde la visita técnica hasta l
 
 ## También te puede interesar
 
+- [Instalación de enchapes y porcelanato en Medellín](/servicios/enchape/) — Formatos y cantidades para los muros y el piso de la cocina.
+- [Pintura de apartamentos y fachadas en Medellín](/servicios/pintura/) — Qué pintura aguanta el vapor y la limpieza diaria.
 - [¿Cuánto cuesta remodelar un baño en Medellín?](/blog/cuanto-cuesta-remodelar-bano-medellin/) — El baño y la cocina son el combo que más valoriza un apartamento. Aquí los precios reales por ítem.
 - [Microcemento vs pintura vs estuco: comparativa 2026](/blog/microcemento-vs-pintura-paredes/) — Para los muros de tu cocina: cuál acabado aguanta más y qué conviene según el presupuesto.
 - [Guía de remodelación integral de apartamentos en Medellín](/blog/guia-remodelacion-apartamentos-medellin/) — Si el proyecto incluye más espacios, esta guía tiene los costos y etapas del proceso completo.

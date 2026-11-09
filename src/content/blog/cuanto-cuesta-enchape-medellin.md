@@ -109,7 +109,7 @@ También puedes conocer nuestro servicio especializado de **[enchape y cerámica
 ## También te puede interesar
 
 - [Tipos de cielo raso: cuál elegir según el espacio](/blog/tipos-cielo-raso-hogar/) — Cuando el proyecto incluye techo además de paredes.
-- [Instalación de cielo raso en drywall: precios en Medellín](/blog/instalacion-cielo-raso-drywall-medellin-precios/) — Presupuesto y alcance cuando el drywall es parte del mismo proyecto.
+- [Cielo raso en drywall y PVC instalado en Medellín](/servicios/cielo-raso/) — Presupuesto y alcance cuando el drywall es parte del mismo proyecto.
 - [Remodelación de apartamentos en Medellín: guía de costos](/blog/guia-remodelacion-apartamentos-medellin/) — Cómo se combinan enchape, pintura, cocina y baño en una reforma integral.
 
 ---
