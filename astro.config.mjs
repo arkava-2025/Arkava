@@ -17,6 +17,9 @@ const blogLastmod = Object.fromEntries(
     }),
 );
 
+// Última actualización del contenido de /servicios/ y sus landings: cambiarla al editarlas
+const SERVICIOS_LASTMOD = new Date('2026-11-08').toISOString();
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.arkava.com.co',
@@ -45,10 +48,11 @@ export default defineConfig({
       filter: (page) => !page.includes('/404') && !page.includes('/draft'),
       changefreq: 'weekly',
       priority: 0.7,
-      // lastmod real solo en artículos del blog; el resto se omite en vez de usar la fecha de build
+      // lastmod real solo en blog y servicios; el resto se omite en vez de usar la fecha de build
       serialize(item) {
         const slug = item.url.match(/\/blog\/([^/]+)\/?$/)?.[1];
         if (slug && blogLastmod[slug]) item.lastmod = blogLastmod[slug];
+        if (/\/servicios\/([^/]+\/?)?$/.test(item.url)) item.lastmod = SERVICIOS_LASTMOD;
         return item;
       },
       i18n: {
