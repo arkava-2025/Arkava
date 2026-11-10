@@ -5,6 +5,7 @@ import Close from '@/icons/close.astro';
 import Instagram from '@/icons/instagram.astro';
 import LinkMenu from '@components/atoms/LinkMenu.astro';
 import DropdownMenu from '@/components/molecules/DropdownMenu.astro';
+import ServiciosMenu from '@/components/molecules/ServiciosMenu.astro';
 import Email from '@/icons/email.astro';
 const currentPath = new URL(Astro.request.url).pathname;
 
@@ -78,6 +79,10 @@ const isHomePage = Astro.url.pathname === '/';
             return null;
           }
 
+          if (link.href === '/servicios/') {
+            return <ServiciosMenu isMobile={false} />;
+          }
+
           return (
             <DropdownMenu link={link} isActive={isActive} isMobile={false} />
           );
@@ -106,7 +111,7 @@ const isHomePage = Astro.url.pathname === '/';
           <Close width={32} height={32} />
         </span>
       </div>
-      <ul class="flex flex-col py-4 mt-4">
+      <ul class="flex flex-col py-4 mt-4 max-h-[calc(100dvh-13rem)] overflow-y-auto overscroll-contain">
         {
           !isHomePage && (
             <LinkMenu
@@ -148,6 +153,9 @@ const isHomePage = Astro.url.pathname === '/';
             // En otras páginas, oculta el enlace de Services
             else if (!isHomePage && link.href === '#Services') {
               return null;
+            }
+            else if (link.href === '/servicios/') {
+              return <ServiciosMenu isMobile={true} />;
             }
             // Mostrar otros enlaces normalmente
             else {

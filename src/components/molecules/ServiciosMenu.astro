@@ -1,0 +1,355 @@
+---
+// Enlace "Servicios" del header con submenú hacia cada landing interna.
+// Escritorio: el enlace lleva al hub y la flecha (o el hover) abre un panel a
+// todo el ancho del header con vista previa del servicio señalado.
+// Móvil: el enlace lleva al hub y la flecha despliega la lista en acordeón.
+import Arrow from '@/icons/arrow.astro';
+import { ESPECIALIDADES, PROYECTOS_TIPO } from '@/lib/servicios/hub';
+
+type Props = { isMobile: boolean };
+const { isMobile } = Astro.props;
+
+const OBRA_BLANCA_ICON =
+  '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />';
+
+const obraBlanca = PROYECTOS_TIPO.find((p) => p.href === '/servicios/obra-blanca/');
+const servicios = [
+  ...ESPECIALIDADES,
+  ...(obraBlanca ? [{ ...obraBlanca, icon: OBRA_BLANCA_ICON }] : []),
+];
+
+const HUB = '/servicios/';
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const hubActive = path.startsWith(HUB);
+// En una landing interna el acordeón móvil arranca abierto
+const mobOpen = hubActive && path !== HUB;
+const id = isMobile ? 'servicios-menu-mob' : 'servicios-menu-desk';
+
+const intro = {
+  title: 'Acabados y remodelación',
+  text: 'Nueve especialidades a cargo de un solo equipo, con contrato y presupuesto por partidas.',
+  price: '',
+};
+---
+
+{
+  !isMobile ? (
+    <li class="servicios-menu" data-servicios-menu data-desktop>
+      <div class="flex items-center gap-1">
+        <a
+          href={HUB}
+          class={`text-base lg:text-lg font-pp-mono uppercase transition-colors duration-200 ease-out hover:text-tertiary ${hubActive ? 'text-tertiary font-bold' : 'text-white'}`}
+          aria-current={path === HUB ? 'page' : undefined}
+        >
+          Servicios
+        </a>
+        <button
+          type="button"
+          class="servicios-toggle grid place-items-center size-7 rounded-full cursor-pointer text-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-tertiary transition-colors"
+          aria-expanded="false"
+          aria-controls={id}
+          aria-label="Mostrar servicios"
+          data-servicios-toggle
+        >
+          <svg class="servicios-chevron size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        id={id}
+        class="servicios-panel absolute left-0 right-0 top-full text-primary"
+        data-servicios-panel
+      >
+        <div class="bg-secondary shadow-[0_24px_48px_-16px_rgba(30,26,27,0.35)] border-t border-white/10">
+          <div class="mx-auto max-w-7xl px-4 2xl:px-0 py-6 lg:py-8 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,9fr)] gap-10">
+            <div
+              class="servicios-preview relative hidden lg:flex flex-col justify-between rounded-2xl bg-primary text-white p-7 overflow-hidden"
+              aria-live="polite"
+            >
+              <svg class="absolute -right-10 -bottom-10 size-48 text-white/[0.06]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-preview-icon />
+              <div class="relative">
+                <p class="font-pp-mono text-xs uppercase tracking-[0.2em] text-primary-pastel">Servicios Arkava</p>
+                <p class="mt-4 text-2xl lg:text-3xl font-pp-sans leading-tight" data-preview-title>{intro.title}</p>
+                <p class="mt-3 text-sm lg:text-base text-white/80 leading-relaxed" data-preview-text>{intro.text}</p>
+                <p class="mt-4 font-pp-mono text-sm text-tertiary min-h-5" data-preview-price>{intro.price}</p>
+              </div>
+              <a
+                href={HUB}
+                class="servicios-cta relative mt-8 inline-flex items-center gap-2 self-start rounded-full bg-tertiary px-5 py-2.5 font-pp-mono text-sm uppercase text-white transition-colors hover:bg-white hover:text-primary"
+              >
+                Ver todos los servicios
+                <svg class="size-4 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </a>
+            </div>
+
+            <ul class="grid grid-cols-3 gap-2 content-start">
+              {servicios.map((s, i) => {
+                const active = path === s.href;
+                return (
+                  <li class="servicios-item" style={`--i:${i}`}>
+                    <a
+                      href={s.href}
+                      class={`group flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-white focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-tertiary ${active ? 'bg-white' : ''}`}
+                      aria-current={active ? 'page' : undefined}
+                      data-servicio
+                      data-title={s.title}
+                      data-text={s.text}
+                      data-price={s.price ?? ''}
+                      data-icon={s.icon}
+                    >
+                      <span class={`grid place-items-center shrink-0 size-10 rounded-lg transition-colors ${active ? 'bg-tertiary text-white' : 'bg-primary/8 text-primary group-hover:bg-primary group-hover:text-white'}`}>
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={s.icon} />
+                      </span>
+                      <span class="min-w-0">
+                        <span class={`block font-pp-sans text-[0.95rem] leading-snug ${active ? 'text-tertiary font-bold' : ''}`}>{s.title}</span>
+                        <span class="block mt-0.5 font-pp-mono text-[0.7rem] uppercase tracking-wide text-gray-darker">
+                          {s.price ?? 'Cotización por obra'}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+              <li class="servicios-item col-span-3 mt-2 pt-4 border-t border-primary/10 flex items-center justify-between gap-4 text-sm" style={`--i:${servicios.length}`}>
+                <span class="text-primary-light">¿Tienes un proyecto completo? Lo cotizamos por partidas.</span>
+                <span class="flex items-center gap-6 shrink-0">
+                  <a href={HUB} class="lg:hidden font-pp-mono uppercase text-primary hover:underline underline-offset-4">Ver todos</a>
+                  <a href="/contacto/" class="font-pp-mono uppercase text-tertiary hover:underline underline-offset-4">Cotizar proyecto</a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+  ) : (
+    <li class="servicios-menu" data-servicios-menu data-open={mobOpen ? '' : undefined}>
+      <div class="flex items-stretch">
+        <a
+          href={HUB}
+          class={`flex-1 text-xl font-pp-sans py-4 px-4 transition-colors relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full before:bg-secondary before:transition-all before:duration-300 before:-z-10 hover:before:left-0 hover:text-primary ${hubActive ? 'text-tertiary' : ''}`}
+          aria-current={path === HUB ? 'page' : undefined}
+        >
+          Servicios
+        </a>
+        <button
+          type="button"
+          class="servicios-toggle grid place-items-center w-14 border-l border-white/15 cursor-pointer active:bg-white/10"
+          aria-expanded={mobOpen ? 'true' : 'false'}
+          aria-controls={id}
+          aria-label={mobOpen ? 'Ocultar servicios' : 'Mostrar servicios'}
+          data-servicios-toggle
+        >
+          <span class="mob-chevron inline-flex"><Arrow style="rotate-90" /></span>
+        </button>
+      </div>
+
+      <div id={id} class="servicios-accordion" data-servicios-panel>
+        <div class="overflow-hidden">
+          <ul class="bg-black/15 py-2 border-y border-white/10">
+            {servicios.map((s, i) => {
+              const active = path === s.href;
+              return (
+                <li class="servicios-item" style={`--i:${i}`}>
+                  <a
+                    href={s.href}
+                    class={`flex items-center gap-3 py-2.5 pl-6 pr-4 text-base transition-colors hover:bg-white/10 ${active ? 'text-tertiary' : 'text-white/90'}`}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    <span class={`grid place-items-center shrink-0 size-8 rounded-md ${active ? 'bg-tertiary text-white' : 'bg-white/10'}`}>
+                      <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={s.icon} />
+                    </span>
+                    {s.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </li>
+  )
+}
+
+<style>
+  /* Escritorio: panel a todo el ancho del header */
+  .servicios-panel {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity 200ms ease,
+      transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      visibility 0s linear 260ms;
+  }
+  [data-open] > .servicios-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  [data-desktop] .servicios-item {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 220ms ease,
+      transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  [data-desktop][data-open] .servicios-item {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--i) * 25ms + 60ms);
+  }
+  .servicios-chevron {
+    transition: transform 250ms ease;
+  }
+  [data-desktop][data-open] .servicios-chevron {
+    transform: rotate(180deg);
+  }
+  .servicios-cta:hover svg {
+    transform: translateX(3px);
+  }
+  .servicios-preview [data-preview-title],
+  .servicios-preview [data-preview-text],
+  .servicios-preview [data-preview-price] {
+    transition: opacity 160ms ease;
+  }
+  .servicios-preview.is-swapping [data-preview-title],
+  .servicios-preview.is-swapping [data-preview-text],
+  .servicios-preview.is-swapping [data-preview-price] {
+    opacity: 0;
+  }
+
+  /* Móvil: acordeón */
+  .servicios-accordion {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  [data-open] > .servicios-accordion {
+    grid-template-rows: 1fr;
+  }
+  .servicios-accordion .servicios-item {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+      opacity 200ms ease,
+      transform 260ms ease;
+  }
+  [data-open] > .servicios-accordion .servicios-item {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--i) * 30ms + 80ms);
+  }
+  .mob-chevron {
+    transition: transform 250ms ease;
+  }
+  [data-open] .mob-chevron {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .servicios-panel,
+    .servicios-item,
+    .servicios-accordion,
+    .servicios-chevron,
+    .mob-chevron {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  const CLOSE_DELAY = 180;
+  const OPEN_DELAY = 80;
+
+  document.querySelectorAll<HTMLElement>('[data-servicios-menu]').forEach((menu) => {
+    const toggle = menu.querySelector<HTMLButtonElement>('[data-servicios-toggle]');
+    const panel = menu.querySelector<HTMLElement>('[data-servicios-panel]');
+    if (!toggle || !panel) return;
+
+    const isDesktop = menu.hasAttribute('data-desktop');
+    let timer: number | undefined;
+
+    const setOpen = (open: boolean) => {
+      window.clearTimeout(timer);
+      menu.toggleAttribute('data-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Ocultar servicios' : 'Mostrar servicios');
+      if (isDesktop) panel.inert = !open;
+    };
+
+    toggle.addEventListener('click', () => setOpen(!menu.hasAttribute('data-open')));
+
+    if (!isDesktop) return;
+
+    setOpen(false);
+
+    // Hover solo con puntero fino; en tablets se abre con la flecha
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    menu.addEventListener('pointerenter', () => {
+      if (!canHover.matches) return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setOpen(true), OPEN_DELAY);
+    });
+    menu.addEventListener('pointerleave', () => {
+      if (!canHover.matches) return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setOpen(false), CLOSE_DELAY);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !menu.hasAttribute('data-open')) return;
+      const hadFocus = menu.contains(document.activeElement);
+      setOpen(false);
+      if (hadFocus) toggle.focus();
+    });
+    menu.addEventListener('focusout', (e) => {
+      const next = e.relatedTarget as Node | null;
+      if (next && !menu.contains(next)) setOpen(false);
+    });
+    document.addEventListener('pointerdown', (e) => {
+      if (menu.hasAttribute('data-open') && !menu.contains(e.target as Node)) setOpen(false);
+    });
+
+    // Vista previa del servicio señalado
+    const preview = panel.querySelector<HTMLElement>('.servicios-preview');
+    const title = panel.querySelector<HTMLElement>('[data-preview-title]');
+    const text = panel.querySelector<HTMLElement>('[data-preview-text]');
+    const price = panel.querySelector<HTMLElement>('[data-preview-price]');
+    const icon = panel.querySelector<SVGElement>('[data-preview-icon]');
+    if (!preview || !title || !text || !price || !icon) return;
+
+    const initial = { title: title.textContent ?? '', text: text.textContent ?? '', price: '', icon: '' };
+    let current = initial.title;
+    let swap: number | undefined;
+
+    const show = (d: typeof initial) => {
+      if (d.title === current) return;
+      current = d.title;
+      window.clearTimeout(swap);
+      preview.classList.add('is-swapping');
+      swap = window.setTimeout(() => {
+        title.textContent = d.title;
+        text.textContent = d.text;
+        price.textContent = d.price;
+        icon.innerHTML = d.icon;
+        preview.classList.remove('is-swapping');
+      }, 140);
+    };
+
+    panel.querySelectorAll<HTMLAnchorElement>('[data-servicio]').forEach((a) => {
+      const data = {
+        title: a.dataset.title ?? '',
+        text: a.dataset.text ?? '',
+        price: a.dataset.price ?? '',
+        icon: a.dataset.icon ?? '',
+      };
+      a.addEventListener('pointerenter', () => show(data));
+      a.addEventListener('focus', () => show(data));
+    });
+    panel.querySelector('ul')?.addEventListener('pointerleave', () => show(initial));
+  });
+</script>

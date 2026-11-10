@@ -1,52 +1,174 @@
 ---
-import Container from '@/components/molecules/Container.astro';
+// Footer del sitio: marca, datos de contacto (los mismos del schema del
+// negocio en BaseLayout) y enlaces a las secciones y a cada servicio.
 import { Image } from 'astro:assets';
-import Instagram from '@icons/instagram.astro';
-import Email from '@icons/email.astro';
+import { ESPECIALIDADES } from '@/lib/servicios/hub';
+import { normalizeWhatsapp, whatsappLink } from '@/lib/utils/whatsapp';
 
-const currentYear = new Date();
 const { headerInfo } = Astro.props;
-const { title, logo, instagram, email } = headerInfo;
+const { title, logo, instagram, email, whatsapp } = headerInfo;
+
+const year = new Date().getFullYear();
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+
+const digits = normalizeWhatsapp(whatsapp);
+const phoneLabel = `+${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
+
+const waHref = whatsappLink(whatsapp, 'Hola Arkava, quiero cotizar un proyecto');
+
+type FooterLink = { name: string; href: string };
+
+const servicios: FooterLink[] = [
+  ...ESPECIALIDADES.map((s) => ({ name: s.title, href: s.href })),
+  { name: 'Obra blanca', href: '/servicios/obra-blanca/' },
+];
+
+const sitio: FooterLink[] = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Sobre nosotros', href: '/sobre-nosotros/' },
+  { name: 'Servicios', href: '/servicios/' },
+  { name: 'Proyectos', href: '/proyectos/' },
+  { name: 'Blog', href: '/blog/' },
+  { name: 'Contacto', href: '/contacto/' },
+];
 ---
 
-<footer class="bg-terracota mx-auto max-w-full">
-  <Container style="md:!py-4">
-    <div class="flex flex-col justify-center items-center gap-2 w-full pt-2">
-      <!-- ©  {currentYear.getFullYear()} -->
+<footer class="bg-terracota text-black">
+  <div class="mx-auto max-w-7xl px-4 2xl:px-0">
+    <div class="grid gap-x-10 gap-y-9 py-10 md:grid-cols-[minmax(0,4fr)_minmax(0,2fr)_minmax(0,4fr)] md:py-12">
+      <div>
+        <a href="/" class="inline-flex" aria-label="Arkava, ir al inicio">
+          <Image
+            src={logo}
+            alt={title}
+            format="webp"
+            loading="lazy"
+            width={130}
+            height={130}
+            decoding="async"
+            class="aspect-auto w-[125px]"
+          />
+        </a>
+        <p class="mt-4 max-w-xs text-[0.95rem] leading-relaxed">
+          Especialistas en acabados arquitectónicos y remodelación en Medellín.
+        </p>
 
-      <Image
-        src={logo}
-        alt={title}
-        format="webp"
-        loading="lazy"
-        width={90}
-        height={90}
-        decoding="async"
-        class="aspect-auto"
-      />
-      <span
-        class="font-pp-sans text-white text-base opacity-90 mt-2 text-center"
-      >
-        Especialistas en acabados arquitectónicos en Medellín
-      </span>
-      <span class="font-pp-sans text-white text-sm opacity-90"
-        >Todos los derechos reservados. - ©{currentYear.getFullYear()}</span
-      >
+        <address class="mt-5 not-italic">
+          <ul class="space-y-2.5 text-[0.95rem]">
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 size-[1.15rem] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>
+              <span>Medellín, Antioquia, Colombia</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 size-[1.15rem] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg>
+              <a href={`tel:+${digits}`} class="footer-link">{phoneLabel}</a>
+            </li>
+            {email && (
+              <li class="flex items-start gap-2.5">
+                <svg class="mt-0.5 size-[1.15rem] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+                <a href={`mailto:${email}`} class="footer-link break-all">{email}</a>
+              </li>
+            )}
+          </ul>
+        </address>
+
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener"
+          class="footer-wa mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-pp-mono text-xs uppercase text-white transition-colors hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          Escribir por WhatsApp
+          <svg class="size-3.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg>
+        </a>
+      </div>
+
+      <nav aria-label="Secciones del sitio">
+        <p class="footer-title">Sitio</p>
+        <ul class="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-[0.95rem] md:grid-cols-1">
+          {sitio.map((l) => (
+            <li>
+              <a href={l.href} class="footer-link" aria-current={path === l.href ? 'page' : undefined}>
+                {l.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Servicios">
+        <p class="footer-title">Servicios</p>
+        <ul class="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-[0.95rem]">
+          {servicios.map((l) => (
+            <li>
+              <a href={l.href} class="footer-link" aria-current={path === l.href ? 'page' : undefined}>
+                {l.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
-    <div class="flex justify-center items-center gap-x-4 w-full">
-      <a
-        href={instagram}
-        target="_blank"
-        rel="noopener"
-        aria-label="Síguenos en Instagram"><Instagram /></a
-      >
-      <a
-        href={`mailto:${email}`}
-        target="_blank"
-        aria-label="Escribenos a nuesro Email"
-      >
-        <Email />
-      </a>
+
+  </div>
+
+  <div class="footer-bar text-white">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 pr-24 text-sm 2xl:pl-0">
+      <p>© {year} Arkava. Todos los derechos reservados.</p>
+      <div class="flex shrink-0 items-center gap-6">
+        <a href="#header" class="footer-link hidden font-pp-mono text-xs uppercase sm:inline">
+          Volver arriba ↑
+        </a>
+        {instagram && (
+          <a
+            href={instagram}
+            target="_blank"
+            rel="noopener"
+            aria-label="Arkava en Instagram"
+            class="grid size-9 place-items-center rounded-full border border-white/50 transition-colors hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <svg class="size-[1.1rem]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+          </a>
+        )}
+      </div>
     </div>
-  </Container>
+  </div>
 </footer>
+
+<style>
+  .footer-title {
+    font-family: var(--font-pp-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .footer-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    transition: background-size 250ms ease;
+  }
+  .footer-link:hover,
+  .footer-link:focus-visible,
+  .footer-link[aria-current='page'] {
+    background-size: 100% 1px;
+  }
+  .footer-bar {
+    background: color-mix(in srgb, var(--color-terracota) 62%, var(--color-black));
+  }
+  .footer-wa:hover svg {
+    transform: translate(2px, -2px);
+  }
+  .footer-link:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .footer-link {
+      transition: none;
+    }
+  }
+</style>
